@@ -47,7 +47,7 @@
         Me.MaximizeBox = True
 
         'load the conversations form
-        frm_conversations.Show() 'TODO: Something after this point makes the forms 'jump'. Need to investigate.
+        frm_conversations.Show() 'TODO: Something after this point makes the forms 'jump'. Need to investigate. Added as issue #1
 
         Return True
     End Function
