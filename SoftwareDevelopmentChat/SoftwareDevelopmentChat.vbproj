@@ -72,6 +72,18 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="conversations.Designer.vb">
+      <DependentUpon>conversations.vb</DependentUpon>
+    </Compile>
+    <Compile Include="conversations.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="debugForm.Designer.vb">
+      <DependentUpon>debugForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="debugForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Form1.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -96,6 +108,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="conversations.resx">
+      <DependentUpon>conversations.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="debugForm.resx">
+      <DependentUpon>debugForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
