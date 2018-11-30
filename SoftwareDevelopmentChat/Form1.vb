@@ -48,28 +48,6 @@
         End If
     End Sub
 
-    Function login() 'bring the chat window over, change text, etc., & load the conversations form
-        Dim i As Integer = grp_login.Left           'so all this is basically
-        While grp_chat.Left > i + 10                'just a fancy animation thing
-            grp_chat.Left = grp_chat.Left - 10      'to bring the second groupbox over the top of the first.
-            Threading.Thread.Sleep(20) 'animation speed
-            Me.Refresh() 'this is needed otherwise it just jumps on top instead of sliding
-        End While                                   'Animation is over :)
-
-
-        grp_login.Visible = False 'we don't need this now because we're logged in, so we will hide it.
-
-        'change the title & make it resiseable
-        Me.Text = "Chat"
-        Me.FormBorderStyle = FormBorderStyle.Sizable
-        Me.MaximizeBox = True
-
-        'load the conversations form
-        frm_conversations.Show() 'TODO: Something after this point makes the forms 'jump'. Need to investigate. Added as issue #1
-
-        Return True
-    End Function
-
     ' // The following is for moving the conversation form with this one, adapted from http://www.vbforums.com/showthread.php?611932-snap-or-dock-forms-together#2 //
     Public UserMoving As Boolean = True
 
@@ -87,5 +65,19 @@
         My.Settings.rememberMe = chk_rememberMe.Checked 'save the state of the rememberme
         My.Settings.Save()                              'checkbox in the app's settings (see
         'https://docs.microsoft.com/en-us/dotnet/framework/winforms/advanced/how-to-create-a-new-setting-at-design-time)
+    End Sub
+
+    Private Sub frm_main_Resize(sender As Object, e As EventArgs) Handles Me.Resize
+        frm_conversations.Height = Me.Height 'keep the other form in sync with this one
+
+        ' // move all the controls with the form //
+        ' This might need to become a function one day. Could get very big.
+        grp_chat.Width = Me.Width - 40
+        grp_chat.Height = Me.Height - 60
+        txt_message.Width = grp_chat.Width - 95
+        btn_send.Left = txt_message.Left + txt_message.Width + 10
+        txt_message.Top = grp_chat.Height - txt_message.Height - 10
+        btn_send.Top = txt_message.Top
+        ' // end move controls //
     End Sub
 End Class

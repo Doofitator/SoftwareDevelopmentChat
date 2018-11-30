@@ -78,6 +78,7 @@
     <Compile Include="conversations.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="DatabaseFunctions.vb" />
     <Compile Include="debugForm.Designer.vb">
       <DependentUpon>debugForm.vb</DependentUpon>
     </Compile>
@@ -91,6 +92,7 @@
       <DependentUpon>Form1.vb</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="HelperFunctions.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

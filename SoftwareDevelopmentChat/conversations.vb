@@ -1,4 +1,6 @@
-﻿Public Class frm_conversations
+﻿Imports System.ComponentModel
+
+Public Class frm_conversations
     Private Sub frm_conversations_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         frm_main.UserMoving = False
         Me.Left = frm_main.Left - Me.Width
@@ -19,4 +21,8 @@
     End Sub
 
     ' // End fancy form moving //
+
+    Private Sub frm_conversations_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+        End 'this just means that now, no matter what exit button you click, the entire program shuts down
+    End Sub
 End Class
