@@ -23,6 +23,7 @@ Partial Class frm_debug
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.btn_forceLogin = New System.Windows.Forms.Button()
+        Me.btn_forceCredentials = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
         'btn_forceLogin
@@ -34,11 +35,21 @@ Partial Class frm_debug
         Me.btn_forceLogin.Text = "Successful login"
         Me.btn_forceLogin.UseVisualStyleBackColor = True
         '
+        'btn_forceCredentials
+        '
+        Me.btn_forceCredentials.Location = New System.Drawing.Point(175, 83)
+        Me.btn_forceCredentials.Name = "btn_forceCredentials"
+        Me.btn_forceCredentials.Size = New System.Drawing.Size(139, 23)
+        Me.btn_forceCredentials.TabIndex = 2
+        Me.btn_forceCredentials.Text = "Force Credential Save"
+        Me.btn_forceCredentials.UseVisualStyleBackColor = True
+        '
         'frm_debug
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(447, 113)
+        Me.Controls.Add(Me.btn_forceCredentials)
         Me.Controls.Add(Me.btn_forceLogin)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
         Me.Name = "frm_debug"
@@ -48,4 +59,5 @@ Partial Class frm_debug
 
     End Sub
     Friend WithEvents btn_forceLogin As Button
+    Friend WithEvents btn_forceCredentials As Button
 End Class

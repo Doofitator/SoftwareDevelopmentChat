@@ -2,4 +2,12 @@
     Private Sub btn_forceLogin_Click(sender As Object, e As EventArgs) Handles btn_forceLogin.Click
         frm_main.login()
     End Sub
+
+    Private Sub btn_forceCredentialSave(sender As Object, e As EventArgs) Handles btn_forceCredentials.Click
+        If frm_main.chk_rememberMe.Checked Then
+            My.Settings.userName = frm_main.txt_userName.Text
+            My.Settings.userPassword = frm_main.txt_password.Text
+            My.Settings.Save()
+        End If
+    End Sub
 End Class

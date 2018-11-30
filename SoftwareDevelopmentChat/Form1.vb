@@ -7,6 +7,13 @@
             Me.UserMoving = True 'back to normal
         End If
 
+        If My.Settings.rememberMe = True Then               'if the app is configured to remember you
+            txt_userName.Text = My.Settings.userName        'set all
+            txt_password.Text = My.Settings.userPassword    'the saved
+            chk_rememberMe.Checked = My.Settings.rememberMe 'settings
+            btn_login_Click(sender, e)                      'and login
+        End If
+
         frm_debug.Show() 'this is just a debugging form so we can test functions
     End Sub
 
@@ -22,12 +29,23 @@
     End Sub
 
     Private Sub btn_login_Click(sender As Object, e As EventArgs) Handles btn_login.Click
-        'check password & user against database
-        MsgBox("Username or password incorrect. Please try again.", vbOKOnly, "Login failed") 'no database yet so login failed
-        Exit Sub 'this ends the sub after the failed login, obviously, once there's a database, this will be inside an if statement and will only run if the password is incorrect.
+        If rbtn_userExist.Checked Then 'if it's an existing user
+            'check password & user against database
+            MsgBox("Username or password incorrect. Please try again.", vbOKOnly, "Login failed") 'no database yet so login failed
+            Exit Sub 'this ends the sub after the failed login, obviously, once there's a database, this will be inside an if statement and will only run if the password is incorrect.
 
-        'happy with password? Then login!
-        login()
+            'happy with password? Then are we supposed to remember you?
+            If chk_rememberMe.Checked Then
+                My.Settings.userName = txt_userName.Text
+                My.Settings.userPassword = txt_password.Text
+                My.Settings.Save()
+            End If
+
+            'Okay. That's all sorted, now login!
+            login()
+        ElseIf rbtn_userNew.Checked Then 'if it's a new user
+
+        End If
     End Sub
 
     Function login() 'bring the chat window over, change text, etc., & load the conversations form
@@ -63,6 +81,11 @@
             Me.UserMoving = True   'reset the flag after moving is complete
         End If
     End Sub
-
     ' // End fancy form moving //
+
+    Private Sub chk_rememberMe_CheckedChanged(sender As Object, e As EventArgs) Handles chk_rememberMe.CheckedChanged
+        My.Settings.rememberMe = chk_rememberMe.Checked 'save the state of the rememberme
+        My.Settings.Save()                              'checkbox in the app's settings (see
+        'https://docs.microsoft.com/en-us/dotnet/framework/winforms/advanced/how-to-create-a-new-setting-at-design-time)
+    End Sub
 End Class

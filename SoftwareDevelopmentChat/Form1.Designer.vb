@@ -23,6 +23,7 @@ Partial Class frm_main
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.grp_login = New System.Windows.Forms.GroupBox()
+        Me.chk_rememberMe = New System.Windows.Forms.CheckBox()
         Me.pbx_appLogo = New System.Windows.Forms.PictureBox()
         Me.lbl_passwordRepeat = New System.Windows.Forms.Label()
         Me.txt_passwordRepeat = New System.Windows.Forms.TextBox()
@@ -36,9 +37,8 @@ Partial Class frm_main
         Me.txt_password = New System.Windows.Forms.TextBox()
         Me.txt_userName = New System.Windows.Forms.TextBox()
         Me.grp_chat = New System.Windows.Forms.GroupBox()
-        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
-        Me.txt_message = New System.Windows.Forms.TextBox()
         Me.btn_send = New System.Windows.Forms.Button()
+        Me.txt_message = New System.Windows.Forms.TextBox()
         Me.grp_login.SuspendLayout()
         CType(Me.pbx_appLogo, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.grp_chat.SuspendLayout()
@@ -46,7 +46,7 @@ Partial Class frm_main
         '
         'grp_login
         '
-        Me.grp_login.Controls.Add(Me.CheckBox1)
+        Me.grp_login.Controls.Add(Me.chk_rememberMe)
         Me.grp_login.Controls.Add(Me.pbx_appLogo)
         Me.grp_login.Controls.Add(Me.lbl_passwordRepeat)
         Me.grp_login.Controls.Add(Me.txt_passwordRepeat)
@@ -64,6 +64,16 @@ Partial Class frm_main
         Me.grp_login.Size = New System.Drawing.Size(381, 437)
         Me.grp_login.TabIndex = 0
         Me.grp_login.TabStop = False
+        '
+        'chk_rememberMe
+        '
+        Me.chk_rememberMe.AutoSize = True
+        Me.chk_rememberMe.Location = New System.Drawing.Point(23, 314)
+        Me.chk_rememberMe.Name = "chk_rememberMe"
+        Me.chk_rememberMe.Size = New System.Drawing.Size(102, 17)
+        Me.chk_rememberMe.TabIndex = 12
+        Me.chk_rememberMe.Text = "Remember login"
+        Me.chk_rememberMe.UseVisualStyleBackColor = True
         '
         'pbx_appLogo
         '
@@ -184,23 +194,6 @@ Partial Class frm_main
         Me.grp_chat.TabIndex = 1
         Me.grp_chat.TabStop = False
         '
-        'CheckBox1
-        '
-        Me.CheckBox1.AutoSize = True
-        Me.CheckBox1.Location = New System.Drawing.Point(23, 314)
-        Me.CheckBox1.Name = "CheckBox1"
-        Me.CheckBox1.Size = New System.Drawing.Size(102, 17)
-        Me.CheckBox1.TabIndex = 12
-        Me.CheckBox1.Text = "Remember login"
-        Me.CheckBox1.UseVisualStyleBackColor = True
-        '
-        'txt_message
-        '
-        Me.txt_message.Location = New System.Drawing.Point(7, 410)
-        Me.txt_message.Name = "txt_message"
-        Me.txt_message.Size = New System.Drawing.Size(287, 20)
-        Me.txt_message.TabIndex = 0
-        '
         'btn_send
         '
         Me.btn_send.Location = New System.Drawing.Point(300, 408)
@@ -209,6 +202,13 @@ Partial Class frm_main
         Me.btn_send.TabIndex = 1
         Me.btn_send.Text = "Send"
         Me.btn_send.UseVisualStyleBackColor = True
+        '
+        'txt_message
+        '
+        Me.txt_message.Location = New System.Drawing.Point(7, 410)
+        Me.txt_message.Name = "txt_message"
+        Me.txt_message.Size = New System.Drawing.Size(287, 20)
+        Me.txt_message.TabIndex = 0
         '
         'frm_main
         '
@@ -244,7 +244,7 @@ Partial Class frm_main
     Friend WithEvents txt_password As TextBox
     Friend WithEvents txt_userName As TextBox
     Friend WithEvents pbx_appLogo As PictureBox
-    Friend WithEvents CheckBox1 As CheckBox
+    Friend WithEvents chk_rememberMe As CheckBox
     Friend WithEvents btn_send As Button
     Friend WithEvents txt_message As TextBox
 End Class
