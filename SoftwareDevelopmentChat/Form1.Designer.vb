@@ -24,7 +24,6 @@ Partial Class frm_main
     Private Sub InitializeComponent()
         Me.grp_login = New System.Windows.Forms.GroupBox()
         Me.chk_rememberMe = New System.Windows.Forms.CheckBox()
-        Me.pbx_appLogo = New System.Windows.Forms.PictureBox()
         Me.lbl_passwordRepeat = New System.Windows.Forms.Label()
         Me.txt_passwordRepeat = New System.Windows.Forms.TextBox()
         Me.Label4 = New System.Windows.Forms.Label()
@@ -39,9 +38,10 @@ Partial Class frm_main
         Me.grp_chat = New System.Windows.Forms.GroupBox()
         Me.btn_send = New System.Windows.Forms.Button()
         Me.txt_message = New System.Windows.Forms.TextBox()
+        Me.pbx_appLogo = New System.Windows.Forms.PictureBox()
         Me.grp_login.SuspendLayout()
-        CType(Me.pbx_appLogo, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.grp_chat.SuspendLayout()
+        CType(Me.pbx_appLogo, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'grp_login
@@ -74,14 +74,6 @@ Partial Class frm_main
         Me.chk_rememberMe.TabIndex = 12
         Me.chk_rememberMe.Text = "Remember login"
         Me.chk_rememberMe.UseVisualStyleBackColor = True
-        '
-        'pbx_appLogo
-        '
-        Me.pbx_appLogo.Location = New System.Drawing.Point(6, 19)
-        Me.pbx_appLogo.Name = "pbx_appLogo"
-        Me.pbx_appLogo.Size = New System.Drawing.Size(369, 74)
-        Me.pbx_appLogo.TabIndex = 11
-        Me.pbx_appLogo.TabStop = False
         '
         'lbl_passwordRepeat
         '
@@ -210,6 +202,17 @@ Partial Class frm_main
         Me.txt_message.Size = New System.Drawing.Size(287, 20)
         Me.txt_message.TabIndex = 0
         '
+        'pbx_appLogo
+        '
+        Me.pbx_appLogo.Image = Global.SoftwareDevelopmentChat.My.Resources.Resources.logo_placeholder
+        Me.pbx_appLogo.InitialImage = Nothing
+        Me.pbx_appLogo.Location = New System.Drawing.Point(6, 19)
+        Me.pbx_appLogo.Name = "pbx_appLogo"
+        Me.pbx_appLogo.Size = New System.Drawing.Size(369, 125)
+        Me.pbx_appLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+        Me.pbx_appLogo.TabIndex = 11
+        Me.pbx_appLogo.TabStop = False
+        '
         'frm_main
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -223,9 +226,9 @@ Partial Class frm_main
         Me.Text = "Login"
         Me.grp_login.ResumeLayout(False)
         Me.grp_login.PerformLayout()
-        CType(Me.pbx_appLogo, System.ComponentModel.ISupportInitialize).EndInit()
         Me.grp_chat.ResumeLayout(False)
         Me.grp_chat.PerformLayout()
+        CType(Me.pbx_appLogo, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
