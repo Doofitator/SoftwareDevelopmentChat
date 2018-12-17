@@ -44,7 +44,7 @@
             'Okay. That's all sorted, now login!
             login()
         ElseIf rbtn_userNew.Checked Then 'if it's a new user
-
+            'add to database, login.
         End If
     End Sub
 
