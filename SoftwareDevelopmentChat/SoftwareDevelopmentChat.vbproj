@@ -72,6 +72,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Comments.vb" />
     <Compile Include="conversations.Designer.vb">
       <DependentUpon>conversations.vb</DependentUpon>
     </Compile>
