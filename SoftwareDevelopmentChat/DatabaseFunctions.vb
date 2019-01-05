@@ -21,6 +21,12 @@ Module DatabaseFunctions
         'Open the connection.
         myConn.Open()
 
-        myCmd.ExecuteNonQuery()
+        Try
+            myCmd.ExecuteNonQuery()
+            myConn.Close()
+        Catch
+            myConn.Close()
+            MsgBox("error")
+        End Try
     End Function
 End Module
