@@ -10,4 +10,8 @@
             My.Settings.Save()
         End If
     End Sub
+
+    Private Sub btn_newUser_Click(sender As Object, e As EventArgs) Handles btn_newUser.Click
+        writeNewUser(frm_main.txt_userName.Text, frm_main.txt_passwordRepeat.Text)
+    End Sub
 End Class
