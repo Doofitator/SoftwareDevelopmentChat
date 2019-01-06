@@ -65,7 +65,7 @@ Module DatabaseFunctions
         'Open the connection.
         myConn.Open()
 
-        Dim result As String 'this is what the function will return
+        Dim result As String = False 'this is what the function will return
 
         Try
             Dim reader As SqlDataReader = myCmd.ExecuteReader()
