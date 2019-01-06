@@ -36,12 +36,11 @@
     Private Sub btn_login_Click(sender As Object, e As EventArgs) Handles btn_login.Click
         If rbtn_userExist.Checked Then 'if it's an existing user
             'check password & user against database
-            MsgBox("Username or password incorrect. Please try again.", vbOKOnly, "Login failed") 'no database yet so login failed
-
 
             If passwordCorrect(txt_userName.Text, txt_password.Text) Then
                 GoTo correctPassword
             Else
+                MsgBox("Username or password incorrect. Please try again.", vbOKOnly, "Login failed") 'no database yet so login failed
                 Exit Sub
             End If
 

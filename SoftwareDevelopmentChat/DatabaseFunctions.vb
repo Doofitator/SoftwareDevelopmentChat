@@ -54,21 +54,24 @@ Module DatabaseFunctions
         Return sql
     End Function
 
-    Function readSQL(ByVal Query As String) 'with any luck, all READs from the database will call this at some point.
+    Function readUserPassword(ByVal Name As String) As String
         'Create a Connection object.
         myConn = New SqlConnection(connectionString)
 
         'Create a Command object.
         myCmd = myConn.CreateCommand
-        myCmd.CommandText = Query
+        myCmd.CommandText = "select Password from tbl_users where convert(varchar, Name) = '" & Name & "'" 'TODO: Currently there's nothing stopping someone from having the same username as someone else. Need to fix this, or this function will crash.
 
         'Open the connection.
         myConn.Open()
 
-        Dim result As SqlDataReader 'this is what the function will return
+        Dim result As String 'this is what the function will return
 
         Try
-            result = myCmd.ExecuteReader()
+            Dim reader As SqlDataReader = myCmd.ExecuteReader()
+            While reader.Read
+                result = reader.GetString(0)
+            End While
             myConn.Close()
         Catch ex As Exception
             myConn.Close()

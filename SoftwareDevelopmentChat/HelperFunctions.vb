@@ -34,9 +34,9 @@
     End Function
 
     Function passwordCorrect(ByVal username As String, ByVal password As String) As Boolean
-        Dim result As SqlClient.SqlDataReader = readSQL("select Password from tbl_users where convert(varchar, Name) = '" & username & "'")
+        Dim result As String = readUserPassword(username)
         Try
-            If result.GetString(0) = frm_main.txt_password.Text Then 'TODO: Fix error here - reader is already closed after the function ended on databaseFunctions module so it crashes :(
+            If result = frm_main.txt_password.Text Then
                 Return True
             End If
         Catch ex As Exception
