@@ -22,9 +22,11 @@
         If control Is rbtn_userExist Then
             lbl_passwordRepeat.Visible = False
             txt_passwordRepeat.Visible = False
+            btn_login.Text = "Login"
         ElseIf control Is rbtn_userNew Then             'all this is just radio button stuff for the new user / existing user
             lbl_passwordRepeat.Visible = True
             txt_passwordRepeat.Visible = True
+            btn_login.Text = "Sign Up"
         End If
     End Sub
 
