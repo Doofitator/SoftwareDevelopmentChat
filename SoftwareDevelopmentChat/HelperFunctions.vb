@@ -32,7 +32,7 @@
     End Function
 
     Function passwordCorrect(ByVal username As String, ByVal password As String) As Boolean
-        readSQL("select * from tbl_users where convert(varchar, Name) = '" & username & "'")
+        readSQL("select Password from tbl_users where convert(varchar, Name) = '" & username & "'")
         Return False
     End Function
 End Module
