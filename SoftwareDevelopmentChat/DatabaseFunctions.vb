@@ -65,19 +65,17 @@ Module DatabaseFunctions
         'Open the connection.
         myConn.Open()
 
+        Dim result As SqlDataReader 'this is what the function will return
+
         Try
-            Dim reader As SqlDataReader = myCmd.ExecuteReader() 'new reader
-            If reader.HasRows Then 'if the reader contains anything
-                While reader.Read()
-                    Console.WriteLine(reader.GetString(1)) 'write it to the console
-                End While
-            Else
-                Console.WriteLine("No rows found.") 'reader contains nothing: write message to console.
-            End If
+            result = myCmd.ExecuteReader()
             myConn.Close()
         Catch ex As Exception
             myConn.Close()
             MsgBox("E: " & ex.ToString)
+            Return False
         End Try
+
+        Return result
     End Function
 End Module
