@@ -12,7 +12,7 @@ Module DatabaseFunctions
     Function runSQL(ByVal Query As String)
         'Create a Connection object.
         myConn = New SqlConnection("Data Source=120.150.110.21,1433;Network Library=DBMSSOCN;Initial Catalog=SoftDevChat;uid=sa;pwd=sys@dmin")
-
+        '                           Data source is the IP address followed by port. Initial catalog is the database name.
 
         'Create a Command object.
         myCmd = myConn.CreateCommand
