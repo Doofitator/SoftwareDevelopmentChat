@@ -10,11 +10,11 @@ Module DatabaseFunctions
     Private results As String
 
     Public connectionString As String = "Data Source=120.150.110.21,1433;Network Library=DBMSSOCN;Initial Catalog=SoftDevChat;uid=sa;pwd=sys@dmin" 'this is the string required to connect to the server
+    '                                    Data source is the IP address followed by port. Initial catalog is the database name.
 
-    Function writeSQL(ByVal Query As String) 'with any luck, all other functions on this module will call this one at some point.
+    Function writeSQL(ByVal Query As String) 'with any luck, all database WRITE functions will call this one at some point.
         'Create a Connection object.
         myConn = New SqlConnection(connectionString)
-        '                           Data source is the IP address followed by port. Initial catalog is the database name.
 
         'Create a Command object.
         myCmd = myConn.CreateCommand
@@ -51,5 +51,33 @@ Module DatabaseFunctions
         Next
 
         Return sql
+    End Function
+
+    Function readSQL(ByVal Query As String) 'with any luck, all READs from the database will call this at some point.
+        'Create a Connection object.
+        myConn = New SqlConnection(connectionString)
+
+        'Create a Command object.
+        myCmd = myConn.CreateCommand
+        myCmd.CommandText = Query
+
+        'Open the connection.
+        myConn.Open()
+
+        Try
+            Dim reader As SqlDataReader = myCmd.ExecuteReader()
+            If reader.HasRows Then
+
+                While reader.Read()
+                    Console.WriteLine("{0}" & vbTab & "{1}", reader.GetInt32(0), reader.GetString(1))
+                End While
+            Else
+                Console.WriteLine("No rows found.")
+            End If
+            myConn.Close()
+        Catch ex As Exception
+            myConn.Close()
+            MsgBox("E: " & ex.ToString)
+        End Try
     End Function
 End Module
