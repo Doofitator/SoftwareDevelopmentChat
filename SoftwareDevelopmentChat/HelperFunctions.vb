@@ -38,6 +38,7 @@
         Try
             If result = frm_main.txt_password.Text Then
                 Return True
+            Else Return False
             End If
         Catch ex As Exception
             MsgBox(ex.ToString)
