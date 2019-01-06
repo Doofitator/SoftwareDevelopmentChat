@@ -47,7 +47,7 @@
             login()
         ElseIf rbtn_userNew.Checked Then 'if it's a new user
             If txt_passwordRepeat.Text = txt_password.Text Then 'if both password fields match
-                addNewUser(txt_userName.Text, txt_password.Text)
+                addUser(txt_userName.Text, txt_password.Text)
             Else
                 MsgBox("Passwords do not match")
             End If
