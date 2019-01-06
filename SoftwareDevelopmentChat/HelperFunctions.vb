@@ -27,12 +27,12 @@
     End Function
 
     Function addUser(ByVal username As String, ByVal password As String) 'technically belongs here as it doesn't actually run any server stuff - just calls another function to do it.
-        writeSQL("insert into tbl_users (Name, Password) values ('" & username & "' '" & password & "')")
+        writeSQL("insert into tbl_users (Name, Password) values ('" & username & "', '" & password & "')")
         ' // SQL script makes a new record in tbl_users with the corresponding values for username and password.
     End Function
 
     Function passwordCorrect(ByVal username As String, ByVal password As String) As Boolean
-
-        Return True
+        readSQL("select * from tbl_users where Name = '" & username & "'")
+        Return False
     End Function
 End Module
