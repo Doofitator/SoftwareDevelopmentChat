@@ -1,4 +1,7 @@
 ﻿Public Class frm_main
+
+    'TODO: Fix tabindex on this form. It's terrible.
+
     Private Sub frm_main_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.Width = 421 'set the width to half what it is in the design editor (it's only double there so we can see both windows)
         If Me.Left < frm_conversations.Width + 50 Then 'make sure that the form loads far enough to the right that the conversations form fits next to it
