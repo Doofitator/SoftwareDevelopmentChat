@@ -27,6 +27,8 @@
     End Function
 
     Function addUser(ByVal username As String, ByVal password As String) 'technically belongs here as it doesn't actually run any server stuff - just calls another function to do it.
+        'TODO: Need to read first to ensure username doesn't already exist
+
         writeSQL("insert into tbl_users (Name, Password) values ('" & username & "', '" & password & "')")
         ' // SQL script makes a new record in tbl_users with the corresponding values for username and password.
     End Function

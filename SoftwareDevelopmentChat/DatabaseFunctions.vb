@@ -69,7 +69,7 @@ Module DatabaseFunctions
             Dim reader As SqlDataReader = myCmd.ExecuteReader() 'new reader
             If reader.HasRows Then 'if the reader contains anything
                 While reader.Read()
-                    Console.WriteLine("{0}" & vbTab & "{1}", reader.GetInt32(0), reader.GetString(1)) 'write it to the console
+                    Console.WriteLine(reader.GetString(1)) 'write it to the console
                 End While
             Else
                 Console.WriteLine("No rows found.") 'reader contains nothing: write message to console.
