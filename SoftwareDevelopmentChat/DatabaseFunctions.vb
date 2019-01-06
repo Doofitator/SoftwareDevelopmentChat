@@ -52,9 +52,4 @@ Module DatabaseFunctions
 
         Return sql
     End Function
-
-    Function addUser(ByVal username As String, ByVal password As String)
-        runSQL("insert into tbl_users (Name, Password) values ('" & username & "' '" & password & "')")
-        ' // SQL script makes a new record in tbl_users with the corresponding values for username and password.
-    End Function
 End Module

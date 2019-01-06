@@ -34,7 +34,15 @@
         If rbtn_userExist.Checked Then 'if it's an existing user
             'check password & user against database
             MsgBox("Username or password incorrect. Please try again.", vbOKOnly, "Login failed") 'no database yet so login failed
-            Exit Sub 'this ends the sub after the failed login, obviously, once there's a database, this will be inside an if statement and will only run if the password is incorrect.
+
+
+            If passwordCorrect(txt_userName.Text, txt_password.Text) Then
+                GoTo correctPassword
+            Else
+                Exit Sub
+            End If
+
+correctPassword:
 
             'happy with password? Then are we supposed to remember you?
             If chk_rememberMe.Checked Then
