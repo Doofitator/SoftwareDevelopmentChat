@@ -24,11 +24,11 @@ Module DatabaseFunctions
         myConn.Open()
 
         Try
-            myCmd.ExecuteNonQuery()
-            myConn.Close()
-        Catch ex As Exception
-            myConn.Close()
-            MsgBox("E: " & ex.ToString)
+            myCmd.ExecuteNonQuery() 'run sql script
+            myConn.Close() 'close connection
+        Catch ex As Exception 'if a catastrophic error occurs
+            myConn.Close() 'close the connection
+            MsgBox("E: " & ex.ToString) 'show error msg
         End Try
     End Function
 
@@ -54,7 +54,7 @@ Module DatabaseFunctions
         Return sql
     End Function
 
-    Function readUserPassword(ByVal Name As String) As String
+    Function readUserPassword(ByVal Name As String) As String 'function to read passwords from database. This function should in future decrypt passwords too.
         'Create a Connection object.
         myConn = New SqlConnection(connectionString)
 
@@ -68,14 +68,14 @@ Module DatabaseFunctions
         Dim result As String = False 'this is what the function will return
 
         Try
-            Dim reader As SqlDataReader = myCmd.ExecuteReader()
+            Dim reader As SqlDataReader = myCmd.ExecuteReader() 'run sql script
             While reader.Read
-                result = reader.GetString(0)
+                result = reader.GetString(0) 'get first value of field (because there should only be one record returned as there shouldn't be username doubleups).
             End While
-            myConn.Close()
-        Catch ex As Exception
-            myConn.Close()
-            MsgBox("E: " & ex.ToString)
+            myConn.Close() 'close connection
+        Catch ex As Exception 'if a catastrophic error occurs
+            myConn.Close() 'close the connection
+            MsgBox("E: " & ex.ToString) 'show error msg
             Return False
         End Try
 

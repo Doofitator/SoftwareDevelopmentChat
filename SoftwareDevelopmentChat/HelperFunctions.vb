@@ -26,22 +26,22 @@
         Return True
     End Function
 
-    Function addUser(ByVal username As String, ByVal password As String) 'technically belongs here as it doesn't actually run any server stuff - just calls another function to do it.
+    Function addUser(ByVal username As String, ByVal password As String) 'technically belongs here as it doesn't actually run any server stuff - just calls another function to do it. It should in future encrypt passwords on their way out to the database.
         'TODO: Need to read first to ensure username doesn't already exist
 
         writeSQL("insert into tbl_users (Name, Password) values ('" & username & "', '" & password & "')")
         ' // SQL script makes a new record in tbl_users with the corresponding values for username and password.
     End Function
 
-    Function passwordCorrect(ByVal username As String, ByVal password As String) As Boolean
-        Dim result As String = readUserPassword(username)
+    Function passwordCorrect(ByVal username As String, ByVal password As String) As Boolean 'returns try/false after checking database for password
+        Dim result As String = readUserPassword(username) 'call function to read user's password (this function should contain decryption code but that's not implemented yet).
         Try
-            If result = frm_main.txt_password.Text Then
+            If result = frm_main.txt_password.Text Then 'if the password is what has been entered
                 Return True
             Else Return False
             End If
         Catch ex As Exception
-            MsgBox(ex.ToString)
+            MsgBox(ex.ToString) 'something went wrong that we didn't expect to happen. Display error msg.
             Return False
         End Try
     End Function
