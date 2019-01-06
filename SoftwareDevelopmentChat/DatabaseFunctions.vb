@@ -9,14 +9,14 @@ Module DatabaseFunctions
     Private myReader As SqlDataReader
     Private results As String
 
-    Function writeNewUser(ByVal username As String, ByVal password As String)
+    Function runSQL(ByVal Query As String)
         'Create a Connection object.
         myConn = New SqlConnection("Data Source=120.150.110.21,1433;Network Library=DBMSSOCN;Initial Catalog=SoftDevChat;uid=sa;pwd=sys@dmin")
 
 
         'Create a Command object.
         myCmd = myConn.CreateCommand
-        myCmd.CommandText = "INSERT INTO tbl_users (Name, Password) VALUES (" & username & ", " & password & ")"
+        myCmd.CommandText = Query
 
         'Open the connection.
         myConn.Open()
@@ -24,9 +24,9 @@ Module DatabaseFunctions
         Try
             myCmd.ExecuteNonQuery()
             myConn.Close()
-        Catch
+        Catch ex As Exception
             myConn.Close()
-            MsgBox("error")
+            MsgBox("E: " & ex.ToString)
         End Try
     End Function
 End Module
