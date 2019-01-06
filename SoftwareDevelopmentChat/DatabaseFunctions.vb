@@ -11,7 +11,7 @@ Module DatabaseFunctions
 
     Public connectionString As String = "Data Source=120.150.110.21,1433;Network Library=DBMSSOCN;Initial Catalog=SoftDevChat;uid=sa;pwd=sys@dmin" 'this is the string required to connect to the server
 
-    Function runSQL(ByVal Query As String) 'with any luck, all other functions on this module will call this one at some point.
+    Function writeSQL(ByVal Query As String) 'with any luck, all other functions on this module will call this one at some point.
         'Create a Connection object.
         myConn = New SqlConnection(connectionString)
         '                           Data source is the IP address followed by port. Initial catalog is the database name.
