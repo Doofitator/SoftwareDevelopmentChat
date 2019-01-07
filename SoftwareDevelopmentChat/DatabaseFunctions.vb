@@ -9,10 +9,12 @@ Module DatabaseFunctions
     Private myReader As SqlDataReader
     Private results As String
 
+    Public errorInfo As Exception
+
     Public connectionString As String = "Data Source=120.150.110.21,1433;Network Library=DBMSSOCN;Initial Catalog=SoftDevChat;uid=sa;pwd=sys@dmin" 'this is the string required to connect to the server
     '                                    Data source is the IP address followed by port. Initial catalog is the database name.
 
-    Function writeSQL(ByVal Query As String) 'with any luck, all database WRITE functions will call this one at some point.
+    Function writeSQL(ByVal Query As String) As Boolean 'with any luck, all database WRITE functions will call this one at some point.
         'Create a Connection object.
         myConn = New SqlConnection(connectionString)
 
@@ -26,9 +28,11 @@ Module DatabaseFunctions
         Try
             myCmd.ExecuteNonQuery() 'run sql script
             myConn.Close() 'close connection
+            Return True
         Catch ex As Exception 'if a catastrophic error occurs
             myConn.Close() 'close the connection
-            MsgBox("E: " & ex.ToString) 'show error msg
+            errorInfo = ex 'make error information publicly available
+            Return False
         End Try
     End Function
 
@@ -85,7 +89,7 @@ Module DatabaseFunctions
         'Open the connection.
         myConn.Open()
 
-        Dim result As String = False 'this is what the function will return
+        Dim result As String = "False" 'this is what the function will return
 
         Try
             Dim reader As SqlDataReader = myCmd.ExecuteReader() 'run sql script
@@ -95,8 +99,8 @@ Module DatabaseFunctions
             myConn.Close() 'close connection
         Catch ex As Exception 'if a catastrophic error occurs
             myConn.Close() 'close the connection
-            MsgBox("E: " & ex.ToString) 'show error msg
-            Return False
+            errorInfo = ex
+            Return "False"
         End Try
 
         Return result

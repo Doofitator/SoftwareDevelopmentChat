@@ -28,8 +28,12 @@
 
     Function addUser(ByVal username As String, ByVal password As String) 'technically belongs here as it doesn't actually run any server stuff - just calls another function to do it. It should in future encrypt passwords on their way out to the database.
         If Not userExists(username) Then 'check database to see if user exists
-            writeSQL("insert into tbl_users (Name, Password) values ('" & username & "', '" & password & "')")
-            ' // SQL script makes a new record in tbl_users with the corresponding values for username and password.
+            If writeSQL("insert into tbl_users (Name, Password) values ('" & username & "', '" & password & "')") Then 'if insert new user command was successful
+            Else
+                If MsgBox("Something went horribly wrong and the user wasn't created. View technical details?", vbExclamation + vbYesNo, "Something happened") = MsgBoxResult.Yes Then 'if user wants technical details
+                    MsgBox(errorInfo.ToString) 'show them the details from the public errorinfo exception on databasefunctions.vb
+                End If
+            End If
         Else
             MsgBox("Username is taken. Please try again.", vbOKOnly & vbExclamation, "Error creating user")
         End If
@@ -37,13 +41,20 @@
 
     Function passwordCorrect(ByVal username As String, ByVal password As String) As Boolean 'returns try/false after checking database for password
         Dim result As String = readUserPassword(username) 'call function to read user's password (this function should contain decryption code but that's not implemented yet).
+        If result = "False" Then 'if the readUserPassword function failed (and thus returned false as a string because that's what its supposed to do)
+            If MsgBox("Something went horribly wrong and the password couldn't be verified. View technical details?", vbExclamation + vbYesNo, "Something happened") = MsgBoxResult.Yes Then 'if user wants technical details
+                MsgBox(errorInfo.ToString) 'show them the details from the public errorinfo exception on databasefunctions.vb
+            End If
+        End If
         Try
             If result = frm_main.txt_password.Text Then 'if the password is what has been entered
                 Return True
             Else Return False
             End If
         Catch ex As Exception
-            MsgBox(ex.ToString) 'something went wrong that we didn't expect to happen. Display error msg.
+            If MsgBox("Something went horribly wrong and the password couldn't be verified. View technical details?", vbExclamation + vbYesNo, "Something happened") = MsgBoxResult.Yes Then 'if user wants technical details
+                MsgBox(ex.ToString) 'something went wrong that we didn't expect to happen. Display error msg.
+            End If
             Return False
         End Try
     End Function
