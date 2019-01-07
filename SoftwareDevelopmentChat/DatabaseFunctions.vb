@@ -90,6 +90,8 @@ Module DatabaseFunctions
                 result = reader.GetString(0) 'get first value of field (because there should only be one record returned as there shouldn't be username doubleups).
             End While
             myConn.Close() 'close connection
+            Dim decryptor As New Encryption(Name) 'new instance of encryption module
+            result = decryptor.DecryptData(result) 'decript with username key
         Catch ex As Exception 'if a catastrophic error occurs
             myConn.Close() 'close the connection
             errorInfo = ex

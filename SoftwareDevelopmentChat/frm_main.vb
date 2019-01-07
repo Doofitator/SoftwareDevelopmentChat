@@ -52,8 +52,8 @@
             If passwordCorrect(MakeSQLSafe(userName), MakeSQLSafe(password)) Then
                 GoTo correctPassword
             Else
-                MsgBox("Username ('" & userName & "') or password ('" & PlainTextPassword & "') and thus encrypted password ('" & password & "') incorrect. Please try again.", vbOKOnly, "Login failed") 'for debugging
-                'MsgBox("Username or password incorrect. Please try again.", vbOKOnly, "Login failed")
+                'MsgBox("Username ('" & userName & "') or password ('" & PlainTextPassword & "') and thus encrypted password ('" & password & "') incorrect. Please try again.", vbOKOnly, "Login failed") 'for debugging
+                MsgBox("Username or password incorrect. Please try again.", vbOKOnly, "Login failed")
                 Exit Sub
             End If
 

@@ -49,7 +49,7 @@
     End Function
 
     Function passwordCorrect(ByVal username As String, ByVal password As String) As Boolean 'returns try/false after checking database for password
-        Dim result As String = readUserPassword(username) 'call function to read user's password (this function should contain decryption code but that's not implemented yet).
+        Dim result As String = readUserPassword(username)
         If result = "False" Then 'if the readUserPassword function failed (and thus returned false as a string because that's what its supposed to do)
             If MsgBox("Something went horribly wrong and the password couldn't be verified. View technical details?", vbExclamation + vbYesNo, "Something happened") = MsgBoxResult.Yes Then 'if user wants technical details
                 MsgBox(errorInfo.ToString) 'show them the details from the public errorinfo exception on databasefunctions.vb
