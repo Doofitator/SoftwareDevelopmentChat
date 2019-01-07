@@ -86,6 +86,7 @@
     <Compile Include="debugForm.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Encryption.vb" />
     <Compile Include="frm_main.vb">
       <SubType>Form</SubType>
     </Compile>
