@@ -29,6 +29,15 @@
     Function addUser(ByVal username As String, ByVal password As String) 'technically belongs here as it doesn't actually run any server stuff - just calls another function to do it. It should in future encrypt passwords on their way out to the database.
         If Not userExists(username) Then 'check database to see if user exists
             If writeSQL("insert into tbl_users (Name, Password) values ('" & username & "', '" & password & "')") Then 'if insert new user command was successful
+
+                ' // the following will click the 'existing user' radio button and login. There's probably nicer ways of doing this but I can't be bothered to work them out.
+
+                MsgBox("User created successfully.", vbOKOnly, "Success")
+                frm_main.rbtn_userExist.PerformClick()
+                frm_main.btn_login.PerformClick() 'no need to enter password. Should already be there.
+
+                '// end
+
             Else
                 If MsgBox("Something went horribly wrong and the user wasn't created. View technical details?", vbExclamation + vbYesNo, "Something happened") = MsgBoxResult.Yes Then 'if user wants technical details
                     MsgBox(errorInfo.ToString) 'show them the details from the public errorinfo exception on databasefunctions.vb
