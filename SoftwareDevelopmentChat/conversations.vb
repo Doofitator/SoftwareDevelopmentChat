@@ -25,7 +25,7 @@ Public Class frm_conversations
     Private Sub frm_conversations_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
         End 'this just means that now, no matter what exit button you click, the entire program shuts down
     End Sub
-
+    Dim StreamButtons As Integer = 1
     Private Sub btn_newMessage_Click(sender As Object, e As EventArgs) Handles btn_newMessage.Click
 
         Dim recipient As String = InputBox("Pick a user you would like to chat with.")
@@ -42,13 +42,15 @@ Public Class frm_conversations
         Dim sql As String = "insert into tbl_streams (StreamName) values ('" & StreamNameString & "')"
         'Dim UserButtons As List(Of Button) = New List(Of Button)
         Dim UserButtons As List(Of Button) = New List(Of Button)
-        Dim StreamButtons As Integer = 1
+
 
         If userExists(recipient) Then
             If writeSQL(sql) Then
                 MsgBox("Conversation created successfully.", vbOKOnly, "Success")
                 Dim btn As New Button
-                btn.Location = New Point(13, 57 + UserButtons.Count * 6)
+                'btn.Location = New Point(13, 57 + UserButtons.Count * 6)
+                btn.Top = 57 + (UserButtons.Count * 6)
+                btn.Left = 13
                 btn.Height = 38
                 btn.Width = 163
                 btn.Name = "btn" & StreamNameString
