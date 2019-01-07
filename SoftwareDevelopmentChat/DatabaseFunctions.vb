@@ -101,7 +101,7 @@ Module DatabaseFunctions
         Return result
     End Function
 
-    Function readUserID(ByVal Name As String) As String 'function to read passwords from database.
+    Function readUserID(ByVal Name As String) As String 'function to read IDs from database.
         'Create a Connection object.
         myConn = New SqlConnection(connectionString)
 
