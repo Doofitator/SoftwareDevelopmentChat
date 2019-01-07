@@ -34,13 +34,26 @@
     End Sub
 
     Private Sub btn_login_Click(sender As Object, e As EventArgs) Handles btn_login.Click
+        Dim userName As String = txt_userName.Text              'get username
+        Dim PlainTextPassword As String = txt_password.Text     'get password
+
+        '// fancy encryption stuff from encryption.vb //
+
+        Dim password As String  'new string to hold encrypted password
+
+        Dim wrapper As Encryption = New Encryption(userName)             'make a new encrypted string with the key of username
+        password = wrapper.EncryptData(PlainTextPassword)   'encrypt the password with the key of the username
+
+        '// end //
+
         If rbtn_userExist.Checked Then 'if it's an existing user
             'check password & user against database
 
-            If passwordCorrect(MakeSQLSafe(txt_userName.Text), MakeSQLSafe(txt_password.Text)) Then
+            If passwordCorrect(MakeSQLSafe(userName), MakeSQLSafe(password)) Then
                 GoTo correctPassword
             Else
-                MsgBox("Username or password incorrect. Please try again.", vbOKOnly, "Login failed") 'no database yet so login failed
+                MsgBox("Username ('" & userName & "') or password ('" & PlainTextPassword & "') and thus encrypted password ('" & password & "') incorrect. Please try again.", vbOKOnly, "Login failed") 'for debugging
+                'MsgBox("Username or password incorrect. Please try again.", vbOKOnly, "Login failed")
                 Exit Sub
             End If
 
@@ -48,8 +61,8 @@ correctPassword:
 
             'happy with password? Then are we supposed to remember you?
             If chk_rememberMe.Checked Then
-                My.Settings.userName = txt_userName.Text
-                My.Settings.userPassword = txt_password.Text
+                My.Settings.userName = userName
+                My.Settings.userPassword = password
                 My.Settings.Save()
             End If
 
@@ -57,7 +70,7 @@ correctPassword:
             login()
         ElseIf rbtn_userNew.Checked Then 'if it's a new user
             If txt_passwordRepeat.Text = txt_password.Text Then 'if both password fields match
-                addUser(MakeSQLSafe(txt_userName.Text), MakeSQLSafe(txt_password.Text)) 'function on helperfunctions.vb
+                addUser(MakeSQLSafe(userName), MakeSQLSafe(password)) 'function on helperfunctions.vb
             Else
                 MsgBox("Passwords do not match. Please try again.", vbOKOnly & vbExclamation, "Error creating user")
             End If
