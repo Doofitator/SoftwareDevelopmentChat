@@ -28,13 +28,14 @@ Public Class frm_conversations
 
     Private Sub btn_newMessage_Click(sender As Object, e As EventArgs) Handles btn_newMessage.Click
 
-        Dim recipient As String = InputBox("Pick a user you would like to chat with.")
+        Dim recipient As String = InputBox("Type the recipient's username:")
         Try
             Dim recipientID As String = readUserID(recipient)
         Catch
-            If MsgBox("Something went horribly wrong and the user wasn't created. View technical details?", vbExclamation + vbYesNo, "Something happened") = MsgBoxResult.Yes Then 'if user wants technical details
+            If MsgBox("Something went horribly wrong and the stream couldn't be created. View technical details?", vbExclamation + vbYesNo, "Something happened") = MsgBoxResult.Yes Then 'if user wants technical details
                 MsgBox(errorInfo.ToString) 'show them the details from the public errorinfo exception on databasefunctions.vb
             End If
+            Exit Sub
         End Try
 
         Dim StreamNameString As String = recipient & " and " & frm_main.txt_userName.Text
