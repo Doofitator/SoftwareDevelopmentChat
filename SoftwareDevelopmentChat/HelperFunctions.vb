@@ -47,13 +47,16 @@
             MsgBox("Username is taken. Please try again.", vbOKOnly & vbExclamation, "Error creating user")
         End If
     End Function
-
+    Public dontshowpassword As Boolean = False
     Function passwordCorrect(ByVal username As String, ByVal password As String) As Boolean 'returns try/false after checking database for password
-        Dim result As String = readUserPassword(username)
-        If result = "False" Then 'if the readUserPassword function failed (and thus returned false as a string because that's what its supposed to do)
-            If MsgBox("Something went horribly wrong and the password couldn't be verified. View technical details?", vbExclamation + vbYesNo, "Something happened") = MsgBoxResult.Yes Then 'if user wants technical details
+        Dim result As String = readUserPassword(MakeSQLSafe(username))
+        If result = "False" And userExists(MakeSQLSafe(username)) Then 'if the readUserPassword function failed (and thus returned false as a string because that's what its supposed to do)
+            If MsgBox("Something went horribly wrong and the password couldn't be verified against the database. View technical details?", vbExclamation + vbYesNo, "Something happened") = MsgBoxResult.Yes Then 'if user wants technical details
                 MsgBox(errorInfo.ToString) 'show them the details from the public errorinfo exception on databasefunctions.vb
             End If
+        ElseIf result = "False" And Not userExists(MakeSQLSafe(username)) Then
+            MsgBox("Username incorrect. Please try again.", vbOKOnly, "Login failed")
+            dontshowpassword = True
         End If
         Try
             If result = frm_main.txt_password.Text Then 'if the password is what has been entered

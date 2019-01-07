@@ -52,7 +52,7 @@
                 GoTo correctPassword
             Else
                 'MsgBox("Username ('" & userName & "') or password ('" & PlainTextPassword & "') and thus encrypted password ('" & password & "') incorrect. Please try again.", vbOKOnly, "Login failed") 'for debugging
-                MsgBox("Username or password incorrect. Please try again.", vbOKOnly, "Login failed")
+                If Not dontshowpassword Then MsgBox("Password incorrect. Please try again.", vbOKOnly, "Login failed") Else dontshowpassword = False
                 Exit Sub
             End If
 
