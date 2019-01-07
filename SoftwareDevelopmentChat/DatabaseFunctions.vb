@@ -54,13 +54,33 @@ Module DatabaseFunctions
         Return sql
     End Function
 
+    Function userExists(ByVal name As String) As Boolean
+        'Create a Connection object.
+        myConn = New SqlConnection(connectionString)
+
+        'Create a Command object.
+        myCmd = myConn.CreateCommand
+        myCmd.CommandText = "select count(*) from tbl_users where convert(varchar, Name) = '" & name & "'"
+
+        'Open the connection.
+        myConn.Open()
+
+        If myCmd.ExecuteScalar = 1 Then 'if there is one result returned, then the username already exists in the database.
+            myConn.Close()
+            Return True
+        Else
+            myConn.Close()
+            Return False
+        End If
+    End Function
+
     Function readUserPassword(ByVal Name As String) As String 'function to read passwords from database. This function should in future decrypt passwords too.
         'Create a Connection object.
         myConn = New SqlConnection(connectionString)
 
         'Create a Command object.
         myCmd = myConn.CreateCommand
-        myCmd.CommandText = "select Password from tbl_users where convert(varchar, Name) = '" & Name & "'" 'TODO: Currently there's nothing stopping someone from having the same username as someone else. Need to fix this, or this function will crash.
+        myCmd.CommandText = "select Password from tbl_users where convert(varchar, Name) = '" & Name & "'"
 
         'Open the connection.
         myConn.Open()

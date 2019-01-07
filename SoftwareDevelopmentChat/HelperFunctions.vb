@@ -27,10 +27,12 @@
     End Function
 
     Function addUser(ByVal username As String, ByVal password As String) 'technically belongs here as it doesn't actually run any server stuff - just calls another function to do it. It should in future encrypt passwords on their way out to the database.
-        'TODO: Need to read first to ensure username doesn't already exist
-
-        writeSQL("insert into tbl_users (Name, Password) values ('" & username & "', '" & password & "')")
-        ' // SQL script makes a new record in tbl_users with the corresponding values for username and password.
+        If Not userExists(username) Then 'check database to see if user exists
+            writeSQL("insert into tbl_users (Name, Password) values ('" & username & "', '" & password & "')")
+            ' // SQL script makes a new record in tbl_users with the corresponding values for username and password.
+        Else
+            MsgBox("Username is taken. Please try again.", vbOKOnly & vbExclamation, "Error creating user")
+        End If
     End Function
 
     Function passwordCorrect(ByVal username As String, ByVal password As String) As Boolean 'returns try/false after checking database for password

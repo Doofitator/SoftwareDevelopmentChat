@@ -37,7 +37,7 @@
         If rbtn_userExist.Checked Then 'if it's an existing user
             'check password & user against database
 
-            If passwordCorrect(txt_userName.Text, txt_password.Text) Then
+            If passwordCorrect(MakeSQLSafe(txt_userName.Text), MakeSQLSafe(txt_password.Text)) Then
                 GoTo correctPassword
             Else
                 MsgBox("Username or password incorrect. Please try again.", vbOKOnly, "Login failed") 'no database yet so login failed
@@ -57,9 +57,9 @@ correctPassword:
             login()
         ElseIf rbtn_userNew.Checked Then 'if it's a new user
             If txt_passwordRepeat.Text = txt_password.Text Then 'if both password fields match
-                addUser(txt_userName.Text, txt_password.Text)
+                addUser(MakeSQLSafe(txt_userName.Text), MakeSQLSafe(txt_password.Text)) 'function on helperfunctions.vb
             Else
-                MsgBox("Passwords do not match")
+                MsgBox("Passwords do not match. Please try again.", vbOKOnly & vbExclamation, "Error creating user")
             End If
         End If
     End Sub
