@@ -80,12 +80,6 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="DatabaseFunctions.vb" />
-    <Compile Include="debugForm.Designer.vb">
-      <DependentUpon>debugForm.vb</DependentUpon>
-    </Compile>
-    <Compile Include="debugForm.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Encryption.vb" />
     <Compile Include="frm_main.vb">
       <SubType>Form</SubType>
@@ -115,17 +109,14 @@
     <EmbeddedResource Include="conversations.resx">
       <DependentUpon>conversations.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="debugForm.resx">
-      <DependentUpon>debugForm.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="frm_main.resx">
       <DependentUpon>frm_main.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -141,7 +132,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\logo-placeholder.png" />
+    <None Include="Resources\Logo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

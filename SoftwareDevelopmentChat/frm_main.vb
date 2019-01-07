@@ -1,6 +1,7 @@
 ﻿Public Class frm_main
 
     'TODO: Fix tabindex on this form. It's terrible.
+    ' // Image background credit https://www.y2architecture.com.au/marist-college-bendigo-champagnat/
 
     Private Sub frm_main_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.Width = 421 'set the width to half what it is in the design editor (it's only double there so we can see both windows)
@@ -16,8 +17,6 @@
             chk_rememberMe.Checked = My.Settings.rememberMe 'settings
             btn_login_Click(sender, e)                      'and login
         End If
-
-        frm_debug.Show() 'this is just a debugging form so we can test functions
     End Sub
 
     Private Sub rbtn_CheckedChanged(sender As Object, e As EventArgs) Handles rbtn_userNew.CheckedChanged, rbtn_userExist.CheckedChanged

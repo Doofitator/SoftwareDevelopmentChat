@@ -46,6 +46,7 @@ Partial Class frm_main
         '
         'grp_login
         '
+        Me.grp_login.BackColor = System.Drawing.SystemColors.Control
         Me.grp_login.Controls.Add(Me.chk_rememberMe)
         Me.grp_login.Controls.Add(Me.pbx_appLogo)
         Me.grp_login.Controls.Add(Me.lbl_passwordRepeat)
@@ -68,7 +69,7 @@ Partial Class frm_main
         'chk_rememberMe
         '
         Me.chk_rememberMe.AutoSize = True
-        Me.chk_rememberMe.Location = New System.Drawing.Point(23, 314)
+        Me.chk_rememberMe.Location = New System.Drawing.Point(23, 342)
         Me.chk_rememberMe.Name = "chk_rememberMe"
         Me.chk_rememberMe.Size = New System.Drawing.Size(102, 17)
         Me.chk_rememberMe.TabIndex = 12
@@ -78,7 +79,7 @@ Partial Class frm_main
         'lbl_passwordRepeat
         '
         Me.lbl_passwordRepeat.AutoSize = True
-        Me.lbl_passwordRepeat.Location = New System.Drawing.Point(20, 287)
+        Me.lbl_passwordRepeat.Location = New System.Drawing.Point(20, 315)
         Me.lbl_passwordRepeat.Name = "lbl_passwordRepeat"
         Me.lbl_passwordRepeat.Size = New System.Drawing.Size(91, 13)
         Me.lbl_passwordRepeat.TabIndex = 10
@@ -87,7 +88,7 @@ Partial Class frm_main
         '
         'txt_passwordRepeat
         '
-        Me.txt_passwordRepeat.Location = New System.Drawing.Point(150, 284)
+        Me.txt_passwordRepeat.Location = New System.Drawing.Point(150, 312)
         Me.txt_passwordRepeat.Name = "txt_passwordRepeat"
         Me.txt_passwordRepeat.PasswordChar = Global.Microsoft.VisualBasic.ChrW(183)
         Me.txt_passwordRepeat.Size = New System.Drawing.Size(208, 20)
@@ -106,7 +107,7 @@ Partial Class frm_main
         'lbl_IAmA
         '
         Me.lbl_IAmA.AutoSize = True
-        Me.lbl_IAmA.Location = New System.Drawing.Point(72, 178)
+        Me.lbl_IAmA.Location = New System.Drawing.Point(72, 206)
         Me.lbl_IAmA.Name = "lbl_IAmA"
         Me.lbl_IAmA.Size = New System.Drawing.Size(39, 13)
         Me.lbl_IAmA.TabIndex = 7
@@ -115,7 +116,7 @@ Partial Class frm_main
         'lbl_password
         '
         Me.lbl_password.AutoSize = True
-        Me.lbl_password.Location = New System.Drawing.Point(58, 261)
+        Me.lbl_password.Location = New System.Drawing.Point(58, 289)
         Me.lbl_password.Name = "lbl_password"
         Me.lbl_password.Size = New System.Drawing.Size(53, 13)
         Me.lbl_password.TabIndex = 6
@@ -124,7 +125,7 @@ Partial Class frm_main
         'lbl_userName
         '
         Me.lbl_userName.AutoSize = True
-        Me.lbl_userName.Location = New System.Drawing.Point(56, 235)
+        Me.lbl_userName.Location = New System.Drawing.Point(56, 263)
         Me.lbl_userName.Name = "lbl_userName"
         Me.lbl_userName.Size = New System.Drawing.Size(55, 13)
         Me.lbl_userName.TabIndex = 5
@@ -134,7 +135,7 @@ Partial Class frm_main
         '
         Me.rbtn_userExist.AutoSize = True
         Me.rbtn_userExist.Checked = True
-        Me.rbtn_userExist.Location = New System.Drawing.Point(150, 176)
+        Me.rbtn_userExist.Location = New System.Drawing.Point(150, 204)
         Me.rbtn_userExist.Name = "rbtn_userExist"
         Me.rbtn_userExist.Size = New System.Drawing.Size(86, 17)
         Me.rbtn_userExist.TabIndex = 4
@@ -145,7 +146,7 @@ Partial Class frm_main
         'rbtn_userNew
         '
         Me.rbtn_userNew.AutoSize = True
-        Me.rbtn_userNew.Location = New System.Drawing.Point(150, 199)
+        Me.rbtn_userNew.Location = New System.Drawing.Point(150, 227)
         Me.rbtn_userNew.Name = "rbtn_userNew"
         Me.rbtn_userNew.Size = New System.Drawing.Size(72, 17)
         Me.rbtn_userNew.TabIndex = 3
@@ -154,7 +155,7 @@ Partial Class frm_main
         '
         'btn_login
         '
-        Me.btn_login.Location = New System.Drawing.Point(283, 310)
+        Me.btn_login.Location = New System.Drawing.Point(283, 338)
         Me.btn_login.Name = "btn_login"
         Me.btn_login.Size = New System.Drawing.Size(75, 23)
         Me.btn_login.TabIndex = 2
@@ -163,7 +164,7 @@ Partial Class frm_main
         '
         'txt_password
         '
-        Me.txt_password.Location = New System.Drawing.Point(150, 258)
+        Me.txt_password.Location = New System.Drawing.Point(150, 286)
         Me.txt_password.Name = "txt_password"
         Me.txt_password.PasswordChar = Global.Microsoft.VisualBasic.ChrW(183)
         Me.txt_password.Size = New System.Drawing.Size(208, 20)
@@ -171,7 +172,7 @@ Partial Class frm_main
         '
         'txt_userName
         '
-        Me.txt_userName.Location = New System.Drawing.Point(150, 232)
+        Me.txt_userName.Location = New System.Drawing.Point(150, 260)
         Me.txt_userName.Name = "txt_userName"
         Me.txt_userName.Size = New System.Drawing.Size(208, 20)
         Me.txt_userName.TabIndex = 0
@@ -204,7 +205,7 @@ Partial Class frm_main
         '
         'pbx_appLogo
         '
-        Me.pbx_appLogo.Image = Global.SoftwareDevelopmentChat.My.Resources.Resources.logo_placeholder
+        Me.pbx_appLogo.Image = Global.SoftwareDevelopmentChat.My.Resources.Resources.Logo
         Me.pbx_appLogo.InitialImage = Nothing
         Me.pbx_appLogo.Location = New System.Drawing.Point(6, 19)
         Me.pbx_appLogo.Name = "pbx_appLogo"
