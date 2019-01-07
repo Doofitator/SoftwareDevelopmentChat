@@ -37,23 +37,16 @@ Module DatabaseFunctions
     End Function
 
     Public Function MakeSQLSafe(ByVal sql As String) As String ' Ripped this function from https://stackoverflow.com/questions/725367/how-to-filter-out-some-vulnerability-causing-characters-in-query-string.
-        '                                                        TODO: Need to make it more efficient and handle illegal characters better (not remove them, but make them safe) to avoid people's passwords 
-        '                                                              changing here without them knowing & then Not being able to get back in.
+        '                                                        There used to be a TODO here but I've decided that it's safe enough for now.
 
         '// HENRY: If you're confused as to why this is here and what it does, check out https://www.youtube.com/watch?v=_jKylhJtPmI //
 
-        Dim strIllegalChars As String = "/?-^%{}[];$=*`#|&@\<>()+,\"
         If sql.Contains("'") Then
             sql = sql.Replace("'", "''")
         End If
         If sql.Contains("""") Then
             sql = sql.Replace("""", """""")
         End If
-        For Each c As Char In strIllegalChars
-            If sql.Contains(c.ToString) Then
-                sql = sql.Replace(c.ToString, "")
-            End If
-        Next
 
         Return sql
     End Function
