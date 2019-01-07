@@ -1,6 +1,5 @@
 ﻿Public Class frm_main
 
-    'TODO: Fix tabindex on this form. It's terrible.
     ' // Image background credit https://www.y2architecture.com.au/marist-college-bendigo-champagnat/
 
     Private Sub frm_main_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -17,6 +16,10 @@
             chk_rememberMe.Checked = My.Settings.rememberMe 'settings
             btn_login_Click(sender, e)                      'and login
         End If
+
+        For Each control In grp_chat.Controls
+            control.enabled = False 'disable all the chat controls so they dont interfere with tab jumping
+        Next
 
         tabIndexFixer(True)
     End Sub
@@ -105,6 +108,9 @@ correctPassword:
 
         For Each control In grp_login.Controls
             control.enabled = False 'diable all the login controls so they dont interfere with tab jumping
+        Next
+        For Each control In grp_chat.Controls
+            control.enabled = True 'enable all the chat controls
         Next
     End Sub
 
