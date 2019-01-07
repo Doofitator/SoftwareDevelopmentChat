@@ -71,7 +71,7 @@ Module DatabaseFunctions
         End If
     End Function
 
-    Function readUserPassword(ByVal Name As String) As String 'function to read passwords from database. This function should in future decrypt passwords too.
+    Function readUserPassword(ByVal Name As String) As String 'function to read passwords from database.
         'Create a Connection object.
         myConn = New SqlConnection(connectionString)
 
