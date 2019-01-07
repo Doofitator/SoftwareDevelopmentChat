@@ -30,7 +30,7 @@ Public Class frm_conversations
 
     Private Sub btn_newMessage_Click(sender As Object, e As EventArgs) Handles btn_newMessage.Click
 
-        Dim recipient As String = InputBox("Pick a user you would like to chat with.")
+        Dim recipient As String = InputBox("Type the recipient's username:")
         Try
             Dim recipientID As String = readUserID(recipient)
         Catch
