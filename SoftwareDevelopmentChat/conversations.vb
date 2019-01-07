@@ -25,4 +25,12 @@ Public Class frm_conversations
     Private Sub frm_conversations_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
         End 'this just means that now, no matter what exit button you click, the entire program shuts down
     End Sub
+
+    Private Sub btn_newMessage_Click(sender As Object, e As EventArgs) Handles btn_newMessage.Click
+
+        Dim recipient As String = InputBox("Pick a user you would like to chat with.")
+
+
+
+    End Sub
 End Class

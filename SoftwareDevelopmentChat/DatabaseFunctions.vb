@@ -100,4 +100,32 @@ Module DatabaseFunctions
 
         Return result
     End Function
+
+    Function readUserID(ByVal Name As String) As String 'function to read passwords from database.
+        'Create a Connection object.
+        myConn = New SqlConnection(connectionString)
+
+        'Create a Command object.
+        myCmd = myConn.CreateCommand
+        myCmd.CommandText = "select ID from tbl_users where convert(varchar, Name) = '" & Name & "'"
+
+        'Open the connection.
+        myConn.Open()
+
+        Dim result As String = "False" 'this is what the function will return
+
+        Try
+            Dim reader As SqlDataReader = myCmd.ExecuteReader() 'run sql script
+            While reader.Read
+                result = reader.GetString(0) 'get first value of field (because there should only be one record returned as there shouldn't be username doubleups).
+            End While
+            myConn.Close() 'close connection
+        Catch ex As Exception 'if a catastrophic error occurs
+            myConn.Close() 'close the connection
+            errorInfo = ex
+            Return "False"
+        End Try
+
+        Return result
+    End Function
 End Module
