@@ -287,10 +287,6 @@
         writeSQL("update tbl_streams set BubbleColor = '" & MakeSQLSafe(colorToWrite.ToString) & "' where convert(varchar, StreamName) = '" & MakeSQLSafe(stream) & "'")
     End Function
 
-    Function writeFont(ByVal fontToWrite As String, ByVal stream As String)
-        writeSQL("update tbl_streams set BubbleFont = '" & MakeSQLSafe(fontToWrite) & "' where convert(varchar, StreamName) = '" & MakeSQLSafe(stream) & "'")
-    End Function
-
     Function decipherColor(ByVal undecipheredColor As String) As Color
         Dim deciphered As String = undecipheredColor.Split(New Char() {"[", "]"})(1)
         decipherColor = System.Drawing.Color.FromName(deciphered)

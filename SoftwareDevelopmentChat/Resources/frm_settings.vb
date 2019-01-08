@@ -19,13 +19,4 @@
         MsgBox("App will now close.", vbInformation, "Logout successful")
         frm_main.Close() 'close so they have to log back in next time they open it
     End Sub
-
-    Private Sub Btn_font_Click(sender As Object, e As EventArgs) Handles btn_font.Click
-        If dlog_font.ShowDialog <> Windows.Forms.DialogResult.Cancel Then
-
-            Dim converter = New FontConverter()
-            Dim FontAsString As String = converter.ConvertToString(dlog_font.Font)
-            writeFont(FontAsString, frm_main.grp_chat.Text)
-        End If
-    End Sub
 End Class
