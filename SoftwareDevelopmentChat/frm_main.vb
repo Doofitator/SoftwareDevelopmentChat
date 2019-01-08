@@ -147,7 +147,32 @@ correctPassword:
         ' // end move controls //
     End Sub
 
-    Private Sub btn_send_Click(sender As Object, e As EventArgs) Handles btn_send.Click
+    Public Sub btn_send_Click(sender As Object, e As EventArgs) Handles btn_send.Click
         writeMessage(txt_message.Text, grp_chat.Text, txt_userName.Text)
+    End Sub
+
+    Public Sub doSomeStuffingAbout()
+        Me.btn_send = New System.Windows.Forms.Button()                    ' // from here to END is a whole heap of stuffing about because looping through the labels 
+        Me.txt_message = New System.Windows.Forms.TextBox()                ' // and deleting them when you change chats didn't work, so I had to clear every control and rebuild the important ones.
+
+        '
+        'btn_send
+        '
+        Me.btn_send.Location = New System.Drawing.Point(300, 408)
+        Me.btn_send.Name = "btn_send"
+        Me.btn_send.Size = New System.Drawing.Size(75, 23)
+        Me.btn_send.TabIndex = 1
+        Me.btn_send.Text = "Send"
+        Me.btn_send.UseVisualStyleBackColor = True
+        '
+        'txt_message
+        '
+        Me.txt_message.Location = New System.Drawing.Point(7, 410)
+        Me.txt_message.Name = "txt_message"
+        Me.txt_message.Size = New System.Drawing.Size(287, 20)
+        Me.txt_message.TabIndex = 0
+
+        Me.grp_chat.Controls.Add(Me.btn_send)
+        Me.grp_chat.Controls.Add(Me.txt_message)
     End Sub
 End Class

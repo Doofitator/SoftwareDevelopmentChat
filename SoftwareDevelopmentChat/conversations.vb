@@ -80,10 +80,16 @@ Public Class frm_conversations
     End Sub
 
     Public Shared Sub RecipientHandler(sender As Object, e As EventArgs)
+        frm_main.grp_chat.Controls.Clear()
+
+        frm_main.doSomeStuffingAbout()
+
+
+
         Dim btn As Button = CType(sender, Button)                           'get the button that was clicked
         Dim streamName As String = btn.Name.Replace("btn_", "")             'get the stream name from the button
         Dim streamID As Integer = readStreamID(MakeSQLSafe(streamName))     'get the stream ID from the name
-        Console.WriteLine(streamName & " - " & streamID) 'for debugging
+        'Console.WriteLine(streamName & " - " & streamID) 'for debugging
         frm_main.grp_chat.Text = streamName                                 'write the stream name on the top of the chat window for a) the user and b) the send button's code and c) the chat window to load the right messages
 
         loadMessages()

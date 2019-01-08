@@ -30,6 +30,7 @@ Module DatabaseFunctions
             MyConn.Close() 'close connection
             Return True
         Catch ex As Exception 'if a catastrophic error occurs
+            Console.WriteLine(ex.ToString)
             MyConn.Close() 'close the connection
             errorInfo = ex 'make error information publicly available
             Return False
@@ -42,7 +43,7 @@ Module DatabaseFunctions
 
         'Create a Command object.
         Dim myCmd = MyConn.CreateCommand
-        myCmd.CommandText = "select count(*) from tbl_users where convert(varchar, Name) = '" & name & "'"
+        myCmd.CommandText = "select count(*) from tbl_users where convert(varchar, Name) = '" & MakeSQLSafe(name) & "'"
 
         'Open the connection.
         MyConn.Open()
@@ -91,7 +92,7 @@ Module DatabaseFunctions
 
         'Create a Command object.
         Dim myCmd = MyConn.CreateCommand
-        myCmd.CommandText = "select Password from tbl_users where convert(varchar, Name) = '" & Name & "'"
+        myCmd.CommandText = "select Password from tbl_users where convert(varchar, Name) = '" & MakeSQLSafe(Name) & "'"
 
         'Open the connection.
         MyConn.Open()
@@ -107,6 +108,7 @@ Module DatabaseFunctions
             Dim decryptor As New Encryption(Name) 'new instance of encryption module
             result = decryptor.DecryptData(result) 'decript with username key
         Catch ex As Exception 'if a catastrophic error occurs
+            Console.WriteLine(ex.ToString)
             MyConn.Close() 'close the connection
             errorInfo = ex
             Return "False"
@@ -121,7 +123,7 @@ Module DatabaseFunctions
 
         'Create a Command object.
         Dim myCmd = MyConn.CreateCommand
-        myCmd.CommandText = "select ID from tbl_users where convert(varchar, Name) = '" & Name & "'"
+        myCmd.CommandText = "select ID from tbl_users where convert(varchar, Name) = '" & MakeSQLSafe(Name) & "'"
 
         'Open the connection.
         MyConn.Open()
@@ -135,6 +137,36 @@ Module DatabaseFunctions
             End While
             MyConn.Close() 'close connection
         Catch ex As Exception 'if a catastrophic error occurs
+            Console.WriteLine(ex.ToString)
+            MyConn.Close() 'close the connection
+            errorInfo = ex
+            Return 0
+        End Try
+
+        Return result
+    End Function
+
+    Function readUserName(ByVal ID As Integer) As String 'function to read Names from database.
+        'Create a Connection object.
+        Dim MyConn = New SqlConnection(connectionString)
+
+        'Create a Command object.
+        Dim myCmd = MyConn.CreateCommand
+        myCmd.CommandText = "select Name from tbl_users where ID = '" & ID & "'"
+
+        'Open the connection.
+        MyConn.Open()
+
+        Dim result As String = 0 'this is what the function will return
+
+        Try
+            Dim reader As SqlDataReader = myCmd.ExecuteReader() 'run sql script
+            While reader.Read
+                result = reader.GetString(0) 'get first value of field (because there should only be one record returned as there shouldn't be username doubleups).
+            End While
+            MyConn.Close() 'close connection
+        Catch ex As Exception 'if a catastrophic error occurs
+            Console.WriteLine(ex.ToString)
             MyConn.Close() 'close the connection
             errorInfo = ex
             Return 0
@@ -151,7 +183,7 @@ Module DatabaseFunctions
 
         'Create a Command object.
         Dim myCmd = MyConn.CreateCommand
-        myCmd.CommandText = "select StreamName from tbl_streams Where streamName like '%" & frm_main.txt_userName.Text & "%'" 'select streamname where it includes your name
+        myCmd.CommandText = "select StreamName from tbl_streams Where streamName like '%" & MakeSQLSafe(frm_main.txt_userName.Text) & "%'" 'select streamname where it includes your name
 
         'Open the connection.
         MyConn.Open()
@@ -168,6 +200,7 @@ Module DatabaseFunctions
             MyConn.Close() 'close connection
             Return streams.ToArray
         Catch ex As Exception 'if a catastrophic error occurs
+            Console.WriteLine(ex.ToString)
             MyConn.Close() 'close the connection
             errorInfo = ex
             Return False
@@ -201,6 +234,7 @@ Module DatabaseFunctions
             MyConn.Close() 'close connection
             Return messages.ToArray
         Catch ex As Exception 'if a catastrophic error occurs
+            Console.WriteLine(ex.ToString)
             MyConn.Close() 'close the connection
             errorInfo = ex
             Return False
@@ -214,10 +248,10 @@ Module DatabaseFunctions
 
         'Create a Command object.
         Dim myCmd = myConn.CreateCommand
-        myCmd.CommandText = "select StreamID from tbl_streams where convert(varchar, StreamName) = '" & streamName & "'"
+        myCmd.CommandText = "select StreamID from tbl_streams where convert(varchar, StreamName) = '" & MakeSQLSafe(streamName) & "'"
 
         'Open the connection.
-        myConn.Open()
+        MyConn.Open()
 
         Dim result As Integer = 0 'this is what the function will return
 
@@ -228,7 +262,8 @@ Module DatabaseFunctions
             End While
             myConn.Close() 'close connection
         Catch ex As Exception 'if a catastrophic error occurs
-            myConn.Close() 'close the connection
+            Console.WriteLine(ex.ToString)
+            MyConn.Close() 'close the connection
             errorInfo = ex
             Return 0
         End Try
@@ -242,7 +277,7 @@ Module DatabaseFunctions
 
         'Create a Command object.
         Dim myCmd = MyConn.CreateCommand
-        myCmd.CommandText = "select ID from tbl_messages where convert(varchar(MAX), Message) = '" & Message & "'" 'probably a less bandwidth hogging way of doing this but its not 1986 anymore so it doesn't really matter
+        myCmd.CommandText = "select ID from tbl_messages where convert(varchar(MAX), Message) = '" & MakeSQLSafe(Message) & "'" 'probably a less bandwidth hogging way of doing this but its not 1986 anymore so it doesn't really matter
 
         'Open the connection.
         MyConn.Open()
@@ -256,11 +291,48 @@ Module DatabaseFunctions
             End While
             MyConn.Close() 'close connection
         Catch ex As Exception 'if a catastrophic error occurs
+            Console.WriteLine(ex.ToString)
             MyConn.Close() 'close the connection
             errorInfo = ex
             Return 0
         End Try
 
         Return result
+    End Function
+
+    Function theySentTheMessage(ByVal message As String) As Boolean 'this function works out who sent the message. If it was someone else, it is true, else false.
+        'Create a Connection object.
+        Dim MyConn = New SqlConnection(connectionString)
+
+        'Create a Command object.
+        Dim myCmd = MyConn.CreateCommand
+        myCmd.CommandText = "select FromID from tbl_messages where convert(varchar(MAX), Message) = '" & MakeSQLSafe(message) & "'"
+
+        'Open the connection.
+        MyConn.Open()
+
+        Dim FromID As Integer = 0 'who sent the message
+
+        Try
+            Dim reader As SqlDataReader = myCmd.ExecuteReader() 'run sql script
+            While reader.Read
+                FromID = reader.GetInt32(0) 'get first value of field
+            End While
+            MyConn.Close() 'close connection
+        Catch ex As Exception 'if a catastrophic error occurs
+            Console.WriteLine(ex.ToString)
+            MyConn.Close() 'close the connection
+            FromID = 0 'fail
+            If MsgBox("Something went horribly wrong and the messages couldn't be loaded. View technical details?", vbExclamation + vbYesNo, "Something happened") = MsgBoxResult.Yes Then 'if user wants technical details
+                MsgBox(ex.ToString) 'something went wrong that we didn't expect to happen. Display error msg.
+            End If
+        End Try
+
+        Dim TheUsername As String = readUserName(MakeSQLSafe(FromID))
+        If TheUsername = frm_main.txt_userName.Text Then
+            Return False 'it was us
+        Else
+            Return True 'it was them
+        End If
     End Function
 End Module

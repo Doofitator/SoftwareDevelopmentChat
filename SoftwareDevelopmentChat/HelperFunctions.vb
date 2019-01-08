@@ -66,6 +66,7 @@
             Else Return False
             End If
         Catch ex As Exception
+            Console.WriteLine(ex.ToString)
             If MsgBox("Something went horribly wrong and the password couldn't be verified. View technical details?", vbExclamation + vbYesNo, "Something happened") = MsgBoxResult.Yes Then 'if user wants technical details
                 MsgBox(ex.ToString) 'something went wrong that we didn't expect to happen. Display error msg.
             End If
@@ -95,13 +96,15 @@
                     frm_conversations.StreamButtons = UserButtons.Count + 1
                     AddHandler btn.Click, AddressOf frm_conversations.RecipientHandler
                 Next
-            Catch
+            Catch ex As Exception
+                Console.WriteLine(ex.ToString)
                 If MsgBox("Something went horribly wrong and the streams couldn't be loaded. View technical details?", vbExclamation + vbYesNo, "Something happened") = MsgBoxResult.Yes Then 'if user wants technical details
                     MsgBox(errorInfo.ToString) 'something went wrong that we didn't expect to happen. Display error msg.
                 End If
             End Try
             Return True
         Catch ex As Exception
+            Console.WriteLine(ex.ToString)
             If MsgBox("Something went horribly wrong and the streams couldn't be loaded. View technical details?", vbExclamation + vbYesNo, "Something happened") = MsgBoxResult.Yes Then 'if user wants technical details
                 MsgBox(ex.ToString) 'something went wrong that we didn't expect to happen. Display error msg.
             End If
@@ -139,32 +142,41 @@
                     lbl.AutoSize = True
                     lbl.Text = message
                     lbl.Left = frm_main.grp_chat.Left + 10
-                    lbl.Top = 20 + ((Userlabels.Count - 1) * 10)
+                    If theySentTheMessage(message) Then
+                        lbl.BackColor = Color.White
+                    Else
+                        lbl.BackColor = Color.Blue
+                        lbl.ForeColor = Color.White
+                    End If
+                    lbl.Top = 30 + ((Userlabels.Count - 1) * 15)
 
                     Try
                         lbl.Name = "lbl" & readMessageID(message)
-                    Catch
+                    Catch ex As Exception
+                        Console.WriteLine(ex.ToString)
                         If MsgBox("Something went horribly wrong and the message IDs couldn't be loaded. View technical details?", vbExclamation + vbYesNo, "Something happened") = MsgBoxResult.Yes Then 'if user wants technical details
                             MsgBox(errorInfo.ToString) 'something went wrong that we didn't expect to happen. Display error msg.
                             Exit Function
                         End If
                     End Try
-                    Console.WriteLine(lbl.Name & " TOP: " & lbl.Top & " USERLABELCOUT: " & Userlabels.Count)
+                    'Console.WriteLine(lbl.Name & " TOP: " & lbl.Top & " USERLABELCOUT: " & Userlabels.Count)
                     For Each ctrl In Userlabels
                         Console.Write(ctrl.Name & ", ")
                     Next
-                    Console.WriteLine()
+                    'Console.WriteLine()
                     frm_main.grp_chat.Controls.Add(lbl)
                     Userlabels.Add(lbl)
                 Next
-            Catch
+            Catch ex As Exception
+                Console.WriteLine(ex.ToString)
                 If MsgBox("Something went horribly wrong and the messages couldn't be loaded. View technical details?", vbExclamation + vbYesNo, "Something happened") = MsgBoxResult.Yes Then 'if user wants technical details
-                    MsgBox(errorInfo.ToString) 'something went wrong that we didn't expect to happen. Display error msg.
+                    MsgBox(ex.ToString) 'something went wrong that we didn't expect to happen. Display error msg.
                     Exit Function
                 End If
             End Try
             Return True
         Catch ex As Exception
+            Console.WriteLine(ex.ToString)
             If MsgBox("Something went horribly wrong and the messages couldn't be loaded. View technical details?", vbExclamation + vbYesNo, "Something happened") = MsgBoxResult.Yes Then 'if user wants technical details
                 MsgBox(ex.ToString) 'something went wrong that we didn't expect to happen. Display error msg.
             End If
@@ -190,9 +202,13 @@
         Dim fromID As Integer = readUserID(MakeSQLSafe(username))           '|  <-- getting variables as listed above
         Dim timestamp As DateTime = DateTime.Now                            '|
 
+        Console.WriteLine(message)
+
         Try
             writeSQL("insert into tbl_messages (StreamID, FromID, Timestamp, Message) values ('" & StreamID & "', '" & fromID & "', '" & timestamp & "', '" & MakeSQLSafe(message) & "')")
-        Catch
+        Catch ex As Exception
+            Console.WriteLine(ex.ToString)
+            Console.WriteLine(ex.ToString)
             If MsgBox("Something went horribly wrong and the message couldn't be sent. View technical details?", vbExclamation + vbYesNo, "Something happened") = MsgBoxResult.Yes Then 'if user wants technical details
                 MsgBox(errorInfo.ToString) 'something went wrong that we didn't expect to happen. Display error msg.
             End If
@@ -200,19 +216,8 @@
 
         frm_main.txt_message.Text = "" 'reset textbox
 
-        'now we need to make a new control to show the message.
-
-        Dim Userlabels As List(Of Label) = New List(Of Label)
-        For Each Control In frm_conversations.Controls
-            If TypeOf Control Is Label Then Userlabels.Add(Control)
-        Next
-
-        Dim lbl As New Label
-        lbl.AutoSize = True
-        lbl.Text = message
-        lbl.Left = frm_main.grp_chat.Left + 10 'this is really bad
-        lbl.Top = 20 + ((Userlabels.Count - 1) * 10)
-        frm_main.grp_chat.Controls.Add(lbl)
+        'now run LoadMessages again to refresh the messages in the chat
+        loadMessages()
 
     End Function
 End Module
