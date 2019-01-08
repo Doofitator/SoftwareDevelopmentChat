@@ -166,7 +166,7 @@ Module DatabaseFunctions
 
         'Create a Command object.
         myCmd = myConn.CreateCommand
-        myCmd.CommandText = "select StreamName from tbl_streams Where streamName like '%" & frm_main.txt_userName.Text & "%'"
+        myCmd.CommandText = "select StreamName from tbl_streams Where streamName like '%" & frm_main.txt_userName.Text & "%'" 'select streamname where it includes your name
 
         'Open the connection.
         myConn.Open()
@@ -175,9 +175,9 @@ Module DatabaseFunctions
 
         Try
             Dim reader As SqlDataReader = myCmd.ExecuteReader
-            ' Loop through our records, reading "Value" and put into array1
+            ' Loop through our records, reading "StreamName" and put into array1
             While reader.Read()
-                streams.Add(CType(reader("StreamName"), String))
+                streams.Add(CType(reader("StreamName"), String)) 'add streamname to list as string
             End While
 
             myConn.Close() 'close connection

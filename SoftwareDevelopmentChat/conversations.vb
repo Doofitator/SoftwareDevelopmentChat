@@ -79,7 +79,7 @@ Public Class frm_conversations
 
     End Sub
 
-    Public Shared Sub RecipientHandler()
+    Public Shared Sub RecipientHandler(sender As Object, e As EventArgs)
         ' Do stuff
     End Sub
 End Class

@@ -81,7 +81,7 @@
             Next
 
             Try
-                For Each stream As String In getStreamArr()
+                For Each stream As String In getStreamArr() 'for each stream on the database, make a button for it
                     Dim btn As New Button
                     'btn.Location = New Point(13, 57 + UserButtons.Count * 6)
                     btn.Top = 57 + ((UserButtons.Count - 1) * 47)
