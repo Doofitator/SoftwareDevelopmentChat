@@ -144,6 +144,7 @@ correctPassword:
         btn_send.Left = txt_message.Left + txt_message.Width + 10
         txt_message.Top = grp_chat.Height - txt_message.Height - 10
         btn_send.Top = txt_message.Top
+        pbx_settings.Left = Me.Width - pbx_settings.Width - 20
         ' // end move controls //
     End Sub
 

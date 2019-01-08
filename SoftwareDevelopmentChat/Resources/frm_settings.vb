@@ -1,6 +1,8 @@
 ﻿Public Class frm_settings
     Private Sub btn_color_Click(sender As Object, e As EventArgs) Handles btn_color.Click
-        dlog_color.ShowDialog()
+        If dlog_color.ShowDialog <> Windows.Forms.DialogResult.Cancel Then
+            WriteColor(dlog_color.Color, frm_main.grp_chat.Text)
+        End If
     End Sub
 
     Private Sub frm_settings_Load(sender As Object, e As EventArgs) Handles MyBase.Load

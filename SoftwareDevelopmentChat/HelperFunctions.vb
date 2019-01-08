@@ -146,8 +146,7 @@
                     If theySentTheMessage(message) Then
                         lbl.BackColor = Color.White
                     Else
-                        lbl.BackColor = Color.Blue
-                        lbl.ForeColor = Color.White
+                        lbl.BackColor = getMessageColor()
                     End If
                     lbl.Top = 30 + ((Userlabels.Count - 1) * 15)
 
@@ -220,5 +219,24 @@
         'now run LoadMessages again to refresh the messages in the chat
         loadMessages()
 
+    End Function
+
+    Function writeColor(colorToWrite As Color, stream As String)
+        writeSQL("update tbl_streams set BubbleColor = '" & MakeSQLSafe(colorToWrite.ToString) & "' where convert(varchar, StreamName) = '" & MakeSQLSafe(stream) & "'")
+    End Function
+
+    Function decipherColor(ByVal undecipheredColor As String) As Color
+        Dim deciphered As String = undecipheredColor.Split(New Char() {"[", "]"})(1)
+        decipherColor = System.Drawing.Color.FromName(deciphered)
+    End Function
+
+    Function fixARGB(ByVal brokenARGB As String) As Color
+        Dim halfwayThere As String = brokenARGB.Split(New Char() {"[", "]"})(1)
+        Dim noA As String = Replace(halfwayThere, "A=", "")
+        Dim noR As String = Replace(noA, "R=", "")
+        Dim noG As String = Replace(noR, "G=", "")
+        Dim clean As String = Replace(noG, "B=", "")
+        Dim sept As String() = clean.Split(New Char() {","c})
+        fixARGB = Color.FromArgb(sept(0), sept(1), sept(2), sept(3))
     End Function
 End Module
