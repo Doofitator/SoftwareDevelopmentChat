@@ -8,6 +8,7 @@ Public Class frm_conversations
         Me.Top = frm_main.Top
         frm_main.UserMoving = True
         loadStreams()
+        cbx_class.Items.Add("Add New...")
     End Sub
 
     ' // The following is for moving the main form with this one, adapted from http://www.vbforums.com/showthread.php?611932-snap-or-dock-forms-together#2 //
@@ -58,7 +59,7 @@ Public Class frm_conversations
                 MsgBox("Conversation created successfully.", vbOKOnly, "Success")
                 Dim btn As New Button
                 'btn.Location = New Point(13, 57 + UserButtons.Count * 6)
-                btn.Top = 57 + ((UserButtons.Count - 1) * 47)
+                btn.Top = 84 + ((UserButtons.Count - 1) * 47)
                 btn.Left = 13
                 btn.Height = 38
                 btn.Width = 163
@@ -93,5 +94,16 @@ Public Class frm_conversations
         frm_main.grp_chat.Text = streamName                                 'write the stream name on the top of the chat window for a) the user and b) the send button's code and c) the chat window to load the right messages
 
         loadMessages()
+    End Sub
+
+    Private Sub cbx_class_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbx_class.SelectedIndexChanged
+        'this is for selecting classes - you can have two chats with the same person in different classes. Something Mr. V and I talked about.
+        'there would also be a global for each class, including everyone who is in it as a group chat.
+
+        If cbx_class.SelectedItem = "Add New..." Then
+            'ask if adding new or joining existing
+            'if adding new, generate class code
+            'if joinging existing, type in class code
+        End If
     End Sub
 End Class

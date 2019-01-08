@@ -86,7 +86,7 @@
                 For Each stream As String In getStreamArr() 'for each stream on the database, make a button for it
                     Dim btn As New Button
                     'btn.Location = New Point(13, 57 + UserButtons.Count * 6)
-                    btn.Top = 57 + ((UserButtons.Count - 1) * 47)
+                    btn.Top = 84 + ((UserButtons.Count - 1) * 47)
                     btn.Left = 13
                     btn.Height = 38
                     btn.Width = 163
@@ -148,7 +148,13 @@
                     Else
                         lbl.BackColor = getMessageColor()
                     End If
-                    lbl.Top = 30 + ((Userlabels.Count - 1) * 15)
+
+
+                    Dim converter = New FontConverter()
+                    Dim StringAsFont As Font = TryCast(converter.ConvertFromString(getFont()), Font)
+                    lbl.Font = StringAsFont
+
+                    lbl.Top = 35 + lbl.Font.Size + ((Userlabels.Count - 1) * 15 * (lbl.Font.Size / 8))
 
                     Try
                         lbl.Name = "lbl" & readMessageID(message)
@@ -221,8 +227,12 @@
 
     End Function
 
-    Function writeColor(colorToWrite As Color, stream As String)
+    Function writeColor(ByVal colorToWrite As Color, ByVal stream As String)
         writeSQL("update tbl_streams set BubbleColor = '" & MakeSQLSafe(colorToWrite.ToString) & "' where convert(varchar, StreamName) = '" & MakeSQLSafe(stream) & "'")
+    End Function
+
+    Function writeFont(ByVal fontToWrite As String, ByVal stream As String)
+        writeSQL("update tbl_streams set BubbleFont = '" & MakeSQLSafe(fontToWrite) & "' where convert(varchar, StreamName) = '" & MakeSQLSafe(stream) & "'")
     End Function
 
     Function decipherColor(ByVal undecipheredColor As String) As Color

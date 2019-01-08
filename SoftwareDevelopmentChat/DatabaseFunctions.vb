@@ -369,8 +369,37 @@ Module DatabaseFunctions
                 Return fixARGB(result)
             End If
         Else
-                Return Color.Blue 'fallback to blue default on fail
+            Return Color.Blue 'fallback to blue default on fail
         End If
 
+    End Function
+
+    Function getFont() As String
+        'Create a Connection object.
+        Dim MyConn = New SqlConnection(connectionString)
+
+        'Create a Command object.
+        Dim myCmd = MyConn.CreateCommand
+        myCmd.CommandText = "select BubbleFont from tbl_streams where convert(varchar, StreamName) = '" & frm_main.grp_chat.Text & "'"
+
+        'Open the connection.
+        MyConn.Open()
+
+        Dim result As String = "Microsoft Sans Serif, 8.25pt"
+
+        Try
+            Dim reader As SqlDataReader = myCmd.ExecuteReader() 'run sql script
+            While reader.Read
+                result = reader.GetString(0) 'get first value of field (because there should only be one record returned as there shouldn't be stream doubleups).
+            End While
+            MyConn.Close() 'close connection
+        Catch ex As Exception 'if a catastrophic error occurs
+            Console.WriteLine(ex.ToString)
+            MyConn.Close() 'close the connection
+            errorInfo = ex
+            result = "Microsoft Sans Serif, 8.25pt"
+        End Try
+
+        Return result
     End Function
 End Module
