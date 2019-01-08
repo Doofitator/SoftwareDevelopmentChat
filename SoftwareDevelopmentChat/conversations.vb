@@ -7,6 +7,7 @@ Public Class frm_conversations
         Me.Height = frm_main.Height
         Me.Top = frm_main.Top
         frm_main.UserMoving = True
+        loadStreams()
     End Sub
 
     ' // The following is for moving the main form with this one, adapted from http://www.vbforums.com/showthread.php?611932-snap-or-dock-forms-together#2 //
@@ -26,7 +27,7 @@ Public Class frm_conversations
         End 'this just means that now, no matter what exit button you click, the entire program shuts down
     End Sub
 
-    Dim StreamButtons As Integer = 1
+    Public StreamButtons As Integer = 1
 
     Private Sub btn_newMessage_Click(sender As Object, e As EventArgs) Handles btn_newMessage.Click
 
@@ -52,6 +53,7 @@ Public Class frm_conversations
 
 
         If userExists(recipient) Then
+            If streamExists(recipient, frm_main.txt_userName.Text) Then MsgBox("Conversation already exists", vbOKOnly, "Error creating stream") : Exit Sub 'check if stream already exists & cancel if it does
             If writeSQL(sql) Then
                 MsgBox("Conversation created successfully.", vbOKOnly, "Success")
                 Dim btn As New Button
@@ -60,23 +62,24 @@ Public Class frm_conversations
                 btn.Left = 13
                 btn.Height = 38
                 btn.Width = 163
-                btn.Name = "btn" & StreamNameString
+                btn.Name = "btn_" & StreamNameString
                 btn.Text = StreamNameString
                 Me.Controls.Add(btn)
                 UserButtons.Add(btn)
                 StreamButtons = UserButtons.Count + 1
                 AddHandler btn.Click, AddressOf RecipientHandler
             Else
-                MsgBox("An error has occured.", vbOKOnly, "Failure")
-                MsgBox(errorInfo.ToString)
+                If MsgBox("Something went horribly wrong and the database couldn't be written to. View technical details?", vbExclamation + vbYesNo, "Something happened") = MsgBoxResult.Yes Then 'if user wants technical details
+                    MsgBox(errorInfo.ToString)
+                End If
             End If
-        Else
+                Else
             MsgBox("This user doesn't exist" & vbNewLine & "Please check the spelling and try again")
         End If
 
     End Sub
 
-    Sub RecipientHandler()
+    Public Shared Sub RecipientHandler()
         ' Do stuff
     End Sub
 End Class

@@ -47,7 +47,9 @@
             MsgBox("Username is taken. Please try again.", vbOKOnly & vbExclamation, "Error creating user")
         End If
     End Function
+
     Public dontshowpassword As Boolean = False
+
     Function passwordCorrect(ByVal username As String, ByVal password As String) As Boolean 'returns try/false after checking database for password
         Dim result As String = readUserPassword(MakeSQLSafe(username))
         If result = "False" And userExists(MakeSQLSafe(username)) Then 'if the readUserPassword function failed (and thus returned false as a string because that's what its supposed to do)
@@ -65,6 +67,42 @@
             End If
         Catch ex As Exception
             If MsgBox("Something went horribly wrong and the password couldn't be verified. View technical details?", vbExclamation + vbYesNo, "Something happened") = MsgBoxResult.Yes Then 'if user wants technical details
+                MsgBox(ex.ToString) 'something went wrong that we didn't expect to happen. Display error msg.
+            End If
+            Return False
+        End Try
+    End Function
+
+    Function loadStreams() 'load existing streams
+        Try
+            Dim UserButtons As List(Of Button) = New List(Of Button)
+            For Each Control In frm_conversations.Controls
+                If TypeOf Control Is Button Then UserButtons.Add(Control)
+            Next
+
+            Try
+                For Each stream As String In getStreamArr()
+                    Dim btn As New Button
+                    'btn.Location = New Point(13, 57 + UserButtons.Count * 6)
+                    btn.Top = 57 + ((UserButtons.Count - 1) * 47)
+                    btn.Left = 13
+                    btn.Height = 38
+                    btn.Width = 163
+                    btn.Name = "btn_" & stream
+                    btn.Text = stream
+                    frm_conversations.Controls.Add(btn)
+                    UserButtons.Add(btn)
+                    frm_conversations.StreamButtons = UserButtons.Count + 1
+                    AddHandler btn.Click, AddressOf frm_conversations.RecipientHandler
+                Next
+            Catch
+                If MsgBox("Something went horribly wrong and the streams couldn't be loaded. View technical details?", vbExclamation + vbYesNo, "Something happened") = MsgBoxResult.Yes Then 'if user wants technical details
+                    MsgBox(errorInfo.ToString) 'something went wrong that we didn't expect to happen. Display error msg.
+                End If
+            End Try
+            Return True
+            Catch ex As Exception
+                If MsgBox("Something went horribly wrong and the streams couldn't be loaded. View technical details?", vbExclamation + vbYesNo, "Something happened") = MsgBoxResult.Yes Then 'if user wants technical details
                 MsgBox(ex.ToString) 'something went wrong that we didn't expect to happen. Display error msg.
             End If
             Return False
