@@ -184,7 +184,7 @@ Module DatabaseFunctions
         'Create a Command object.
         Dim myCmd = MyConn.CreateCommand
         myCmd.CommandText = "select Message from tbl_messages Where StreamID = '" & MakeSQLSafe(readStreamID(frm_main.grp_chat.Text)) & "'" 'select message where it includes the stream ID
-        Console.WriteLine(myCmd.CommandText)
+        'Console.WriteLine(myCmd.CommandText)
 
         'Open the connection.
         MyConn.Open()
@@ -229,6 +229,34 @@ Module DatabaseFunctions
             myConn.Close() 'close connection
         Catch ex As Exception 'if a catastrophic error occurs
             myConn.Close() 'close the connection
+            errorInfo = ex
+            Return 0
+        End Try
+
+        Return result
+    End Function
+
+    Function readMessageID(ByVal Message As String) As Integer 'returns 0 on fail
+        'Create a Connection object.
+        Dim MyConn = New SqlConnection(connectionString)
+
+        'Create a Command object.
+        Dim myCmd = MyConn.CreateCommand
+        myCmd.CommandText = "select ID from tbl_messages where convert(varchar(MAX), Message) = '" & Message & "'" 'probably a less bandwidth hogging way of doing this but its not 1986 anymore so it doesn't really matter
+
+        'Open the connection.
+        MyConn.Open()
+
+        Dim result As Integer = 0 'this is what the function will return
+
+        Try
+            Dim reader As SqlDataReader = myCmd.ExecuteReader() 'run sql script
+            While reader.Read
+                result = reader.GetInt32(0) 'get first value of field
+            End While
+            MyConn.Close() 'close connection
+        Catch ex As Exception 'if a catastrophic error occurs
+            MyConn.Close() 'close the connection
             errorInfo = ex
             Return 0
         End Try

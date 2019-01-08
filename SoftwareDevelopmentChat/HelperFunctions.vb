@@ -126,23 +126,41 @@
 
     Function loadMessages()
         Try
-            Dim Userlabels As List(Of Button) = New List(Of Button)
-            For Each Control In frm_conversations.Controls
-                If TypeOf Control Is Label Then Userlabels.Add(Control)
-            Next
+            Dim Userlabels As List(Of Label) = New List(Of Label)
+
 
             Try
-                For Each message As String In getMessageArr(MakeSQLSafe(frm_main.grp_chat.Text)) 'for each stream on the database, make a button for it
+                For Each message As String In getMessageArr(MakeSQLSafe(frm_main.grp_chat.Text)) 'for each message on the database, make a label for it
+                    'For Each Control In frm_main.grp_chat.Controls
+                    ' If TypeOf Control Is Label Then Userlabels.Add(Control)
+                    ' Next
+
                     Dim lbl As New Label
                     lbl.AutoSize = True
                     lbl.Text = message
-                    lbl.Left = frm_main.grp_chat.Left + 10 'this is really bad
+                    lbl.Left = frm_main.grp_chat.Left + 10
                     lbl.Top = 20 + ((Userlabels.Count - 1) * 10)
+
+                    Try
+                        lbl.Name = "lbl" & readMessageID(message)
+                    Catch
+                        If MsgBox("Something went horribly wrong and the message IDs couldn't be loaded. View technical details?", vbExclamation + vbYesNo, "Something happened") = MsgBoxResult.Yes Then 'if user wants technical details
+                            MsgBox(errorInfo.ToString) 'something went wrong that we didn't expect to happen. Display error msg.
+                            Exit Function
+                        End If
+                    End Try
+                    Console.WriteLine(lbl.Name & " TOP: " & lbl.Top & " USERLABELCOUT: " & Userlabels.Count)
+                    For Each ctrl In Userlabels
+                        Console.Write(ctrl.Name & ", ")
+                    Next
+                    Console.WriteLine()
                     frm_main.grp_chat.Controls.Add(lbl)
+                    Userlabels.Add(lbl)
                 Next
             Catch
                 If MsgBox("Something went horribly wrong and the messages couldn't be loaded. View technical details?", vbExclamation + vbYesNo, "Something happened") = MsgBoxResult.Yes Then 'if user wants technical details
                     MsgBox(errorInfo.ToString) 'something went wrong that we didn't expect to happen. Display error msg.
+                    Exit Function
                 End If
             End Try
             Return True
@@ -184,7 +202,7 @@
 
         'now we need to make a new control to show the message.
 
-        Dim Userlabels As List(Of Button) = New List(Of Button)
+        Dim Userlabels As List(Of Label) = New List(Of Label)
         For Each Control In frm_conversations.Controls
             If TypeOf Control Is Label Then Userlabels.Add(Control)
         Next
