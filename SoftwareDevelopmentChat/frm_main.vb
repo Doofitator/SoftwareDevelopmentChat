@@ -146,4 +146,8 @@ correctPassword:
         btn_send.Top = txt_message.Top
         ' // end move controls //
     End Sub
+
+    Private Sub btn_send_Click(sender As Object, e As EventArgs) Handles btn_send.Click
+
+    End Sub
 End Class

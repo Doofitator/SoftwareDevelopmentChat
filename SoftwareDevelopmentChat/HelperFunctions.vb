@@ -101,11 +101,38 @@
                 End If
             End Try
             Return True
-            Catch ex As Exception
-                If MsgBox("Something went horribly wrong and the streams couldn't be loaded. View technical details?", vbExclamation + vbYesNo, "Something happened") = MsgBoxResult.Yes Then 'if user wants technical details
+        Catch ex As Exception
+            If MsgBox("Something went horribly wrong and the streams couldn't be loaded. View technical details?", vbExclamation + vbYesNo, "Something happened") = MsgBoxResult.Yes Then 'if user wants technical details
                 MsgBox(ex.ToString) 'something went wrong that we didn't expect to happen. Display error msg.
             End If
             Return False
+        End Try
+    End Function
+
+
+
+    Function writeMessage(ByVal message As String, ByVal streamName As String, ByVal username As String) 'when you send a message it needs to write to the database
+
+
+        'the messages table has the following columns:
+        'ID (auto incrememnt)
+        'StreamID                   <-- Get from streamName
+        'FromID                     <-- Get from Username
+        'Timestamp                  <-- Get from utc_datetime
+        'Message                    <-- Get from message
+        'Active                     <-- idk yet not important
+        'Read                       <-- idk yet not important
+
+        Dim StreamID As Integer = readStreamID(MakeSQLSafe(streamName))
+        Dim fromID As Integer = readUserID(MakeSQLSafe(username))
+        Dim timestamp As DateTime = DateTime.Now
+
+        Try
+            writeSQL("insert into tbl_messages (StreamID, FromID, Timestamp, Message) values ('" & StreamID & "', '" & fromID & "', '" & timestamp & "', '" & MakeSQLSafe(message) & "')")
+        Catch
+            If MsgBox("Something went horribly wrong and the message couldn't be sent. View technical details?", vbExclamation + vbYesNo, "Something happened") = MsgBoxResult.Yes Then 'if user wants technical details
+                MsgBox(errorInfo.ToString) 'something went wrong that we didn't expect to happen. Display error msg.
+            End If
         End Try
     End Function
 End Module

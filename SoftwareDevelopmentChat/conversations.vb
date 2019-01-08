@@ -82,6 +82,8 @@ Public Class frm_conversations
     Public Shared Sub RecipientHandler(sender As Object, e As EventArgs)
         Dim btn As Button = CType(sender, Button)
         Dim streamName As String = btn.Name.Replace("btn_", "")
-        Console.WriteLine(streamName & " - " & readStreamID(MakeSQLSafe(streamName)))
+        Dim streamID As Integer = readStreamID(MakeSQLSafe(streamName))
+        Console.WriteLine(streamName & " - " & streamID)
+
     End Sub
 End Class
