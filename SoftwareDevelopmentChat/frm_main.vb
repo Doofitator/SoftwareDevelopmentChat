@@ -92,7 +92,7 @@ correctPassword:
             'happy with password? Then are we supposed to remember you?
             If chk_rememberMe.Checked Then
                 My.Settings.userName = userName
-                My.Settings.userPassword = password
+                My.Settings.userPassword = PlainTextPassword 'not very secure but it works
                 My.Settings.Save()
             End If
 
