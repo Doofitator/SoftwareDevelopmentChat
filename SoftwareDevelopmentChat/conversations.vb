@@ -85,5 +85,7 @@ Public Class frm_conversations
         Dim streamID As Integer = readStreamID(MakeSQLSafe(streamName))     'get the stream ID from the name
         Console.WriteLine(streamName & " - " & streamID) 'for debugging
         frm_main.grp_chat.Text = streamName                                 'write the stream name on the top of the chat window for a) the user and b) the send button's code and c) the chat window to load the right messages
+
+        loadMessages()
     End Sub
 End Class

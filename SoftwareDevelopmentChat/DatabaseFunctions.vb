@@ -36,21 +36,6 @@ Module DatabaseFunctions
         End Try
     End Function
 
-    Public Function MakeSQLSafe(ByVal sql As String) As String ' Ripped this function from https://stackoverflow.com/questions/725367/how-to-filter-out-some-vulnerability-causing-characters-in-query-string.
-        '                                                        There used to be a TODO here but I've decided that it's safe enough for now.
-
-        '// HENRY: If you're confused as to why this is here and what it does, check out https://www.youtube.com/watch?v=_jKylhJtPmI //
-
-        If sql.Contains("'") Then
-            sql = sql.Replace("'", "''")
-        End If
-        If sql.Contains("""") Then
-            sql = sql.Replace("""", """""")
-        End If
-
-        Return sql
-    End Function
-
     Function userExists(ByVal name As String) As Boolean
         'Create a Connection object.
         myConn = New SqlConnection(connectionString)
@@ -182,6 +167,38 @@ Module DatabaseFunctions
 
             myConn.Close() 'close connection
             Return streams.ToArray
+        Catch ex As Exception 'if a catastrophic error occurs
+            myConn.Close() 'close the connection
+            errorInfo = ex
+            Return False
+        End Try
+
+    End Function
+
+    Function getMessageArr(ByVal message As String)
+        Dim messages As New List(Of String)
+
+        'Create a Connection object.
+        myConn = New SqlConnection(connectionString)
+
+        'Create a Command object.
+        myCmd = myConn.CreateCommand
+        myCmd.CommandText = "select Message from tbl_messages Where StreamID like '%" & MakeSQLSafe(readStreamID(frm_main.grp_chat.Text)) & "%'" 'select message where it includes the stream ID
+
+        'Open the connection.
+        myConn.Open()
+
+        Dim result As String = "False" 'this is what the function will return
+
+        Try
+            Dim reader As SqlDataReader = myCmd.ExecuteReader
+            ' Loop through our records, reading "Message" and put into array1
+            While reader.Read()
+                messages.Add(CType(reader("Message"), String)) 'add message to list as string
+            End While
+
+            myConn.Close() 'close connection
+            Return messages.ToArray
         Catch ex As Exception 'if a catastrophic error occurs
             myConn.Close() 'close the connection
             errorInfo = ex

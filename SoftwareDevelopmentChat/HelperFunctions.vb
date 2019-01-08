@@ -109,6 +109,51 @@
         End Try
     End Function
 
+    Public Function MakeSQLSafe(ByVal sql As String) As String ' Ripped this function from https://stackoverflow.com/questions/725367/how-to-filter-out-some-vulnerability-causing-characters-in-query-string.
+        '                                                        There used to be a TODO here but I've decided that it's safe enough for now.
+
+        '// HENRY: If you're confused as to why this is here and what it does, check out https://www.youtube.com/watch?v=_jKylhJtPmI //
+
+        If sql.Contains("'") Then
+            sql = sql.Replace("'", "''")
+        End If
+        If sql.Contains("""") Then
+            sql = sql.Replace("""", """""")
+        End If
+
+        Return sql
+    End Function
+
+    Function loadMessages()
+        Try
+            Dim Userlabels As List(Of Button) = New List(Of Button)
+            For Each Control In frm_conversations.Controls
+                If TypeOf Control Is Label Then Userlabels.Add(Control)
+            Next
+
+            Try
+                For Each message As String In getMessageArr(MakeSQLSafe(frm_main.grp_chat.Text)) 'for each stream on the database, make a button for it
+                    Dim lbl As New Label
+                    lbl.AutoSize = True
+                    lbl.Text = message
+                    lbl.Left = frm_main.grp_chat.Left + 10 'this is really bad
+                    lbl.Top = 20 + ((Userlabels.Count - 1) * 10)
+                    frm_main.grp_chat.Controls.Add(lbl)
+                Next
+            Catch
+                If MsgBox("Something went horribly wrong and the messages couldn't be loaded. View technical details?", vbExclamation + vbYesNo, "Something happened") = MsgBoxResult.Yes Then 'if user wants technical details
+                    MsgBox(errorInfo.ToString) 'something went wrong that we didn't expect to happen. Display error msg.
+                End If
+            End Try
+            Return True
+        Catch ex As Exception
+            If MsgBox("Something went horribly wrong and the messages couldn't be loaded. View technical details?", vbExclamation + vbYesNo, "Something happened") = MsgBoxResult.Yes Then 'if user wants technical details
+                MsgBox(ex.ToString) 'something went wrong that we didn't expect to happen. Display error msg.
+            End If
+            Return False
+        End Try
+    End Function
+
 
 
     Function writeMessage(ByVal message As String, ByVal streamName As String, ByVal username As String) 'when you send a message it needs to write to the database
@@ -138,11 +183,17 @@
         frm_main.txt_message.Text = "" 'reset textbox
 
         'now we need to make a new control to show the message.
+
+        Dim Userlabels As List(Of Button) = New List(Of Button)
+        For Each Control In frm_conversations.Controls
+            If TypeOf Control Is Label Then Userlabels.Add(Control)
+        Next
+
         Dim lbl As New Label
         lbl.AutoSize = True
         lbl.Text = message
-        lbl.Left = frm_main.grp_chat.Width - lbl.Width - 10 'this is really bad
-        lbl.Top = 20 'hard coded for now because im taking a break
+        lbl.Left = frm_main.grp_chat.Left + 10 'this is really bad
+        lbl.Top = 20 + ((Userlabels.Count - 1) * 10)
         frm_main.grp_chat.Controls.Add(lbl)
 
     End Function
