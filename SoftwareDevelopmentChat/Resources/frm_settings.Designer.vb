@@ -24,9 +24,9 @@ Partial Class frm_settings
     Private Sub InitializeComponent()
         Me.dlog_color = New System.Windows.Forms.ColorDialog()
         Me.grp_chatSettings = New System.Windows.Forms.GroupBox()
+        Me.btn_color = New System.Windows.Forms.Button()
         Me.grp_appSettings = New System.Windows.Forms.GroupBox()
         Me.btn_logout = New System.Windows.Forms.Button()
-        Me.btn_color = New System.Windows.Forms.Button()
         Me.grp_chatSettings.SuspendLayout()
         Me.grp_appSettings.SuspendLayout()
         Me.SuspendLayout()
@@ -47,6 +47,15 @@ Partial Class frm_settings
         Me.grp_chatSettings.TabStop = False
         Me.grp_chatSettings.Text = "Chat Settings"
         '
+        'btn_color
+        '
+        Me.btn_color.Location = New System.Drawing.Point(7, 20)
+        Me.btn_color.Name = "btn_color"
+        Me.btn_color.Size = New System.Drawing.Size(75, 23)
+        Me.btn_color.TabIndex = 0
+        Me.btn_color.Text = "Chat color"
+        Me.btn_color.UseVisualStyleBackColor = True
+        '
         'grp_appSettings
         '
         Me.grp_appSettings.Controls.Add(Me.btn_logout)
@@ -59,21 +68,13 @@ Partial Class frm_settings
         '
         'btn_logout
         '
+        Me.btn_logout.Enabled = False
         Me.btn_logout.Location = New System.Drawing.Point(332, 53)
         Me.btn_logout.Name = "btn_logout"
         Me.btn_logout.Size = New System.Drawing.Size(75, 23)
         Me.btn_logout.TabIndex = 0
         Me.btn_logout.Text = "Logout"
         Me.btn_logout.UseVisualStyleBackColor = True
-        '
-        'btn_color
-        '
-        Me.btn_color.Location = New System.Drawing.Point(7, 20)
-        Me.btn_color.Name = "btn_color"
-        Me.btn_color.Size = New System.Drawing.Size(75, 23)
-        Me.btn_color.TabIndex = 0
-        Me.btn_color.Text = "Chat color"
-        Me.btn_color.UseVisualStyleBackColor = True
         '
         'frm_settings
         '

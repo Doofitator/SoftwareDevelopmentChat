@@ -24,8 +24,7 @@ Public Class frm_conversations
     ' // End fancy form moving //
 
     Private Sub frm_conversations_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
-        End 'this just means that now, no matter what exit button you click, the entire program shuts down
-        'TODO: this is legit the simplest command ever but it's broken
+        frm_main.Close() 'this just means that now, no matter what exit button you click, the entire program shuts down
     End Sub
 
     Public StreamButtons As Integer = 1
