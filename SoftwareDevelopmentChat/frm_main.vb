@@ -175,4 +175,10 @@ correctPassword:
         Me.grp_chat.Controls.Add(Me.btn_send)
         Me.grp_chat.Controls.Add(Me.txt_message)
     End Sub
+
+    Private Sub pbx_settings_Click(sender As Object, e As EventArgs) Handles pbx_settings.Click
+        If Not grp_chat.Text = "" Then 'basically if there's a chat open
+            frm_settings.ShowDialog() 'show settings
+        End If
+    End Sub
 End Class
