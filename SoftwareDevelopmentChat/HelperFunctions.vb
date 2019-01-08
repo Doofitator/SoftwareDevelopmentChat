@@ -134,5 +134,16 @@
                 MsgBox(errorInfo.ToString) 'something went wrong that we didn't expect to happen. Display error msg.
             End If
         End Try
+
+        frm_main.txt_message.Text = "" 'reset textbox
+
+        'now we need to make a new control to show the message.
+        Dim lbl As New Label
+        lbl.AutoSize = True
+        lbl.Text = message
+        lbl.Left = frm_main.grp_chat.Width - lbl.Width - 10 'this is really bad
+        lbl.Top = 20 'hard coded for now because im taking a break
+        frm_main.grp_chat.Controls.Add(lbl)
+
     End Function
 End Module
