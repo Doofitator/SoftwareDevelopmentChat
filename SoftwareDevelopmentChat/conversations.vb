@@ -33,7 +33,7 @@ Public Class frm_conversations
 
         Dim recipient As String = InputBox("Type the recipient's username:")
         Try
-            Dim recipientID As String = readUserID(recipient)
+            Dim recipientID As Integer = readUserID(recipient)
         Catch
             If MsgBox("Something went horribly wrong and the user could not be found. View technical details?", vbExclamation + vbYesNo, "Something happened") = MsgBoxResult.Yes Then 'if user wants technical details
                 MsgBox(errorInfo.ToString) 'show them the details from the public errorinfo exception on databasefunctions.vb
@@ -80,6 +80,8 @@ Public Class frm_conversations
     End Sub
 
     Public Shared Sub RecipientHandler(sender As Object, e As EventArgs)
-        ' Do stuff
+        Dim btn As Button = CType(sender, Button)
+        Dim streamName As String = btn.Name.Replace("btn_", "")
+        Console.WriteLine(streamName & " - " & readStreamID(MakeSQLSafe(streamName)))
     End Sub
 End Class

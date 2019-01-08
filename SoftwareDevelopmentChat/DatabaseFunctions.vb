@@ -130,7 +130,7 @@ Module DatabaseFunctions
         Return result
     End Function
 
-    Function readUserID(ByVal Name As String) As String 'function to read IDs from database.
+    Function readUserID(ByVal Name As String) As Integer 'function to read IDs from database.
         'Create a Connection object.
         myConn = New SqlConnection(connectionString)
 
@@ -141,18 +141,18 @@ Module DatabaseFunctions
         'Open the connection.
         myConn.Open()
 
-        Dim result As String = "False" 'this is what the function will return
+        Dim result As Integer = 0 'this is what the function will return
 
         Try
             Dim reader As SqlDataReader = myCmd.ExecuteReader() 'run sql script
             While reader.Read
-                result = reader.GetString(0) 'get first value of field (because there should only be one record returned as there shouldn't be username doubleups).
+                result = reader.GetInt32(0) 'get first value of field (because there should only be one record returned as there shouldn't be username doubleups).
             End While
             myConn.Close() 'close connection
         Catch ex As Exception 'if a catastrophic error occurs
             myConn.Close() 'close the connection
             errorInfo = ex
-            Return "False"
+            Return 0
         End Try
 
         Return result
@@ -188,5 +188,33 @@ Module DatabaseFunctions
             Return False
         End Try
 
+    End Function
+
+    Function readStreamID(ByVal streamName As String) As Integer 'returns 0 on fail
+        'Create a Connection object.
+        myConn = New SqlConnection(connectionString)
+
+        'Create a Command object.
+        myCmd = myConn.CreateCommand
+        myCmd.CommandText = "select StreamID from tbl_streams where convert(varchar, StreamName) = '" & streamName & "'"
+
+        'Open the connection.
+        myConn.Open()
+
+        Dim result As Integer = 0 'this is what the function will return
+
+        Try
+            Dim reader As SqlDataReader = myCmd.ExecuteReader() 'run sql script
+            While reader.Read
+                result = reader.GetInt32(0) 'get first value of field (because there should only be one record returned as there shouldn't be streams doubleups).
+            End While
+            myConn.Close() 'close connection
+        Catch ex As Exception 'if a catastrophic error occurs
+            myConn.Close() 'close the connection
+            errorInfo = ex
+            Return 0
+        End Try
+
+        Return result
     End Function
 End Module
