@@ -363,13 +363,13 @@ Module DatabaseFunctions
         End Try
 
         If Not result = "False" Then
-            Try
+            If Not result.Contains("A=") Then
                 Return decipherColor(result)
-            Catch ex As Exception
-                Return fixARGB(result) 'TODO: not working
-            End Try
+            Else
+                Return fixARGB(result)
+            End If
         Else
-            Return Color.Blue 'fallback to blue default on fail
+                Return Color.Blue 'fallback to blue default on fail
         End If
 
     End Function
