@@ -123,9 +123,9 @@
         'Active                     <-- idk yet not important
         'Read                       <-- idk yet not important
 
-        Dim StreamID As Integer = readStreamID(MakeSQLSafe(streamName))
-        Dim fromID As Integer = readUserID(MakeSQLSafe(username))
-        Dim timestamp As DateTime = DateTime.Now
+        Dim StreamID As Integer = readStreamID(MakeSQLSafe(streamName))     '|
+        Dim fromID As Integer = readUserID(MakeSQLSafe(username))           '|  <-- getting variables as listed above
+        Dim timestamp As DateTime = DateTime.Now                            '|
 
         Try
             writeSQL("insert into tbl_messages (StreamID, FromID, Timestamp, Message) values ('" & StreamID & "', '" & fromID & "', '" & timestamp & "', '" & MakeSQLSafe(message) & "')")

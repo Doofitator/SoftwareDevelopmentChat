@@ -148,6 +148,6 @@ correctPassword:
     End Sub
 
     Private Sub btn_send_Click(sender As Object, e As EventArgs) Handles btn_send.Click
-
+        writeMessage(txt_message.Text, grp_chat.Text, txt_userName.Text)
     End Sub
 End Class

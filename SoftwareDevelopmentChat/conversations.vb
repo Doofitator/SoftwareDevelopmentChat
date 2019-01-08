@@ -84,6 +84,6 @@ Public Class frm_conversations
         Dim streamName As String = btn.Name.Replace("btn_", "")
         Dim streamID As Integer = readStreamID(MakeSQLSafe(streamName))
         Console.WriteLine(streamName & " - " & streamID)
-
+        frm_main.grp_chat.Text = streamName
     End Sub
 End Class
