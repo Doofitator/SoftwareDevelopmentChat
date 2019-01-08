@@ -32,50 +32,54 @@ Public Class frm_conversations
 
     Private Sub btn_newMessage_Click(sender As Object, e As EventArgs) Handles btn_newMessage.Click
 
-        Dim recipient As String = InputBox("Type the recipient's username:")
-        Try
-            Dim recipientID As Integer = readUserID(recipient)
-        Catch
-            If MsgBox("Something went horribly wrong and the user could not be found. View technical details?", vbExclamation + vbYesNo, "Something happened") = MsgBoxResult.Yes Then 'if user wants technical details
-                MsgBox(errorInfo.ToString) 'show them the details from the public errorinfo exception on databasefunctions.vb
-            End If
-        End Try
+        If MsgBox("Create group chat?", vbQuestion, "Chat type") = MsgBoxResult.Yes Then
 
-        Dim StreamNameString As String = recipient & " and " & frm_main.txt_userName.Text
-
-        Dim sql As String = "insert into tbl_streams (StreamName) values ('" & StreamNameString & "')"
-        'Dim UserButtons As List(Of Button) = New List(Of Button)
-
-        Dim UserButtons As List(Of Button) = New List(Of Button)
-        For Each Control In Me.Controls
-            If TypeOf Control Is Button Then UserButtons.Add(Control)
-        Next
-
-
-
-        If userExists(recipient) Then
-            If streamExists(recipient, frm_main.txt_userName.Text) Then MsgBox("Conversation already exists", vbOKOnly, "Error creating stream") : Exit Sub 'check if stream already exists & cancel if it does
-            If writeSQL(sql) Then
-                MsgBox("Conversation created successfully.", vbOKOnly, "Success")
-                Dim btn As New Button
-                'btn.Location = New Point(13, 57 + UserButtons.Count * 6)
-                btn.Top = 84 + ((UserButtons.Count - 1) * 47)
-                btn.Left = 13
-                btn.Height = 38
-                btn.Width = 163
-                btn.Name = "btn_" & StreamNameString
-                btn.Text = StreamNameString
-                Me.Controls.Add(btn)
-                UserButtons.Add(btn)
-                StreamButtons = UserButtons.Count + 1
-                AddHandler btn.Click, AddressOf RecipientHandler
-            Else
-                If MsgBox("Something went horribly wrong and the database couldn't be written to. View technical details?", vbExclamation + vbYesNo, "Something happened") = MsgBoxResult.Yes Then 'if user wants technical details
-                    MsgBox(errorInfo.ToString)
+        Else
+            Dim recipient As String = InputBox("Type the recipient's username:")
+            Try
+                Dim recipientID As Integer = readUserID(recipient)
+            Catch
+                If MsgBox("Something went horribly wrong and the user could not be found. View technical details?", vbExclamation + vbYesNo, "Something happened") = MsgBoxResult.Yes Then 'if user wants technical details
+                    MsgBox(errorInfo.ToString) 'show them the details from the public errorinfo exception on databasefunctions.vb
                 End If
-            End If
+            End Try
+
+            Dim StreamNameString As String = recipient & " and " & frm_main.txt_userName.Text
+
+            Dim sql As String = "insert into tbl_streams (StreamName) values ('" & StreamNameString & "')"
+            'Dim UserButtons As List(Of Button) = New List(Of Button)
+
+            Dim UserButtons As List(Of Button) = New List(Of Button)
+            For Each Control In Me.Controls
+                If TypeOf Control Is Button Then UserButtons.Add(Control)
+            Next
+
+
+
+            If userExists(recipient) Then
+                If streamExists(recipient, frm_main.txt_userName.Text) Then MsgBox("Conversation already exists", vbOKOnly, "Error creating stream") : Exit Sub 'check if stream already exists & cancel if it does
+                If writeSQL(sql) Then
+                    MsgBox("Conversation created successfully.", vbOKOnly, "Success")
+                    Dim btn As New Button
+                    'btn.Location = New Point(13, 57 + UserButtons.Count * 6)
+                    btn.Top = 84 + ((UserButtons.Count - 1) * 47)
+                    btn.Left = 13
+                    btn.Height = 38
+                    btn.Width = 163
+                    btn.Name = "btn_" & StreamNameString
+                    btn.Text = StreamNameString
+                    Me.Controls.Add(btn)
+                    UserButtons.Add(btn)
+                    StreamButtons = UserButtons.Count + 1
+                    AddHandler btn.Click, AddressOf RecipientHandler
                 Else
-            MsgBox("This user doesn't exist" & vbNewLine & "Please check the spelling and try again")
+                    If MsgBox("Something went horribly wrong and the database couldn't be written to. View technical details?", vbExclamation + vbYesNo, "Something happened") = MsgBoxResult.Yes Then 'if user wants technical details
+                        MsgBox(errorInfo.ToString)
+                    End If
+                End If
+            Else
+                MsgBox("This user doesn't exist" & vbNewLine & "Please check the spelling and try again")
+            End If
         End If
 
     End Sub
