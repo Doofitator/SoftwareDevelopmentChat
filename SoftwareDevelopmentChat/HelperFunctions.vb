@@ -128,9 +128,66 @@
         Return sql
     End Function
 
+    'the following variable is the HTML & css base code for all chat bubbles
+    Public html As String = "<html>
+    <head>
+        <style type=""text/css"">
+            .them:before {
+                content: '';
+                width: 0px;
+                height: 0px;
+                position: absolute;
+                border-left: 10px solid transparent;
+                border-right: 10px solid gray;
+                border-top: 10px solid gray;
+                border-bottom: 10px solid transparent;
+                left:-19px;
+                top:6px;
+            }
+            
+            .us:before {
+                content: '';
+                width: 0px;
+                height: 0px;
+                position: absolute;
+                border-left: 10px solid "
+    Public html2 = ";
+                border-right: 10px solid transparent;
+                border-top: 10px solid "
+    Public html3 = ";
+                border-bottom: 10px solid transparent;
+                right: -20px;
+                top: 6px;
+            }
+            
+            .us {
+                text-align: right;
+                background: "
+    Public html4 = ";
+            }
+            
+            .them {
+                text-align: left;
+                background: gray;
+                color:white;
+                margin-left: 20px;
+            }
+            
+            .chat {
+                width: 300px;
+                padding: 10px;
+                font-family: arial;
+                position:relative;
+                border-radius:5px;
+            }
+        </style>
+    </head>
+    <body style=""background-color: #f0f0f0"">"
+
     Function loadMessages()
+        changeBrowserIEVersion() 'fix rendering issues
         Try
-            Dim Userlabels As List(Of Label) = New List(Of Label)
+            Dim Userlabels As List(Of WebBrowser) = New List(Of WebBrowser)
 
 
             Try
@@ -139,25 +196,24 @@
                     ' If TypeOf Control Is Label Then Userlabels.Add(Control)
                     ' Next
 
-                    Dim lbl As New Label
-                    lbl.AutoSize = True
-                    lbl.Text = message
-                    lbl.Left = frm_main.grp_chat.Left + 10
+                    Dim wbr As New WebBrowser
+                    wbr.Width = frm_main.grp_chat.Width - 20
                     If theySentTheMessage(message) Then
-                        lbl.BackColor = Color.White
+                        wbr.DocumentText = html & getMessageColor().ToHtmlHexadecimal & html2 & getMessageColor().ToHtmlHexadecimal & html3 & getMessageColor().ToHtmlHexadecimal & html4 & "<div class=""chat them"">" & message & "</div></body></html>"
+                        wbr.Left = 10
                     Else
-                        lbl.BackColor = getMessageColor()
+                        wbr.DocumentText = html & getMessageColor().ToHtmlHexadecimal & html2 & getMessageColor().ToHtmlHexadecimal & html3 & getMessageColor().ToHtmlHexadecimal & html4 & "<div class=""chat us"">" & message & "</div></body></html>"
+
+                        wbr.Left = 10
                     End If
 
+                    wbr.Height = 80                        '| TODO: Fix this. 
+                    wbr.Top = (Userlabels.Count * 80) + 20 '| It could be better.
 
-                    Dim converter = New FontConverter()
-                    Dim StringAsFont As Font = TryCast(converter.ConvertFromString(getFont()), Font)
-                    lbl.Font = StringAsFont
-
-                    lbl.Top = 35 + lbl.Font.Size + ((Userlabels.Count - 1) * 15 * (lbl.Font.Size / 8))
+                    wbr.ScrollBarsEnabled = False
 
                     Try
-                        lbl.Name = "lbl" & readMessageID(message)
+                        wbr.Name = "wbr" & readMessageID(message)
                     Catch ex As Exception
                         Console.WriteLine(ex.ToString)
                         If MsgBox("Something went horribly wrong and the message IDs couldn't be loaded. View technical details?", vbExclamation + vbYesNo, "Something happened") = MsgBoxResult.Yes Then 'if user wants technical details
@@ -170,8 +226,8 @@
                         Console.Write(ctrl.Name & ", ")
                     Next
                     'Console.WriteLine()
-                    frm_main.grp_chat.Controls.Add(lbl)
-                    Userlabels.Add(lbl)
+                    frm_main.grp_chat.Controls.Add(wbr)
+                    Userlabels.Add(wbr)
                 Next
             Catch ex As Exception
                 Console.WriteLine(ex.ToString)

@@ -89,6 +89,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="HelperFunctions.vb" />
+    <Compile Include="internetExplorerFixer.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -110,6 +111,7 @@
     <Compile Include="Resources\frm_settings.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="ToHtmlHexidecimal.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="conversations.resx">
