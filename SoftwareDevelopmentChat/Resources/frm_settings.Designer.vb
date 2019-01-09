@@ -28,6 +28,7 @@ Partial Class frm_settings
         Me.grp_appSettings = New System.Windows.Forms.GroupBox()
         Me.btn_logout = New System.Windows.Forms.Button()
         Me.dlog_font = New System.Windows.Forms.FontDialog()
+        Me.btn_download = New System.Windows.Forms.Button()
         Me.grp_chatSettings.SuspendLayout()
         Me.grp_appSettings.SuspendLayout()
         Me.SuspendLayout()
@@ -40,6 +41,7 @@ Partial Class frm_settings
         '
         'grp_chatSettings
         '
+        Me.grp_chatSettings.Controls.Add(Me.btn_download)
         Me.grp_chatSettings.Controls.Add(Me.btn_color)
         Me.grp_chatSettings.Location = New System.Drawing.Point(13, 13)
         Me.grp_chatSettings.Name = "grp_chatSettings"
@@ -77,6 +79,15 @@ Partial Class frm_settings
         Me.btn_logout.Text = "Logout"
         Me.btn_logout.UseVisualStyleBackColor = True
         '
+        'btn_download
+        '
+        Me.btn_download.Location = New System.Drawing.Point(5, 48)
+        Me.btn_download.Name = "btn_download"
+        Me.btn_download.Size = New System.Drawing.Size(75, 23)
+        Me.btn_download.TabIndex = 1
+        Me.btn_download.Text = "Download Chat"
+        Me.btn_download.UseVisualStyleBackColor = True
+        '
         'frm_settings
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -99,4 +110,5 @@ Partial Class frm_settings
     Friend WithEvents btn_color As Button
     Friend WithEvents btn_logout As Button
     Friend WithEvents dlog_font As FontDialog
+    Friend WithEvents btn_download As Button
 End Class

@@ -208,7 +208,7 @@ Module DatabaseFunctions
 
     End Function
 
-    Function getMessagesArr(ByVal message As String, Optional amount As Integer = 0)
+    Function getMessagesArr(ByVal stream As String, Optional amount As Integer = 0, Optional IncludeNames As Boolean = False)
         Dim messages As New List(Of String)
 
         'Create a Connection object.
@@ -219,9 +219,9 @@ Module DatabaseFunctions
 
         Dim sql As String
         If Not amount = 0 Then
-            sql = "select Message, Timestamp from (select top " & amount & " Message, Timestamp From tbl_messages where StreamID='" & MakeSQLSafe(readStreamID(frm_main.grp_chat.Text)) & "' Order By Timestamp DESC) T1 Order by Timestamp"
+            sql = "select Message, Timestamp from (select top " & amount & " Message, Timestamp From tbl_messages where StreamID='" & MakeSQLSafe(readStreamID(stream)) & "' Order By Timestamp DESC) T1 Order by Timestamp"
         Else
-            sql = "select Message from tbl_messages Where StreamID = '" & MakeSQLSafe(readStreamID(frm_main.grp_chat.Text)) & "'" 'select all messages where it includes the stream ID
+            sql = "select Message, FromID from tbl_messages Where StreamID = '" & MakeSQLSafe(readStreamID(stream)) & "'" 'select all messages where it includes the stream ID
         End If
 
         myCmd.CommandText = sql
@@ -236,7 +236,12 @@ Module DatabaseFunctions
             Dim reader As SqlDataReader = myCmd.ExecuteReader
             ' Loop through our records, reading "Message" and put into array1
             While reader.Read()
-                messages.Add(CType(reader("Message"), String)) 'add message to list as string
+                If IncludeNames Then
+                    Dim uN As String = readUserName(CType(reader("FromID"), Integer))
+                    messages.Add(uN & ": " & CType(reader("Message"), String)) 'add message to list as string
+                Else
+                    messages.Add(CType(reader("Message"), String)) 'add message to list as string
+                End If
             End While
 
             MyConn.Close() 'close connection
