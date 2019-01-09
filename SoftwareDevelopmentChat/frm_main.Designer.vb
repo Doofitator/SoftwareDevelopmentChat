@@ -209,7 +209,6 @@ Partial Class frm_main
         'pnl_messages
         '
         Me.pnl_messages.AutoScroll = True
-        Me.pnl_messages.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.pnl_messages.Location = New System.Drawing.Point(0, 21)
         Me.pnl_messages.Name = "pnl_messages"
         Me.pnl_messages.Size = New System.Drawing.Size(381, 383)
