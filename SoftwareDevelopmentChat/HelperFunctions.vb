@@ -181,7 +181,7 @@
     </head>
     <body style=""background-color: #f0f0f0"">"
 
-    Function loadMessages() 'TODO: This only needs to load the last ~25 messages, not everything. If the user wants more, the first control can be a download button or something that will just rip that stream out of the database and put it in a text file.
+    Function loadMessages()
         changeBrowserIEVersion() 'fix rendering issues
         Try
             Dim UserWebBrowsers As List(Of WebBrowser) = New List(Of WebBrowser)
