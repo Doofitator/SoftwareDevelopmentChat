@@ -12,7 +12,6 @@
             frm_main.Refresh() 'this is needed otherwise it just jumps on top instead of sliding
         End While 'Animation is over :)
 
-
         frm_main.grp_login.Visible = False 'we don't need this now because we're logged in, so we will hide it.
 
         'change the title & make it resiseable
@@ -128,7 +127,7 @@
         Return sql
     End Function
 
-    'the following variable is the HTML & css base code for all chat bubbles
+    'the following variables is the HTML & css base code for all chat bubbles. It heas breaks where the bubble colours need to be inserted.
     Public html As String = "<html>
     <head>
         <style type=""text/css"">
@@ -184,10 +183,10 @@
     </head>
     <body style=""background-color: #f0f0f0"">"
 
-    Function loadMessages()
+    Function loadMessages() 'TODO: This only needs to load the last ~25 messages, not everything. If the user wants more, the first control can be a download button or something that will just rip that stream out of the database and put it in a text file.
         changeBrowserIEVersion() 'fix rendering issues
         Try
-            Dim Userlabels As List(Of WebBrowser) = New List(Of WebBrowser)
+            Dim UserWebBrowsers As List(Of WebBrowser) = New List(Of WebBrowser)
 
 
             Try
@@ -197,7 +196,7 @@
                     ' Next
 
                     Dim wbr As New WebBrowser
-                    wbr.Width = frm_main.grp_chat.Width - 20
+                    wbr.Width = frm_main.pnl_messages.Width - 32
                     If theySentTheMessage(message) Then
                         wbr.DocumentText = html & getMessageColor().ToHtmlHexadecimal & html2 & getMessageColor().ToHtmlHexadecimal & html3 & getMessageColor().ToHtmlHexadecimal & html4 & "<div class=""chat them"">" & message & "</div></body></html>"
                         wbr.Left = 10
@@ -207,8 +206,8 @@
                         wbr.Left = 10
                     End If
 
-                    wbr.Height = 80                        '| TODO: Fix this. 
-                    wbr.Top = (Userlabels.Count * 80) + 20 '| It could be better.
+                    wbr.Height = 80                         '| TODO: Fix this. 
+                    wbr.Top = (UserWebBrowsers.Count * 80)  '| It could be better.
 
                     wbr.ScrollBarsEnabled = False
 
@@ -222,12 +221,12 @@
                         End If
                     End Try
                     'Console.WriteLine(lbl.Name & " TOP: " & lbl.Top & " USERLABELCOUT: " & Userlabels.Count)
-                    For Each ctrl In Userlabels
+                    For Each ctrl In UserWebBrowsers
                         Console.Write(ctrl.Name & ", ")
                     Next
                     'Console.WriteLine()
-                    frm_main.grp_chat.Controls.Add(wbr)
-                    Userlabels.Add(wbr)
+                    frm_main.pnl_messages.Controls.Add(wbr)
+                    UserWebBrowsers.Add(wbr)
                 Next
             Catch ex As Exception
                 Console.WriteLine(ex.ToString)
@@ -235,6 +234,12 @@
                     MsgBox(ex.ToString) 'something went wrong that we didn't expect to happen. Display error msg.
                     Exit Function
                 End If
+            End Try
+
+            Try
+                frm_main.pnl_messages.ScrollControlIntoView(UserWebBrowsers(UserWebBrowsers.Count - 1))
+            Catch
+                Console.WriteLine("no messages")
             End Try
             Return True
         Catch ex As Exception
