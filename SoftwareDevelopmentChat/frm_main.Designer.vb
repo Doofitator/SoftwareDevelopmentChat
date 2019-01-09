@@ -22,8 +22,11 @@ Partial Class frm_main
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frm_main))
         Me.grp_login = New System.Windows.Forms.GroupBox()
         Me.chk_rememberMe = New System.Windows.Forms.CheckBox()
+        Me.pbx_appLogo = New System.Windows.Forms.PictureBox()
         Me.lbl_passwordRepeat = New System.Windows.Forms.Label()
         Me.txt_passwordRepeat = New System.Windows.Forms.TextBox()
         Me.Label4 = New System.Windows.Forms.Label()
@@ -36,12 +39,16 @@ Partial Class frm_main
         Me.txt_password = New System.Windows.Forms.TextBox()
         Me.txt_userName = New System.Windows.Forms.TextBox()
         Me.grp_chat = New System.Windows.Forms.GroupBox()
+        Me.pnl_messages = New System.Windows.Forms.Panel()
         Me.btn_send = New System.Windows.Forms.Button()
         Me.txt_message = New System.Windows.Forms.TextBox()
-        Me.pbx_appLogo = New System.Windows.Forms.PictureBox()
+        Me.pbx_settings = New System.Windows.Forms.PictureBox()
+        Me.tmr_messageChecker = New System.Windows.Forms.Timer(Me.components)
+        Me.notificationTray = New System.Windows.Forms.NotifyIcon(Me.components)
         Me.grp_login.SuspendLayout()
-        Me.grp_chat.SuspendLayout()
         CType(Me.pbx_appLogo, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.grp_chat.SuspendLayout()
+        CType(Me.pbx_settings, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'grp_login
@@ -75,6 +82,17 @@ Partial Class frm_main
         Me.chk_rememberMe.TabIndex = 12
         Me.chk_rememberMe.Text = "Remember login"
         Me.chk_rememberMe.UseVisualStyleBackColor = True
+        '
+        'pbx_appLogo
+        '
+        Me.pbx_appLogo.Image = Global.SoftwareDevelopmentChat.My.Resources.Resources.Logo
+        Me.pbx_appLogo.InitialImage = Nothing
+        Me.pbx_appLogo.Location = New System.Drawing.Point(6, 19)
+        Me.pbx_appLogo.Name = "pbx_appLogo"
+        Me.pbx_appLogo.Size = New System.Drawing.Size(369, 125)
+        Me.pbx_appLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+        Me.pbx_appLogo.TabIndex = 11
+        Me.pbx_appLogo.TabStop = False
         '
         'lbl_passwordRepeat
         '
@@ -179,6 +197,7 @@ Partial Class frm_main
         '
         'grp_chat
         '
+        Me.grp_chat.Controls.Add(Me.pnl_messages)
         Me.grp_chat.Controls.Add(Me.btn_send)
         Me.grp_chat.Controls.Add(Me.txt_message)
         Me.grp_chat.Location = New System.Drawing.Point(433, 12)
@@ -186,6 +205,15 @@ Partial Class frm_main
         Me.grp_chat.Size = New System.Drawing.Size(381, 437)
         Me.grp_chat.TabIndex = 1
         Me.grp_chat.TabStop = False
+        '
+        'pnl_messages
+        '
+        Me.pnl_messages.AutoScroll = True
+        Me.pnl_messages.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.pnl_messages.Location = New System.Drawing.Point(0, 21)
+        Me.pnl_messages.Name = "pnl_messages"
+        Me.pnl_messages.Size = New System.Drawing.Size(381, 383)
+        Me.pnl_messages.TabIndex = 2
         '
         'btn_send
         '
@@ -203,33 +231,46 @@ Partial Class frm_main
         Me.txt_message.Size = New System.Drawing.Size(287, 20)
         Me.txt_message.TabIndex = 0
         '
-        'pbx_appLogo
+        'pbx_settings
         '
-        Me.pbx_appLogo.Image = Global.SoftwareDevelopmentChat.My.Resources.Resources.Logo
-        Me.pbx_appLogo.InitialImage = Nothing
-        Me.pbx_appLogo.Location = New System.Drawing.Point(6, 19)
-        Me.pbx_appLogo.Name = "pbx_appLogo"
-        Me.pbx_appLogo.Size = New System.Drawing.Size(369, 125)
-        Me.pbx_appLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
-        Me.pbx_appLogo.TabIndex = 11
-        Me.pbx_appLogo.TabStop = False
+        Me.pbx_settings.Image = CType(resources.GetObject("pbx_settings.Image"), System.Drawing.Image)
+        Me.pbx_settings.Location = New System.Drawing.Point(363, 12)
+        Me.pbx_settings.Name = "pbx_settings"
+        Me.pbx_settings.Size = New System.Drawing.Size(34, 31)
+        Me.pbx_settings.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+        Me.pbx_settings.TabIndex = 2
+        Me.pbx_settings.TabStop = False
+        Me.pbx_settings.Visible = False
+        '
+        'tmr_messageChecker
+        '
+        Me.tmr_messageChecker.Interval = 30000
+        '
+        'notificationTray
+        '
+        Me.notificationTray.Icon = CType(resources.GetObject("notificationTray.Icon"), System.Drawing.Icon)
+        Me.notificationTray.Text = "SoftDevChat"
+        Me.notificationTray.Visible = True
         '
         'frm_main
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(826, 461)
+        Me.Controls.Add(Me.pbx_settings)
         Me.Controls.Add(Me.grp_chat)
         Me.Controls.Add(Me.grp_login)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.Name = "frm_main"
         Me.Text = "Login"
         Me.grp_login.ResumeLayout(False)
         Me.grp_login.PerformLayout()
+        CType(Me.pbx_appLogo, System.ComponentModel.ISupportInitialize).EndInit()
         Me.grp_chat.ResumeLayout(False)
         Me.grp_chat.PerformLayout()
-        CType(Me.pbx_appLogo, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.pbx_settings, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -251,4 +292,8 @@ Partial Class frm_main
     Friend WithEvents chk_rememberMe As CheckBox
     Friend WithEvents btn_send As Button
     Friend WithEvents txt_message As TextBox
+    Friend WithEvents pbx_settings As PictureBox
+    Friend WithEvents pnl_messages As Panel
+    Friend WithEvents tmr_messageChecker As Timer
+    Friend WithEvents notificationTray As NotifyIcon
 End Class
