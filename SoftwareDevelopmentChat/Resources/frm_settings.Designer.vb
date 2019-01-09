@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class frm_settings
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,11 +20,10 @@ Partial Class frm_settings
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.dlog_color = New System.Windows.Forms.ColorDialog()
         Me.grp_chatSettings = New System.Windows.Forms.GroupBox()
-        Me.btn_font = New System.Windows.Forms.Button()
         Me.btn_color = New System.Windows.Forms.Button()
         Me.grp_appSettings = New System.Windows.Forms.GroupBox()
         Me.btn_logout = New System.Windows.Forms.Button()
@@ -41,32 +40,19 @@ Partial Class frm_settings
         '
         'grp_chatSettings
         '
-        Me.grp_chatSettings.Controls.Add(Me.btn_font)
         Me.grp_chatSettings.Controls.Add(Me.btn_color)
-        Me.grp_chatSettings.Location = New System.Drawing.Point(20, 20)
-        Me.grp_chatSettings.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.grp_chatSettings.Location = New System.Drawing.Point(13, 13)
         Me.grp_chatSettings.Name = "grp_chatSettings"
-        Me.grp_chatSettings.Padding = New System.Windows.Forms.Padding(4, 5, 4, 5)
-        Me.grp_chatSettings.Size = New System.Drawing.Size(620, 126)
+        Me.grp_chatSettings.Size = New System.Drawing.Size(413, 82)
         Me.grp_chatSettings.TabIndex = 0
         Me.grp_chatSettings.TabStop = False
         Me.grp_chatSettings.Text = "Chat Settings"
         '
-        'btn_font
-        '
-        Me.btn_font.Location = New System.Drawing.Point(8, 72)
-        Me.btn_font.Name = "btn_font"
-        Me.btn_font.Size = New System.Drawing.Size(112, 35)
-        Me.btn_font.TabIndex = 1
-        Me.btn_font.Text = "Chat Font"
-        Me.btn_font.UseVisualStyleBackColor = True
-        '
         'btn_color
         '
-        Me.btn_color.Location = New System.Drawing.Point(8, 29)
-        Me.btn_color.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.btn_color.Location = New System.Drawing.Point(5, 19)
         Me.btn_color.Name = "btn_color"
-        Me.btn_color.Size = New System.Drawing.Size(112, 35)
+        Me.btn_color.Size = New System.Drawing.Size(75, 23)
         Me.btn_color.TabIndex = 0
         Me.btn_color.Text = "Chat Color"
         Me.btn_color.UseVisualStyleBackColor = True
@@ -74,11 +60,9 @@ Partial Class frm_settings
         'grp_appSettings
         '
         Me.grp_appSettings.Controls.Add(Me.btn_logout)
-        Me.grp_appSettings.Location = New System.Drawing.Point(20, 155)
-        Me.grp_appSettings.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.grp_appSettings.Location = New System.Drawing.Point(13, 101)
         Me.grp_appSettings.Name = "grp_appSettings"
-        Me.grp_appSettings.Padding = New System.Windows.Forms.Padding(4, 5, 4, 5)
-        Me.grp_appSettings.Size = New System.Drawing.Size(620, 126)
+        Me.grp_appSettings.Size = New System.Drawing.Size(413, 82)
         Me.grp_appSettings.TabIndex = 1
         Me.grp_appSettings.TabStop = False
         Me.grp_appSettings.Text = "App Settings"
@@ -86,23 +70,21 @@ Partial Class frm_settings
         'btn_logout
         '
         Me.btn_logout.Enabled = False
-        Me.btn_logout.Location = New System.Drawing.Point(500, 81)
-        Me.btn_logout.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.btn_logout.Location = New System.Drawing.Point(333, 53)
         Me.btn_logout.Name = "btn_logout"
-        Me.btn_logout.Size = New System.Drawing.Size(112, 35)
+        Me.btn_logout.Size = New System.Drawing.Size(75, 23)
         Me.btn_logout.TabIndex = 0
         Me.btn_logout.Text = "Logout"
         Me.btn_logout.UseVisualStyleBackColor = True
         '
         'frm_settings
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(657, 295)
+        Me.ClientSize = New System.Drawing.Size(438, 192)
         Me.Controls.Add(Me.grp_appSettings)
         Me.Controls.Add(Me.grp_chatSettings)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
-        Me.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.Name = "frm_settings"
         Me.Text = "Settings"
         Me.grp_chatSettings.ResumeLayout(False)
@@ -117,5 +99,4 @@ Partial Class frm_settings
     Friend WithEvents btn_color As Button
     Friend WithEvents btn_logout As Button
     Friend WithEvents dlog_font As FontDialog
-    Friend WithEvents btn_font As Button
 End Class
