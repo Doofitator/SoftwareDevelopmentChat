@@ -22,6 +22,13 @@
         Next
 
         tabIndexFixer(True)
+
+
+    End Sub
+
+    Private Sub notificationTray_BalloonTipClicked(ByVal sender As Object, ByVal e As EventArgs) _
+                                          Handles notificationTray.BalloonTipClicked
+        MessageBox.Show("yeet")
     End Sub
 
     Function tabIndexFixer(ByVal isExistingUser As Boolean) 'probably really should be on helperfunctions module but it is something that only this form will access so nvm
@@ -155,6 +162,14 @@ correctPassword:
     Private Sub pbx_settings_Click(sender As Object, e As EventArgs) Handles pbx_settings.Click
         If Not grp_chat.Text = "" Then 'basically if there's a chat open
             frm_settings.ShowDialog() 'show settings
+        End If
+    End Sub
+
+    Private Sub tmr_messageChecker_Tick(sender As Object, e As EventArgs) Handles tmr_messageChecker.Tick
+        If NewMessages() Then
+            notificationTray.BalloonTipTitle = "New Message"
+            notificationTray.BalloonTipText = readUserName(MakeSQLSafe(FromID)) & ": " & NewMessage
+            notificationTray.ShowBalloonTip(5000)
         End If
     End Sub
 End Class

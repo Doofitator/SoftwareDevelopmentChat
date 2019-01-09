@@ -249,7 +249,23 @@
         End Try
     End Function
 
+    Function NewMessages() As Boolean 'works out if there's something on the database that isn't here
+        Dim i As Integer = 25
+        For Each message As String In getMessagesArr(MakeSQLSafe(frm_main.grp_chat.Text), 25) 'for each message on the database
+            For Each control In frm_main.pnl_messages.Controls
+                If TypeOf (control) Is WebBrowser Then
+                    If control.documentText.contains(message) Then
+                        i -= 1
+                    End If
+                End If
+            Next
+        Next
 
+        'basically this iterates through all the messages on the server and all the messages in the webbrowsers, and if 
+        'the Message Is in any webbrowser then i Is decreased by 1. If i Is 0 by the end, then all things on the database are in the webbrowsers.
+
+        If i = 0 Then Return False Else Return True
+    End Function
 
     Function writeMessage(ByVal message As String, ByVal streamName As String, ByVal username As String) 'when you send a message it needs to write to the database
 

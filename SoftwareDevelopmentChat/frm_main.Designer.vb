@@ -39,10 +39,10 @@ Partial Class frm_main
         Me.txt_password = New System.Windows.Forms.TextBox()
         Me.txt_userName = New System.Windows.Forms.TextBox()
         Me.grp_chat = New System.Windows.Forms.GroupBox()
+        Me.pnl_messages = New System.Windows.Forms.Panel()
         Me.btn_send = New System.Windows.Forms.Button()
         Me.txt_message = New System.Windows.Forms.TextBox()
         Me.pbx_settings = New System.Windows.Forms.PictureBox()
-        Me.pnl_messages = New System.Windows.Forms.Panel()
         Me.tmr_messageChecker = New System.Windows.Forms.Timer(Me.components)
         Me.notificationTray = New System.Windows.Forms.NotifyIcon(Me.components)
         Me.grp_login.SuspendLayout()
@@ -206,6 +206,15 @@ Partial Class frm_main
         Me.grp_chat.TabIndex = 1
         Me.grp_chat.TabStop = False
         '
+        'pnl_messages
+        '
+        Me.pnl_messages.AutoScroll = True
+        Me.pnl_messages.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.pnl_messages.Location = New System.Drawing.Point(0, 21)
+        Me.pnl_messages.Name = "pnl_messages"
+        Me.pnl_messages.Size = New System.Drawing.Size(381, 383)
+        Me.pnl_messages.TabIndex = 2
+        '
         'btn_send
         '
         Me.btn_send.Location = New System.Drawing.Point(300, 408)
@@ -233,22 +242,14 @@ Partial Class frm_main
         Me.pbx_settings.TabStop = False
         Me.pbx_settings.Visible = False
         '
-        'pnl_messages
-        '
-        Me.pnl_messages.AutoScroll = True
-        Me.pnl_messages.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.pnl_messages.Location = New System.Drawing.Point(0, 21)
-        Me.pnl_messages.Name = "pnl_messages"
-        Me.pnl_messages.Size = New System.Drawing.Size(381, 383)
-        Me.pnl_messages.TabIndex = 2
-        '
         'tmr_messageChecker
         '
         Me.tmr_messageChecker.Interval = 30000
         '
         'notificationTray
         '
-        Me.notificationTray.Text = "NotifyIcon1"
+        Me.notificationTray.Icon = CType(resources.GetObject("notificationTray.Icon"), System.Drawing.Icon)
+        Me.notificationTray.Text = "SoftDevChat"
         Me.notificationTray.Visible = True
         '
         'frm_main
