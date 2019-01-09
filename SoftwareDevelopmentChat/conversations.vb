@@ -35,7 +35,7 @@ Public Class frm_conversations
         If MsgBox("Create group chat?", vbYesNo, "Chat type") = MsgBoxResult.Yes Then
 
         Else
-            Dim recipient As String = UppercaseFirstLetter(InputBox("Type the recipient's username:"))
+            Dim recipient As String = UppercaseFirstLetter(InputBox("Type the recipient's username:").ToLower)
             Try
                 Dim recipientID As Integer = readUserID(recipient)
             Catch
