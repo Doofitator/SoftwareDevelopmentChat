@@ -16,4 +16,8 @@
     'admin rights
 
     'rich text formatting (with html)
+
+    'webbrowsers need to dynamically size
+
+    'two windows need to be better in sync. Minimise one, minimise the other. Activate one, the other appears next to it.
 End Module

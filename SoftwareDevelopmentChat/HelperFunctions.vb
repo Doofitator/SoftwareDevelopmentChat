@@ -29,7 +29,7 @@
         'TODO: Auto click first stream button if it exists
     End Function
 
-    Function addUser(ByVal username As String, ByVal password As String) 'technically belongs here as it doesn't actually run any server stuff - just calls another function to do it. It should in future encrypt passwords on their way out to the database.
+    Function addUser(ByVal username As String, ByVal password As String) As Boolean 'returns true on success
         If Not userExists(username) Then 'check database to see if user exists
             If writeSQL("insert into tbl_users (Name, Password) values ('" & username & "', '" & password & "')") Then 'if insert new user command was successful
 
@@ -41,13 +41,16 @@
 
                 '// end
 
+                Return True
             Else
                 If MsgBox("Something went horribly wrong and the user wasn't created. View technical details?", vbExclamation + vbYesNo, "Something happened") = MsgBoxResult.Yes Then 'if user wants technical details
                     MsgBox(errorInfo.ToString) 'show them the details from the public errorinfo exception on databasefunctions.vb
                 End If
+                Return False
             End If
         Else
             MsgBox("Username is taken. Please try again.", vbOKOnly & vbExclamation, "Error creating user")
+            Return False
         End If
     End Function
 
@@ -69,7 +72,7 @@
             Else Return False
             End If
         Catch ex As Exception
-            Console.WriteLine(ex.ToString)
+            'console.writeline(ex.ToString)
             If MsgBox("Something went horribly wrong and the password couldn't be verified. View technical details?", vbExclamation + vbYesNo, "Something happened") = MsgBoxResult.Yes Then 'if user wants technical details
                 MsgBox(ex.ToString) 'something went wrong that we didn't expect to happen. Display error msg.
             End If
@@ -100,14 +103,14 @@
                     AddHandler btn.Click, AddressOf frm_conversations.RecipientHandler
                 Next
             Catch ex As Exception
-                Console.WriteLine(ex.ToString)
+                'console.writeline(ex.ToString)
                 If MsgBox("Something went horribly wrong and the streams couldn't be loaded. View technical details?", vbExclamation + vbYesNo, "Something happened") = MsgBoxResult.Yes Then 'if user wants technical details
                     MsgBox(errorInfo.ToString) 'something went wrong that we didn't expect to happen. Display error msg.
                 End If
             End Try
             Return True
         Catch ex As Exception
-            Console.WriteLine(ex.ToString)
+            'console.writeline(ex.ToString)
             If MsgBox("Something went horribly wrong and the streams couldn't be loaded. View technical details?", vbExclamation + vbYesNo, "Something happened") = MsgBoxResult.Yes Then 'if user wants technical details
                 MsgBox(ex.ToString) 'something went wrong that we didn't expect to happen. Display error msg.
             End If
@@ -184,6 +187,7 @@
     <body style=""background-color: #f0f0f0"">"
 
     Function loadMessages()
+        Console.WriteLine("Loading messages with color " & getMessageColor().ToHtmlHexadecimal)
         changeBrowserIEVersion() 'fix rendering issues
         Try
             Dim UserWebBrowsers As List(Of WebBrowser) = New List(Of WebBrowser)
@@ -197,7 +201,7 @@
 
                     Dim wbr As New WebBrowser
                     wbr.Width = frm_main.pnl_messages.Width - 32
-                    Console.WriteLine("'" & message & "' was sent by them: " & theySentTheMessage(message))
+                    'console.writeline("'" & message & "' was sent by them: " & theySentTheMessage(message))
                     If theySentTheMessage(message) Then
                         wbr.DocumentText = html & getMessageColor().ToHtmlHexadecimal & html2 & getMessageColor().ToHtmlHexadecimal & html3 & getMessageColor().ToHtmlHexadecimal & html4 & "<div class=""chat them"">" & message & "</div></body></html>"
                         wbr.Left = 10
@@ -213,23 +217,23 @@
                     wbr.ScrollBarsEnabled = False
 
                     Try
-                        wbr.Name = "wbr" & readMessageID(message)
+                        wbr.Name = "wbr_" & readMessageID(message)
                     Catch ex As Exception
-                        Console.WriteLine(ex.ToString)
+                        'console.writeline(ex.ToString)
                         If MsgBox("Something went horribly wrong and the message IDs couldn't be loaded. View technical details?", vbExclamation + vbYesNo, "Something happened") = MsgBoxResult.Yes Then 'if user wants technical details
                             MsgBox(errorInfo.ToString) 'something went wrong that we didn't expect to happen. Display error msg.
                             Exit Function
                         End If
                     End Try
-                    'Console.WriteLine(lbl.Name & " TOP: " & lbl.Top & " USERLABELCOUT: " & Userlabels.Count)
+                    'console.writeline(lbl.Name & " TOP: " & lbl.Top & " USERLABELCOUT: " & Userlabels.Count)
 
-                    'Console.WriteLine()
+                    'console.writeline()
                     frm_main.pnl_messages.Controls.Add(wbr)
                     UserWebBrowsers.Add(wbr)
                 Next
 
             Catch ex As Exception
-                Console.WriteLine(ex.ToString)
+                'console.writeline(ex.ToString)
                 If MsgBox("Something went horribly wrong and the messages couldn't be loaded. View technical details?", vbExclamation + vbYesNo, "Something happened") = MsgBoxResult.Yes Then 'if user wants technical details
                     MsgBox(ex.ToString) 'something went wrong that we didn't expect to happen. Display error msg.
                     Exit Function
@@ -238,21 +242,37 @@
 
             Try
                 Dim lastItem As WebBrowser = UserWebBrowsers(UserWebBrowsers.Count - 1)
-                'Dim lastID As Integer = CInt(lastItem.Name.Replace("wbr_", ""))
+                Dim lastID As Integer = CInt(lastItem.Name.Replace("wbr_", ""))
                 frm_main.pnl_messages.ScrollControlIntoView(lastItem)
-                'writeSQL("") 'write read recipt for all items up to this point if frm_main is the active window
+                'writeSQL("") 'write read recipt for all messages up to this one in this stream sent by 'them' if frm_main is the active window
 
             Catch
-                Console.WriteLine("no messages")
+                'console.writeline("no messages")
             End Try
             Return True
         Catch ex As Exception
-            Console.WriteLine(ex.ToString)
+            'console.writeline(ex.ToString)
             If MsgBox("Something went horribly wrong and the messages couldn't be loaded. View technical details?", vbExclamation + vbYesNo, "Something happened") = MsgBoxResult.Yes Then 'if user wants technical details
                 MsgBox(ex.ToString) 'something went wrong that we didn't expect to happen. Display error msg.
             End If
             Return False
         End Try
+    End Function
+
+    Function UppercaseFirstLetter(ByVal val As String) As String
+        ' Test for nothing or empty.
+        If String.IsNullOrEmpty(val) Then
+            Return val
+        End If
+
+        ' Convert to character array.
+        Dim array() As Char = val.ToCharArray
+
+        ' Uppercase first character.
+        array(0) = Char.ToUpper(array(0))
+
+        ' Return new string.
+        Return New String(array)
     End Function
 
     Function writeMessage(ByVal message As String, ByVal streamName As String, ByVal username As String) 'when you send a message it needs to write to the database
@@ -271,13 +291,13 @@
         Dim fromID As Integer = readUserID(MakeSQLSafe(username))           '|  <-- getting variables as listed above
         Dim timestamp As DateTime = DateTime.Now                            '|
 
-        Console.WriteLine(message)
+        'console.writeline(message)
 
         Try
             writeSQL("insert into tbl_messages (StreamID, FromID, Timestamp, Message) values ('" & StreamID & "', '" & fromID & "', '" & timestamp & "', '" & MakeSQLSafe(message) & "')")
         Catch ex As Exception
-            Console.WriteLine(ex.ToString)
-            Console.WriteLine(ex.ToString)
+            'console.writeline(ex.ToString)
+            'console.writeline(ex.ToString)
             If MsgBox("Something went horribly wrong and the message couldn't be sent. View technical details?", vbExclamation + vbYesNo, "Something happened") = MsgBoxResult.Yes Then 'if user wants technical details
                 MsgBox(errorInfo.ToString) 'something went wrong that we didn't expect to happen. Display error msg.
             End If

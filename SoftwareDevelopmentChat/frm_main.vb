@@ -71,8 +71,9 @@
     End Sub
 
     Private Sub btn_login_Click(sender As Object, e As EventArgs) Handles btn_login.Click
-        Dim userName As String = txt_userName.Text              'get username
-        Dim PlainTextPassword As String = txt_password.Text     'get password
+        txt_userName.Text = UppercaseFirstLetter(txt_userName.Text.ToLower)
+        Dim userName As String = txt_userName.Text.ToLower              'get username
+        Dim PlainTextPassword As String = txt_password.Text             'get password
 
         '// fancy encryption stuff from encryption.vb //
 
@@ -107,7 +108,9 @@ correctPassword:
             login()
         ElseIf rbtn_userNew.Checked Then 'if it's a new user
             If txt_passwordRepeat.Text = txt_password.Text Then 'if both password fields match
-                addUser(MakeSQLSafe(userName), MakeSQLSafe(password)) 'function on helperfunctions.vb
+                If Not addUser(MakeSQLSafe(userName), MakeSQLSafe(password)) Then 'function on helperfunctions.vb
+                    Exit Sub 'if it fails to make user, dont keep going & disable stuff
+                End If
             Else
                 MsgBox("Passwords do not match. Please try again.", vbOKOnly & vbExclamation, "Error creating user")
             End If
@@ -160,8 +163,6 @@ correctPassword:
     End Sub
 
     Private Sub pbx_settings_Click(sender As Object, e As EventArgs) Handles pbx_settings.Click
-        If Not grp_chat.Text = "" Then 'basically if there's a chat open
-            frm_settings.ShowDialog() 'show settings
-        End If
+        frm_settings.ShowDialog() 'show settings
     End Sub
 End Class

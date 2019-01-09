@@ -30,7 +30,7 @@ Module DatabaseFunctions
             MyConn.Close() 'close connection
             Return True
         Catch ex As Exception 'if a catastrophic error occurs
-            Console.WriteLine(ex.ToString)
+            'console.writeline(ex.ToString)
             MyConn.Close() 'close the connection
             errorInfo = ex 'make error information publicly available
             Return False
@@ -108,7 +108,7 @@ Module DatabaseFunctions
             Dim decryptor As New Encryption(Name) 'new instance of encryption module
             result = decryptor.DecryptData(result) 'decript with username key
         Catch ex As Exception 'if a catastrophic error occurs
-            Console.WriteLine(ex.ToString)
+            'console.writeline(ex.ToString)
             MyConn.Close() 'close the connection
             errorInfo = ex
             Return "False"
@@ -137,7 +137,7 @@ Module DatabaseFunctions
             End While
             MyConn.Close() 'close connection
         Catch ex As Exception 'if a catastrophic error occurs
-            Console.WriteLine(ex.ToString)
+            'console.writeline(ex.ToString)
             MyConn.Close() 'close the connection
             errorInfo = ex
             Return 0
@@ -166,7 +166,7 @@ Module DatabaseFunctions
             End While
             MyConn.Close() 'close connection
         Catch ex As Exception 'if a catastrophic error occurs
-            Console.WriteLine(ex.ToString)
+            'console.writeline(ex.ToString)
             MyConn.Close() 'close the connection
             errorInfo = ex
             Return 0
@@ -200,7 +200,7 @@ Module DatabaseFunctions
             MyConn.Close() 'close connection
             Return streams.ToArray
         Catch ex As Exception 'if a catastrophic error occurs
-            Console.WriteLine(ex.ToString)
+            'console.writeline(ex.ToString)
             MyConn.Close() 'close the connection
             errorInfo = ex
             Return False
@@ -225,7 +225,7 @@ Module DatabaseFunctions
         End If
 
         myCmd.CommandText = sql
-        'Console.WriteLine(myCmd.CommandText)
+        'console.writeline(myCmd.CommandText)
 
         'Open the connection.
         MyConn.Open()
@@ -247,7 +247,7 @@ Module DatabaseFunctions
             MyConn.Close() 'close connection
             Return messages.ToArray
         Catch ex As Exception 'if a catastrophic error occurs
-            Console.WriteLine(ex.ToString)
+            'console.writeline(ex.ToString)
             MyConn.Close() 'close the connection
             errorInfo = ex
             Return False
@@ -260,7 +260,7 @@ Module DatabaseFunctions
         Dim MyConn = New SqlConnection(connectionString)
 
         'Create a Command object.
-        Dim myCmd = myConn.CreateCommand
+        Dim myCmd = MyConn.CreateCommand
         myCmd.CommandText = "select StreamID from tbl_streams where convert(varchar, StreamName) = '" & MakeSQLSafe(streamName) & "'"
 
         'Open the connection.
@@ -273,9 +273,9 @@ Module DatabaseFunctions
             While reader.Read
                 result = reader.GetInt32(0) 'get first value of field (because there should only be one record returned as there shouldn't be streams doubleups).
             End While
-            myConn.Close() 'close connection
+            MyConn.Close() 'close connection
         Catch ex As Exception 'if a catastrophic error occurs
-            Console.WriteLine(ex.ToString)
+            'console.writeline(ex.ToString)
             MyConn.Close() 'close the connection
             errorInfo = ex
             Return 0
@@ -304,7 +304,7 @@ Module DatabaseFunctions
             End While
             MyConn.Close() 'close connection
         Catch ex As Exception 'if a catastrophic error occurs
-            Console.WriteLine(ex.ToString)
+            'console.writeline(ex.ToString)
             MyConn.Close() 'close the connection
             errorInfo = ex
             Return 0
@@ -320,7 +320,7 @@ Module DatabaseFunctions
         'Create a Command object.
         Dim myCmd = MyConn.CreateCommand
         myCmd.CommandText = "select Name from tbl_users where ID = (select FromID from tbl_messages where convert(varchar(MAX), Message) = '" & MakeSQLSafe(message) & "')"
-        Console.WriteLine(myCmd.CommandText)
+        'console.writeline(myCmd.CommandText)
 
         'Open the connection.
         MyConn.Open()
@@ -334,7 +334,7 @@ Module DatabaseFunctions
             End While
             MyConn.Close() 'close connection
         Catch ex As Exception 'if a catastrophic error occurs
-            Console.WriteLine(ex.ToString)
+            'console.writeline(ex.ToString)
             MyConn.Close() 'close the connection
             FromName = "" 'fail
             If MsgBox("Something went horribly wrong and the messages couldn't be loaded. View technical details?", vbExclamation + vbYesNo, "Something happened") = MsgBoxResult.Yes Then 'if user wants technical details
@@ -342,8 +342,8 @@ Module DatabaseFunctions
             End If
         End Try
 
-        Console.WriteLine(FromName & " vs " & frm_main.txt_userName.Text)
-        If FromName = frm_main.txt_userName.Text Then
+        'console.writeline(FromName & " vs " & frm_main.txt_userName.Text)
+        If FromName = frm_main.txt_userName.Text.ToLower Then
             Return False 'it was us
         Else
             Return True 'it was them
@@ -370,7 +370,7 @@ Module DatabaseFunctions
             End While
             MyConn.Close() 'close connection
         Catch ex As Exception 'if a catastrophic error occurs
-            Console.WriteLine(ex.ToString)
+            'console.writeline(ex.ToString)
             MyConn.Close() 'close the connection
             errorInfo = ex
             result = "False"

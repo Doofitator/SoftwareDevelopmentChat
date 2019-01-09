@@ -3,12 +3,19 @@
         If dlog_color.ShowDialog <> Windows.Forms.DialogResult.Cancel Then 'if user actually chose a color
             writeColor(dlog_color.Color, frm_main.grp_chat.Text) 'write the color to the database
         End If
-        loadMessages() 'reload messages to refresh colors
+        frm_main.pnl_messages.Controls.Clear()  '| reload messages
+        loadMessages()                          '| to refresh colors
     End Sub
 
     Private Sub frm_settings_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        grp_chatSettings.Text = "'" & frm_main.grp_chat.Text & "' Chat Options" 'make it look pretty
+        If Not frm_main.grp_chat.Text = "" Then
+            grp_chatSettings.Enabled = True
 
+            grp_chatSettings.Text = "'" & frm_main.grp_chat.Text & "' Chat Options" 'make it look pretty
+
+        Else
+            grp_chatSettings.Enabled = False
+        End If
         If frm_main.chk_rememberMe.Checked = True Then btn_logout.Enabled = True 'enable logout button if you're permanantly logged in (else you can just close and open the app again to logout)
     End Sub
 
