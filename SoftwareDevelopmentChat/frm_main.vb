@@ -164,12 +164,4 @@ correctPassword:
             frm_settings.ShowDialog() 'show settings
         End If
     End Sub
-
-    Private Sub tmr_messageChecker_Tick(sender As Object, e As EventArgs) Handles tmr_messageChecker.Tick
-        If NewMessages() Then
-            notificationTray.BalloonTipTitle = "New Message"
-            notificationTray.BalloonTipText = readUserName(MakeSQLSafe(FromID)) & ": " & NewMessage
-            notificationTray.ShowBalloonTip(5000)
-        End If
-    End Sub
 End Class
