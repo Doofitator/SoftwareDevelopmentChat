@@ -25,6 +25,8 @@
         frm_main.pbx_settings.Visible = True
 
         Return True
+
+        'TODO: Auto click first stream button if it exists
     End Function
 
     Function addUser(ByVal username As String, ByVal password As String) 'technically belongs here as it doesn't actually run any server stuff - just calls another function to do it. It should in future encrypt passwords on their way out to the database.
@@ -235,7 +237,11 @@
             End Try
 
             Try
-                frm_main.pnl_messages.ScrollControlIntoView(UserWebBrowsers(UserWebBrowsers.Count - 1))
+                Dim lastItem As WebBrowser = UserWebBrowsers(UserWebBrowsers.Count - 1)
+                'Dim lastID As Integer = CInt(lastItem.Name.Replace("wbr_", ""))
+                frm_main.pnl_messages.ScrollControlIntoView(lastItem)
+                'writeSQL("") 'write read recipt for all items up to this point if frm_main is the active window
+
             Catch
                 Console.WriteLine("no messages")
             End Try

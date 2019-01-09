@@ -22,25 +22,37 @@ Partial Class frm_conversations
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frm_conversations))
         Me.btn_newMessage = New System.Windows.Forms.Button()
+        Me.cbx_class = New System.Windows.Forms.ComboBox()
         Me.SuspendLayout()
         '
         'btn_newMessage
         '
-        Me.btn_newMessage.Location = New System.Drawing.Point(13, 13)
+        Me.btn_newMessage.Location = New System.Drawing.Point(13, 40)
         Me.btn_newMessage.Name = "btn_newMessage"
         Me.btn_newMessage.Size = New System.Drawing.Size(163, 38)
         Me.btn_newMessage.TabIndex = 0
         Me.btn_newMessage.Text = "New conversation"
         Me.btn_newMessage.UseVisualStyleBackColor = True
         '
+        'cbx_class
+        '
+        Me.cbx_class.FormattingEnabled = True
+        Me.cbx_class.Location = New System.Drawing.Point(13, 13)
+        Me.cbx_class.Name = "cbx_class"
+        Me.cbx_class.Size = New System.Drawing.Size(163, 21)
+        Me.cbx_class.TabIndex = 1
+        '
         'frm_conversations
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(188, 589)
+        Me.Controls.Add(Me.cbx_class)
         Me.Controls.Add(Me.btn_newMessage)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "frm_conversations"
         Me.Text = "Conversations"
         Me.ResumeLayout(False)
@@ -48,4 +60,5 @@ Partial Class frm_conversations
     End Sub
 
     Friend WithEvents btn_newMessage As Button
+    Friend WithEvents cbx_class As ComboBox
 End Class

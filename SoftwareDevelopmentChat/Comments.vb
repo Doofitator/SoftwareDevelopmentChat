@@ -1,10 +1,19 @@
 ﻿Module Comments
-    'HUGARIAN NOTATION:
-    '   Format: btn_sendToServer (notation, underscore, name with seporate words distinguished by capital letters)
-    '   btn -> button
-    '   lbl -> label
-    '   txt -> textbox
-    '   rbtn -> radio button
-    '   chk -> checkbox
-    '   grp -> groupbox
+    'still to do: Add timers to check the database for new messages every ~30 seconds
+
+    'group chats
+
+    'full scale test (see how database copes with lots of data)
+
+    'when you click send it reloads everything instead of just adding a new one to the bottom.
+
+    'usernames shouldn't be case sensitive
+
+    'swear/javascript injection blocker
+
+    'classes
+
+    'admin rights
+
+    'rich text formatting (with html)
 End Module
