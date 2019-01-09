@@ -32,10 +32,10 @@ Public Class frm_conversations
 
     Private Sub btn_newMessage_Click(sender As Object, e As EventArgs) Handles btn_newMessage.Click
 
-        If MsgBox("Create group chat?", vbQuestion, "Chat type") = MsgBoxResult.Yes Then
+        If MsgBox("Create group chat?", vbYesNo, "Chat type") = MsgBoxResult.Yes Then
 
         Else
-            Dim recipient As String = InputBox("Type the recipient's username:")
+            Dim recipient As String = UppercaseFirstLetter(InputBox("Type the recipient's username:"))
             Try
                 Dim recipientID As Integer = readUserID(recipient)
             Catch

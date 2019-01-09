@@ -113,6 +113,7 @@ correctPassword:
                 End If
             Else
                 MsgBox("Passwords do not match. Please try again.", vbOKOnly & vbExclamation, "Error creating user")
+                Exit Sub
             End If
         End If
 
