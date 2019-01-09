@@ -22,6 +22,7 @@ Partial Class frm_main
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frm_main))
         Me.grp_login = New System.Windows.Forms.GroupBox()
         Me.chk_rememberMe = New System.Windows.Forms.CheckBox()
@@ -42,6 +43,8 @@ Partial Class frm_main
         Me.txt_message = New System.Windows.Forms.TextBox()
         Me.pbx_settings = New System.Windows.Forms.PictureBox()
         Me.pnl_messages = New System.Windows.Forms.Panel()
+        Me.tmr_messageChecker = New System.Windows.Forms.Timer(Me.components)
+        Me.notificationTray = New System.Windows.Forms.NotifyIcon(Me.components)
         Me.grp_login.SuspendLayout()
         CType(Me.pbx_appLogo, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.grp_chat.SuspendLayout()
@@ -239,6 +242,15 @@ Partial Class frm_main
         Me.pnl_messages.Size = New System.Drawing.Size(381, 383)
         Me.pnl_messages.TabIndex = 2
         '
+        'tmr_messageChecker
+        '
+        Me.tmr_messageChecker.Interval = 30000
+        '
+        'notificationTray
+        '
+        Me.notificationTray.Text = "NotifyIcon1"
+        Me.notificationTray.Visible = True
+        '
         'frm_main
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -248,6 +260,7 @@ Partial Class frm_main
         Me.Controls.Add(Me.grp_chat)
         Me.Controls.Add(Me.grp_login)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.Name = "frm_main"
         Me.Text = "Login"
@@ -280,4 +293,6 @@ Partial Class frm_main
     Friend WithEvents txt_message As TextBox
     Friend WithEvents pbx_settings As PictureBox
     Friend WithEvents pnl_messages As Panel
+    Friend WithEvents tmr_messageChecker As Timer
+    Friend WithEvents notificationTray As NotifyIcon
 End Class

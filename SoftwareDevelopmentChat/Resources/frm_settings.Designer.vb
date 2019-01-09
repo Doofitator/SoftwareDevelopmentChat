@@ -22,6 +22,7 @@ Partial Class frm_settings
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frm_settings))
         Me.dlog_color = New System.Windows.Forms.ColorDialog()
         Me.grp_chatSettings = New System.Windows.Forms.GroupBox()
         Me.btn_color = New System.Windows.Forms.Button()
@@ -96,6 +97,7 @@ Partial Class frm_settings
         Me.Controls.Add(Me.grp_appSettings)
         Me.Controls.Add(Me.grp_chatSettings)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "frm_settings"
         Me.Text = "Settings"
         Me.grp_chatSettings.ResumeLayout(False)

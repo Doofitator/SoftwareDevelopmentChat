@@ -22,6 +22,7 @@ Partial Class frm_conversations
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frm_conversations))
         Me.btn_newMessage = New System.Windows.Forms.Button()
         Me.cbx_class = New System.Windows.Forms.ComboBox()
         Me.SuspendLayout()
@@ -51,6 +52,7 @@ Partial Class frm_conversations
         Me.Controls.Add(Me.cbx_class)
         Me.Controls.Add(Me.btn_newMessage)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "frm_conversations"
         Me.Text = "Conversations"
         Me.ResumeLayout(False)
