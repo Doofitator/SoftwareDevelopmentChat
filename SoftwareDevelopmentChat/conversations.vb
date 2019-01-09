@@ -87,8 +87,6 @@ Public Class frm_conversations
     Public Shared Sub RecipientHandler(sender As Object, e As EventArgs)
         frm_main.pnl_messages.Controls.Clear()
 
-        frm_main.grp_chat.Enabled = True
-
 
         Dim btn As Button = CType(sender, Button)                           'get the button that was clicked
         Dim streamName As String = btn.Name.Replace("btn_", "")             'get the stream name from the button
@@ -97,6 +95,10 @@ Public Class frm_conversations
         frm_main.grp_chat.Text = streamName                                 'write the stream name on the top of the chat window for a) the user and b) the send button's code and c) the chat window to load the right messages
 
         loadMessages()
+
+        For Each control In frm_main.grp_chat.Controls
+            control.enabled = True 'enable all the chat controls
+        Next
     End Sub
 
     Private Sub cbx_class_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbx_class.SelectedIndexChanged

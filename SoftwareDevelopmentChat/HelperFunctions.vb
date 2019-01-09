@@ -23,6 +23,7 @@
         frm_conversations.Show() 'TODO: Something after this point makes the forms 'jump'. Need to investigate. Added as issue #1
 
         frm_main.pbx_settings.Visible = True
+
         Return True
     End Function
 
@@ -120,9 +121,6 @@
         If sql.Contains("'") Then
             sql = sql.Replace("'", "''")
         End If
-        If sql.Contains("""") Then
-            sql = sql.Replace("""", """""")
-        End If
 
         Return sql
     End Function
@@ -190,13 +188,14 @@
 
 
             Try
-                For Each message As String In getMessageArr(MakeSQLSafe(frm_main.grp_chat.Text)) 'for each message on the database, make a label for it
+                For Each message As String In getMessagesArr(MakeSQLSafe(frm_main.grp_chat.Text), 25) 'for each message on the database, make a label for it
                     'For Each Control In frm_main.grp_chat.Controls
                     ' If TypeOf Control Is Label Then Userlabels.Add(Control)
                     ' Next
 
                     Dim wbr As New WebBrowser
                     wbr.Width = frm_main.pnl_messages.Width - 32
+                    Console.WriteLine("'" & message & "' was sent by them: " & theySentTheMessage(message))
                     If theySentTheMessage(message) Then
                         wbr.DocumentText = html & getMessageColor().ToHtmlHexadecimal & html2 & getMessageColor().ToHtmlHexadecimal & html3 & getMessageColor().ToHtmlHexadecimal & html4 & "<div class=""chat them"">" & message & "</div></body></html>"
                         wbr.Left = 10
@@ -221,13 +220,12 @@
                         End If
                     End Try
                     'Console.WriteLine(lbl.Name & " TOP: " & lbl.Top & " USERLABELCOUT: " & Userlabels.Count)
-                    For Each ctrl In UserWebBrowsers
-                        Console.Write(ctrl.Name & ", ")
-                    Next
+
                     'Console.WriteLine()
                     frm_main.pnl_messages.Controls.Add(wbr)
                     UserWebBrowsers.Add(wbr)
                 Next
+
             Catch ex As Exception
                 Console.WriteLine(ex.ToString)
                 If MsgBox("Something went horribly wrong and the messages couldn't be loaded. View technical details?", vbExclamation + vbYesNo, "Something happened") = MsgBoxResult.Yes Then 'if user wants technical details

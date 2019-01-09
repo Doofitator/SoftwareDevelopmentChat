@@ -208,7 +208,7 @@ Module DatabaseFunctions
 
     End Function
 
-    Function getMessageArr(ByVal message As String)
+    Function getMessagesArr(ByVal message As String, Optional amount As Integer = 0)
         Dim messages As New List(Of String)
 
         'Create a Connection object.
@@ -216,7 +216,15 @@ Module DatabaseFunctions
 
         'Create a Command object.
         Dim myCmd = MyConn.CreateCommand
-        myCmd.CommandText = "select Message from tbl_messages Where StreamID = '" & MakeSQLSafe(readStreamID(frm_main.grp_chat.Text)) & "'" 'select message where it includes the stream ID
+
+        Dim sql As String
+        If Not amount = 0 Then
+            sql = "select Message, Timestamp from (select top " & amount & " Message, Timestamp From tbl_messages where StreamID='" & MakeSQLSafe(readStreamID(frm_main.grp_chat.Text)) & "' Order By Timestamp DESC) T1 Order by Timestamp"
+        Else
+            sql = "select Message from tbl_messages Where StreamID = '" & MakeSQLSafe(readStreamID(frm_main.grp_chat.Text)) & "'" 'select all messages where it includes the stream ID
+        End If
+
+        myCmd.CommandText = sql
         'Console.WriteLine(myCmd.CommandText)
 
         'Open the connection.
@@ -306,30 +314,31 @@ Module DatabaseFunctions
 
         'Create a Command object.
         Dim myCmd = MyConn.CreateCommand
-        myCmd.CommandText = "select FromID from tbl_messages where convert(varchar(MAX), Message) = '" & MakeSQLSafe(message) & "'"
+        myCmd.CommandText = "select Name from tbl_users where ID = (select FromID from tbl_messages where convert(varchar(MAX), Message) = '" & MakeSQLSafe(message) & "')"
+        Console.WriteLine(myCmd.CommandText)
 
         'Open the connection.
         MyConn.Open()
 
-        Dim FromID As Integer = 0 'who sent the message
+        Dim FromName As String = "" 'who sent the message
 
         Try
             Dim reader As SqlDataReader = myCmd.ExecuteReader() 'run sql script
             While reader.Read
-                FromID = reader.GetInt32(0) 'get first value of field
+                FromName = reader.GetString(0) 'get first value of field
             End While
             MyConn.Close() 'close connection
         Catch ex As Exception 'if a catastrophic error occurs
             Console.WriteLine(ex.ToString)
             MyConn.Close() 'close the connection
-            FromID = 0 'fail
+            FromName = "" 'fail
             If MsgBox("Something went horribly wrong and the messages couldn't be loaded. View technical details?", vbExclamation + vbYesNo, "Something happened") = MsgBoxResult.Yes Then 'if user wants technical details
                 MsgBox(ex.ToString) 'something went wrong that we didn't expect to happen. Display error msg.
             End If
         End Try
 
-        Dim TheUsername As String = readUserName(MakeSQLSafe(FromID))
-        If TheUsername = frm_main.txt_userName.Text Then
+        Console.WriteLine(FromName & " vs " & frm_main.txt_userName.Text)
+        If FromName = frm_main.txt_userName.Text Then
             Return False 'it was us
         Else
             Return True 'it was them
