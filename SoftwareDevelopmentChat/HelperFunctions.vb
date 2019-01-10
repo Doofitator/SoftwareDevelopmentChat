@@ -182,6 +182,17 @@
                 position:relative;
                 border-radius:5px;
             }
+            
+            .read {
+                border-bottom: 20px solid lightgrey;
+            }
+            
+            .readName {
+                position: relative;
+                top: 30px;
+                margin-top: -30px;
+                color: grey;
+            }
         </style>
     </head>
     <body style=""background-color: #f0f0f0"">"
@@ -197,9 +208,9 @@
         Try
             Dim UserWebBrowsers As List(Of WebBrowser) = New List(Of WebBrowser)
 
-
+            Dim messagesArray As Array = getMessagesArr(MakeSQLSafe(frm_main.grp_chat.Text), 25)
             Try
-                For Each message As String In getMessagesArr(MakeSQLSafe(frm_main.grp_chat.Text), 25) 'for each message on the database, make a label for it
+                For Each message As String In messagesArray 'for each message on the database, make a label for it
                     'For Each Control In frm_main.grp_chat.Controls
                     ' If TypeOf Control Is Label Then Userlabels.Add(Control)
                     ' Next
@@ -208,16 +219,27 @@
 
                     wbr.Width = frm_main.pnl_messages.Width - 32
                     'console.writeline("'" & message & "' was sent by them: " & theySentTheMessage(message))
+                    Dim div As String
+                    Dim readDiv As String = ""
+
+
                     If theySentTheMessage(message) Then
                         lastMessage = message
-
-                        wbr.DocumentText = html & getMessageColor().ToHtmlHexadecimal & html2 & getMessageColor().ToHtmlHexadecimal & html3 & getMessageColor().ToHtmlHexadecimal & html4 & "<div class=""chat them"">" & message & "</div></body></html>"
-                        wbr.Left = 10
+                        div = "<div class=""chat them"">"
                     Else
-                        wbr.DocumentText = html & getMessageColor().ToHtmlHexadecimal & html2 & getMessageColor().ToHtmlHexadecimal & html3 & getMessageColor().ToHtmlHexadecimal & html4 & "<div class=""chat us"">" & message & "</div></body></html>"
-
-                        wbr.Left = 10
+                        If Not readRecipt(message) Then
+                            div = "<div class=""chat us"">"
+                        Else
+                            div = "<div class=""chat us"">"
+                            If message = theLastMessageThatWasSentByUsAndIsReadIn(messagesArray) Then readDiv = "<div class=""readName"">Read</div>" : div = "<div class=""chat us read"">"
+                        End If
                     End If
+
+
+
+                    wbr.Left = 10
+
+                    wbr.DocumentText = html & getMessageColor().ToHtmlHexadecimal & html2 & getMessageColor().ToHtmlHexadecimal & html3 & getMessageColor().ToHtmlHexadecimal & html4 & div & message & readDiv & "</div></body></html>"
 
                     wbr.Height = 80                         '| TODO: Fix this. 
                     wbr.Top = (UserWebBrowsers.Count * 80)  '| It could be better.
@@ -268,6 +290,20 @@
             End If
             Return False
         End Try
+    End Function
+
+    Function theLastMessageThatWasSentByUsAndIsReadIn(ByVal Messages As Array) As String 'returns the last message that was sent by 'us' and is read by the other person / persons
+        Dim messagesList As New List(Of String)
+
+        For Each message In Messages                'for each message we're given
+            If Not theySentTheMessage(message) Then 'if we sent it
+                If readRecipt(message) Then         'if it has been read
+                    messagesList.Add(message)       'add it to our list
+                End If
+            End If
+        Next
+
+        Return messagesList(messagesList.Count - 1) 'retun the latest message in our list
     End Function
 
     Function theySentTheMessage(ByVal message As String) As Boolean 'this function works out who sent the message. If it was someone else, it is true, else false.

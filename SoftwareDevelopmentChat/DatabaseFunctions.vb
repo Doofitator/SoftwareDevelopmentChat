@@ -374,6 +374,38 @@ Module DatabaseFunctions
         Return FromName
     End Function
 
+    Function readRecipt(ByVal message As String) As Boolean
+        'Create a Connection object.
+        Dim MyConn = New SqlConnection(connectionString)
+
+        'Create a Command object.
+        Dim myCmd = MyConn.CreateCommand
+        myCmd.CommandText = "select RecipientRead from tbl_messages where convert(varchar(MAX), Message) = '" & MakeSQLSafe(message) & "'"
+        'console.writeline(myCmd.CommandText)
+
+        'Open the connection.
+        MyConn.Open()
+
+        Dim read As Boolean = False
+
+        Try
+            Dim reader As SqlDataReader = myCmd.ExecuteReader() 'run sql script
+            While reader.Read
+                read = reader.GetBoolean(0) 'get first value of field
+            End While
+            MyConn.Close() 'close connection
+        Catch ex As Exception 'if a catastrophic error occurs
+            'console.writeline(ex.ToString)
+            MyConn.Close() 'close the connection
+            read = False 'fail
+            If MsgBox("Something went horribly wrong and the messages couldn't be loaded. View technical details?", vbExclamation + vbYesNo, "Something happened") = MsgBoxResult.Yes Then 'if user wants technical details
+                MsgBox(ex.ToString) 'something went wrong that we didn't expect to happen. Display error msg.
+            End If
+        End Try
+
+        Return read
+    End Function
+
     Function getMessageColor() As Color 'reads BubbleColor field of tbl_streams
         'Create a Connection object.
         Dim MyConn = New SqlConnection(connectionString)
