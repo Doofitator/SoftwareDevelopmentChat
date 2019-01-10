@@ -200,7 +200,6 @@
     Private Declare Function GetActiveWindow Lib "user32" Alias "GetActiveWindow" () As IntPtr
 
     Function loadMessages()
-        Console.WriteLine("Loading messages with color " & getMessageColor().ToHtmlHexadecimal)
         changeBrowserIEVersion() 'fix rendering issues
 
         Dim lastMessage As String 'the current message is always plopped into here - once the for each statement is finished, it will contain the last message.
@@ -364,6 +363,7 @@
         frm_main.txt_message.Text = "" 'reset textbox
 
         'now run LoadMessages again to refresh the messages in the chat
+        frm_main.pnl_messages.Controls.Clear()
         loadMessages()
 
     End Function
