@@ -167,6 +167,19 @@ correctPassword:
         frm_settings.ShowDialog() 'show settings
     End Sub
 
+    Dim notifiedMessages As New List(Of Integer)
+
     Private Sub tmr_messageChecker_Tick(sender As Object, e As EventArgs) Handles tmr_messageChecker.Tick
+        'for each stream button
+        'get stream name
+        'get stream id
+        'look at last message in stream
+        'if last message in stream's ID isn't in the notifiedMessages list,
+        'is last message in stream sent by them?
+        'if so, is it read?
+        'no?
+        'if grp_chat is showing that stream, load the message
+        'display notification
+        'add ID to notifiedMessages list
     End Sub
 End Class
