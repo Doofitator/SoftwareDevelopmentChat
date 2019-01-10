@@ -5,8 +5,6 @@
 
     'full scale test (see how database copes with lots of data)
 
-    'when you click send it reloads everything instead of just adding a new one to the bottom.
-
     'usernames shouldn't be case sensitive
 
     'swear/javascript injection blocker

@@ -242,7 +242,7 @@
 
                     wbr.Height = 80                         '| TODO: Fix this. 
                     wbr.Top = (UserWebBrowsers.Count * 80)  '| It could be better.
-
+                    Console.WriteLine(wbr.Top)
                     wbr.ScrollBarsEnabled = False
 
                     Try
@@ -362,10 +362,46 @@
 
         frm_main.txt_message.Text = "" 'reset textbox
 
-        'now run LoadMessages again to refresh the messages in the chat
-        frm_main.pnl_messages.Controls.Clear()
-        loadMessages()
+        Dim biggestTop As Integer = 0
+        Dim lastHeight As Integer = 0
+        Dim UserWebBrowsersCount As Integer = 0
+        For Each webbrowser In frm_main.pnl_messages.Controls
+            If webbrowser.top > biggestTop Then biggestTop = webbrowser.top : lastHeight = webbrowser.height
+            UserWebBrowsersCount += 1
+        Next
 
+        Dim wbr As New WebBrowser
+
+        wbr.Width = frm_main.pnl_messages.Width - 32
+        'console.writeline("'" & message & "' was sent by them: " & theySentTheMessage(message))
+        Dim div As String = "<div class=""chat us"">"
+
+        wbr.Left = 10
+
+        wbr.DocumentText = html & getMessageColor().ToHtmlHexadecimal & html2 & getMessageColor().ToHtmlHexadecimal & html3 & getMessageColor().ToHtmlHexadecimal & html4 & div & message & "</div></body></html>"
+
+        wbr.Height = 80                         '| TODO: Fix this. 
+        wbr.Top = (UserWebBrowsersCount * 15)  '| also this makes no sense but you know what? I can't be bothered.
+        Console.WriteLine(wbr.Top)
+        wbr.BringToFront()
+
+        wbr.ScrollBarsEnabled = False
+
+        Try
+            wbr.Name = "wbr_" & readMessageID(message)
+        Catch ex As Exception
+            'console.writeline(ex.ToString)
+            If MsgBox("Something went horribly wrong and the message IDs couldn't be loaded. View technical details?", vbExclamation + vbYesNo, "Something happened") = MsgBoxResult.Yes Then 'if user wants technical details
+                MsgBox(errorInfo.ToString) 'something went wrong that we didn't expect to happen. Display error msg.
+                Exit Function
+            End If
+        End Try
+        'console.writeline(lbl.Name & " TOP: " & lbl.Top & " USERLABELCOUT: " & Userlabels.Count)
+
+        'console.writeline()
+        frm_main.pnl_messages.Controls.Add(wbr)
+
+        frm_main.pnl_messages.ScrollControlIntoView(wbr) 'scroll to last message
     End Function
 
     Function writeColor(ByVal colorToWrite As Color, ByVal stream As String)
