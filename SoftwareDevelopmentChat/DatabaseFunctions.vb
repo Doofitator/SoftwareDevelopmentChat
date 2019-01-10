@@ -374,6 +374,37 @@ Module DatabaseFunctions
         Return FromName
     End Function
 
+    Function getLatestMessageInStream(ByVal streamID As Integer) As String
+        'Create a Connection object.
+        Dim MyConn = New SqlConnection(connectionString)
+
+        'Create a Command object.
+        Dim myCmd = MyConn.CreateCommand
+        myCmd.CommandText = "Select Message from tbl_messages where streamID=" & streamID & " order by ID DESC"
+
+        'Open the connection.
+        MyConn.Open()
+
+        Dim Message As String = ""
+
+        Try
+            Dim reader As SqlDataReader = myCmd.ExecuteReader() 'run sql script
+            While reader.Read
+                Message = reader.GetString(0) 'get first value of field, as that's all we want
+            End While
+            MyConn.Close() 'close connection
+        Catch ex As Exception 'if a catastrophic error occurs
+            'console.writeline(ex.ToString)
+            MyConn.Close() 'close the connection
+            Message = "" 'fail
+            If MsgBox("Something went horribly wrong and the messages couldn't be loaded. View technical details?", vbExclamation + vbYesNo, "Something happened") = MsgBoxResult.Yes Then 'if user wants technical details
+                MsgBox(ex.ToString) 'something went wrong that we didn't expect to happen. Display error msg.
+            End If
+        End Try
+
+        Return Message
+    End Function
+
     Function readRecipt(ByVal message As String) As Boolean
         'Create a Connection object.
         Dim MyConn = New SqlConnection(connectionString)

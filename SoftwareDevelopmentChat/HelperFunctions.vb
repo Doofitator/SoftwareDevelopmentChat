@@ -23,6 +23,7 @@
         frm_conversations.Show() 'TODO: Something after this point makes the forms 'jump'. Need to investigate. Added as issue #1
 
         frm_main.pbx_settings.Visible = True
+        frm_main.tmr_messageChecker.Enabled = True
 
         Return True
 
@@ -370,18 +371,35 @@
             UserWebBrowsersCount += 1
         Next
 
+        addMessageAfterTheFact(message, UserWebBrowsersCount)
+
+    End Function
+
+    Function addMessageAfterTheFact(ByVal message As String, ByVal userWebBrowsersCount As Integer)
         Dim wbr As New WebBrowser
 
         wbr.Width = frm_main.pnl_messages.Width - 32
         'console.writeline("'" & message & "' was sent by them: " & theySentTheMessage(message))
-        Dim div As String = "<div class=""chat us"">"
+        Dim div As String
+        Dim readDiv As String
+
+        If theySentTheMessage(message) Then
+            div = "<div class=""chat them"">"
+        Else
+            If Not readRecipt(message) Then
+                div = "<div class=""chat us"">"
+            Else
+                div = "<div class=""chat us"">"
+                If message = theLastMessageThatWasSentByUsAndIsReadIn(getMessagesArr(MakeSQLSafe(frm_main.grp_chat.Text), 25)) Then readDiv = "<div class=""readName"">Read</div>" : div = "<div class=""chat us read"">"
+            End If
+        End If
 
         wbr.Left = 10
 
-        wbr.DocumentText = html & getMessageColor().ToHtmlHexadecimal & html2 & getMessageColor().ToHtmlHexadecimal & html3 & getMessageColor().ToHtmlHexadecimal & html4 & div & message & "</div></body></html>"
+        wbr.DocumentText = html & getMessageColor().ToHtmlHexadecimal & html2 & getMessageColor().ToHtmlHexadecimal & html3 & getMessageColor().ToHtmlHexadecimal & html4 & div & message & readDiv & "</div></body></html>"
 
         wbr.Height = 80                         '| TODO: Fix this. 
-        wbr.Top = (UserWebBrowsersCount * 15)  '| also this makes no sense but you know what? I can't be bothered.
+        wbr.Top = (userWebBrowsersCount * 15)   '| also this makes no sense but you know what? I can't be bothered.
         Console.WriteLine(wbr.Top)
         wbr.BringToFront()
 

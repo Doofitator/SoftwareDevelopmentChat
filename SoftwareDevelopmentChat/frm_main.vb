@@ -167,19 +167,38 @@ correctPassword:
         frm_settings.ShowDialog() 'show settings
     End Sub
 
-    Dim notifiedMessages As New List(Of Integer)
+    Dim notifiedMessages As New List(Of String)
 
     Private Sub tmr_messageChecker_Tick(sender As Object, e As EventArgs) Handles tmr_messageChecker.Tick
-        'for each stream button
-        'get stream name
-        'get stream id
-        'look at last message in stream
-        'if last message in stream's ID isn't in the notifiedMessages list,
-        'is last message in stream sent by them?
-        'if so, is it read?
-        'no?
-        'if grp_chat is showing that stream, load the message
-        'display notification
-        'add ID to notifiedMessages list
+        For Each control In frm_conversations.Controls                                  '|
+            If TypeOf (control) Is Button Then                                          '| for each stream button
+                If Not control.name = "btn_newMessage" Then                             '|
+                    Dim streamName = control.text                                       'get stream name
+                    Dim streamID = readStreamID(MakeSQLSafe(streamName))                'get stream id
+                    Dim latestMessage As String = getLatestMessageInStream(streamID)    'look at last message in stream
+                    If Not notifiedMessages.Contains(latestMessage) Then                'if last message in stream isn't in the notifiedMessages list,
+                        Try 'because if latestmessage is blank for some reason it will crash
+                            If theySentTheMessage(MakeSQLSafe(latestMessage)) Then          'is last message in stream sent by them?
+                                If Not readRecipt(latestMessage) Then                       'if so, is it unread?
+                                    Dim userWebBrowserCount As Integer = 0
+                                    For Each webbrowser In pnl_messages.Controls
+                                        userWebBrowserCount += 1
+                                    Next
+                                    If grp_chat.Text = streamName Then                      'if grp_chat is showing that stream
+                                        addMessageAfterTheFact(latestMessage, userWebBrowserCount) 'load the message
+                                    End If
+                                    notificationTray.BalloonTipTitle = streamName           '|
+                                    notificationTray.BalloonTipText = latestMessage         '| display notification
+                                    notificationTray.ShowBalloonTip(5000)                   '|
+                                    notifiedMessages.Add(latestMessage)                     'add to notifiedMessages list
+                                End If
+                            End If
+                        Catch ex As Exception
+                            Console.WriteLine(ex.ToString)
+                        End Try
+                    End If
+                End If
+            End If
+        Next
     End Sub
 End Class
