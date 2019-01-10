@@ -186,9 +186,14 @@
     </head>
     <body style=""background-color: #f0f0f0"">"
 
+    Private Declare Function GetActiveWindow Lib "user32" Alias "GetActiveWindow" () As IntPtr
+
     Function loadMessages()
         Console.WriteLine("Loading messages with color " & getMessageColor().ToHtmlHexadecimal)
         changeBrowserIEVersion() 'fix rendering issues
+
+        Dim lastMessage As String 'the current message is always plopped into here - once the for each statement is finished, it will contain the last message.
+
         Try
             Dim UserWebBrowsers As List(Of WebBrowser) = New List(Of WebBrowser)
 
@@ -200,9 +205,12 @@
                     ' Next
 
                     Dim wbr As New WebBrowser
+
                     wbr.Width = frm_main.pnl_messages.Width - 32
                     'console.writeline("'" & message & "' was sent by them: " & theySentTheMessage(message))
                     If theySentTheMessage(message) Then
+                        lastMessage = message
+
                         wbr.DocumentText = html & getMessageColor().ToHtmlHexadecimal & html2 & getMessageColor().ToHtmlHexadecimal & html3 & getMessageColor().ToHtmlHexadecimal & html4 & "<div class=""chat them"">" & message & "</div></body></html>"
                         wbr.Left = 10
                     Else
@@ -240,12 +248,15 @@
                 End If
             End Try
 
-            Try
-                Dim lastItem As WebBrowser = UserWebBrowsers(UserWebBrowsers.Count - 1)
-                Dim lastID As Integer = CInt(lastItem.Name.Replace("wbr_", ""))
-                frm_main.pnl_messages.ScrollControlIntoView(lastItem)
-                'writeSQL("") 'write read recipt for all messages up to this one in this stream sent by 'them' if frm_main is the active window
-
+            Try 'in case there are no messages in the stream
+                Dim lastItem As WebBrowser = UserWebBrowsers(UserWebBrowsers.Count - 1) 'get latest message webbrowser
+                frm_main.pnl_messages.ScrollControlIntoView(lastItem) 'scroll to last message
+                If GetActiveWindow Then 'if this program is the active, focused window
+                    Dim fromID As Integer = readUserID(senderName(lastMessage))
+                    Dim messageID As Integer = CInt(lastItem.Name.Replace("wbr_", ""))
+                    'from id is the user id of the name of the person who sent the contents of the latest webbrowser without all the html.
+                    writeSQL("update tbl_messages set recipientRead = 1 where FromID = " & fromID & " and StreamID = " & readStreamIDFromMessageID(messageID)) 'write read recipt for all messages up to this one in this stream sent by 'them' if frm_main is the active window
+                End If
             Catch
                 'console.writeline("no messages")
             End Try
@@ -257,6 +268,17 @@
             End If
             Return False
         End Try
+    End Function
+
+    Function theySentTheMessage(ByVal message As String) As Boolean 'this function works out who sent the message. If it was someone else, it is true, else false.
+
+
+        'console.writeline(FromName & " vs " & frm_main.txt_userName.Text)
+        If senderName(message) = frm_main.txt_userName.Text.ToLower Then
+            Return False 'it was us
+        Else
+            Return True 'it was them
+        End If
     End Function
 
     Function UppercaseFirstLetter(ByVal val As String) As String

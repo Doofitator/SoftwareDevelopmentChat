@@ -284,6 +284,35 @@ Module DatabaseFunctions
         Return result
     End Function
 
+    Function readStreamIDFromMessageID(ByVal messageID As Integer) As Integer 'returns 0 on fail
+        'Create a Connection object.
+        Dim MyConn = New SqlConnection(connectionString)
+
+        'Create a Command object.
+        Dim myCmd = MyConn.CreateCommand
+        myCmd.CommandText = "select StreamID from tbl_messages where ID = '" & messageID & "'"
+
+        'Open the connection.
+        MyConn.Open()
+
+        Dim result As Integer = 0 'this is what the function will return
+
+        Try
+            Dim reader As SqlDataReader = myCmd.ExecuteReader() 'run sql script
+            While reader.Read
+                result = reader.GetInt32(0) 'get first value of field (because there should only be one record returned as there shouldn't be streams doubleups).
+            End While
+            MyConn.Close() 'close connection
+        Catch ex As Exception 'if a catastrophic error occurs
+            'console.writeline(ex.ToString)
+            MyConn.Close() 'close the connection
+            errorInfo = ex
+            Return 0
+        End Try
+
+        Return result
+    End Function
+
     Function readMessageID(ByVal Message As String) As Integer 'returns 0 on fail
         'Create a Connection object.
         Dim MyConn = New SqlConnection(connectionString)
@@ -313,7 +342,7 @@ Module DatabaseFunctions
         Return result
     End Function
 
-    Function theySentTheMessage(ByVal message As String) As Boolean 'this function works out who sent the message. If it was someone else, it is true, else false.
+    Function senderName(ByVal message As String) As String
         'Create a Connection object.
         Dim MyConn = New SqlConnection(connectionString)
 
@@ -342,12 +371,7 @@ Module DatabaseFunctions
             End If
         End Try
 
-        'console.writeline(FromName & " vs " & frm_main.txt_userName.Text)
-        If FromName = frm_main.txt_userName.Text.ToLower Then
-            Return False 'it was us
-        Else
-            Return True 'it was them
-        End If
+        Return FromName
     End Function
 
     Function getMessageColor() As Color 'reads BubbleColor field of tbl_streams

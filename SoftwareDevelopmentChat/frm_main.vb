@@ -166,4 +166,7 @@ correctPassword:
     Private Sub pbx_settings_Click(sender As Object, e As EventArgs) Handles pbx_settings.Click
         frm_settings.ShowDialog() 'show settings
     End Sub
+
+    Private Sub tmr_messageChecker_Tick(sender As Object, e As EventArgs) Handles tmr_messageChecker.Tick
+    End Sub
 End Class
