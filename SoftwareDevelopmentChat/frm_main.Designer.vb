@@ -243,7 +243,7 @@ Partial Class frm_main
         '
         'tmr_messageChecker
         '
-        Me.tmr_messageChecker.Interval = 30000
+        Me.tmr_messageChecker.Interval = 25000
         '
         'notificationTray
         '

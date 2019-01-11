@@ -380,7 +380,7 @@ Module DatabaseFunctions
 
         'Create a Command object.
         Dim myCmd = MyConn.CreateCommand
-        myCmd.CommandText = "Select Message from tbl_messages where streamID=" & streamID & " order by ID DESC"
+        myCmd.CommandText = "Select Message from tbl_messages where streamID=" & streamID & " order by ID ASC"
 
         'Open the connection.
         MyConn.Open()
