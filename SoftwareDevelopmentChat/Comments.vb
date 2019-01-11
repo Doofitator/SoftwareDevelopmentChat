@@ -1,23 +1,19 @@
 ﻿Module Comments
-    'still to do: Add timers to check the database for new messages every ~30 seconds
+    'TODO: group chats
 
-    'group chats
+    'TODO: full scale test (see how database copes with lots of data)
 
-    'full scale test (see how database copes with lots of data)
+    'TODO: swear/javascript injection blocker
 
-    'usernames shouldn't be case sensitive
+    'TODO: classes
 
-    'swear/javascript injection blocker
+    'TODO: admin rights
 
-    'classes
+    'TODO: rich text formatting (with html)
 
-    'admin rights
+    'TODO: webbrowsers need to dynamically size
 
-    'rich text formatting (with html)
+    'TODO: two windows need to be better in sync. Minimise one, minimise the other. Activate one, the other appears next to it.
 
-    'webbrowsers need to dynamically size
-
-    'two windows need to be better in sync. Minimise one, minimise the other. Activate one, the other appears next to it.
-
-    'since adding pnl_messages, resising is kind of broken
+    'TODO: since adding pnl_messages, resising is kind of broken
 End Module
