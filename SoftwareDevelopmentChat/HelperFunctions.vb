@@ -243,7 +243,6 @@
 
                     wbr.Height = 80                         '| TODO: Fix this. 
                     wbr.Top = (UserWebBrowsers.Count * 80)  '| It could be better.
-                    Console.WriteLine(wbr.Top)
                     wbr.ScrollBarsEnabled = False
 
                     Try
@@ -400,7 +399,6 @@
 
         wbr.Height = 80                         '| TODO: Fix this. 
         wbr.Top = (userWebBrowsersCount * 15)   '| also this makes no sense but you know what? I can't be bothered.
-        Console.WriteLine(wbr.Top)
         wbr.BringToFront()
 
         wbr.ScrollBarsEnabled = False

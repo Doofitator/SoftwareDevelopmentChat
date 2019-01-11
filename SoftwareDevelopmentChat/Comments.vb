@@ -18,4 +18,6 @@
     'webbrowsers need to dynamically size
 
     'two windows need to be better in sync. Minimise one, minimise the other. Activate one, the other appears next to it.
+
+    'since adding pnl_messages, resising is kind of broken
 End Module

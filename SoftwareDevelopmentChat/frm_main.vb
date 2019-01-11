@@ -28,7 +28,9 @@
 
     Private Sub notificationTray_BalloonTipClicked(ByVal sender As Object, ByVal e As EventArgs) _
                                           Handles notificationTray.BalloonTipClicked
-        MessageBox.Show("yeet")
+        Dim stream As String = notificationTray.BalloonTipTitle
+        Dim streamBtn As Button = CType(frm_conversations.Controls("btn_" & stream), Button)
+        streamBtn.PerformClick()
     End Sub
 
     Function tabIndexFixer(ByVal isExistingUser As Boolean) 'probably really should be on helperfunctions module but it is something that only this form will access so nvm
@@ -170,6 +172,7 @@ correctPassword:
     Dim notifiedMessages As New List(Of String)
 
     Private Sub tmr_messageChecker_Tick(sender As Object, e As EventArgs) Handles tmr_messageChecker.Tick
+        ' // check for new unread messages //
         For Each control In frm_conversations.Controls                                  '|
             If TypeOf (control) Is Button Then                                          '| for each stream button
                 If Not control.name = "btn_newMessage" Then                             '|
@@ -200,5 +203,7 @@ correctPassword:
                 End If
             End If
         Next
+
+        ' // should check if existing messages are read yet now
     End Sub
 End Class
