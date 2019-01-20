@@ -25,7 +25,7 @@
 
     Private Sub txt_grpMember_textchanged(sender As Object, e As EventArgs) Handles txt_grpMember1.TextChanged, txt_grpMember2.TextChanged
         Dim txt As TextBox = CType(sender, TextBox)             'get sender
-        If readUserID(UppercaseFirstLetter(txt.Text)) = 0 Then  'if you can't get a user ID from the textbox input
+        If readUserID(UppercaseFirstLetter(txt.Text)) = 0 Or UppercaseFirstLetter(txt.Text) = frm_main.txt_userName.Text Then  'if you can't get a user ID from the textbox input
             txt.ForeColor = Color.Red                           'forecolor=red
         Else
             txt.ForeColor = Color.Black                         'forecolor=black (normal)
@@ -37,7 +37,11 @@
             If TypeOf (control) Is TextBox Then 'if control is a textbox
                 Dim text As TextBox = CType(control, TextBox)   'convert control to a textbox (legit just for intellisense)
                 'TODO: The following line needs to also make sure there aren't duplicates with any other textboxes
-                If Not text.Text = "" And Not txt.ForeColor = Color.Red Then textValids.Add(True) Else textValids.Add(False) 'if the textbox isn't red and contains text then put a true in textvalids else false
+                If Not text.Text = "" And Not txt.ForeColor = Color.Red And Not UppercaseFirstLetter(txt.Text) = frm_main.txt_userName.Text Then 'if the textbox isn't red and contains text then put a true in textvalids else false
+                    textValids.Add(True)
+                Else
+                    textValids.Add(False)
+                End If
             End If
         Next
 

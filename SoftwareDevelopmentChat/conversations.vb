@@ -43,9 +43,9 @@ Public Class frm_conversations
 
 
             Dim recipients As String = getGroupChatNames()
-            MsgBox(recipients)
+            'MsgBox(recipients) 'debugging
             If recipients = "False" Then
-                If MsgBox("Something went horribly wrong and the user(s) could not be found. View technical details?", vbExclamation + vbYesNo, "Something happened") = MsgBoxResult.Yes Then 'if user wants technical details
+                If MsgBox("Chat not created. View technical details?", vbExclamation + vbYesNo, "Something happened") = MsgBoxResult.Yes Then 'if user wants technical details
                     MsgBox(errorInfo.ToString)
                 End If
                 Exit Sub
