@@ -32,11 +32,13 @@ Public Class frm_conversations
 
     Private Sub btn_newMessage_Click(sender As Object, e As EventArgs) Handles btn_newMessage.Click
 
+        'todo: https://github.com/Doofitator/SoftwareDevelopmentChat/issues/4
+
         If MsgBox("Create group chat?", vbYesNo, "Chat type") = MsgBoxResult.Yes Then
 
 
             'TODO: This is really dodgy.
-            'For starters, say there's an existing chat between Ash and Henry, and we make a group chat between Ash, Henry and Lachie, the system thinks the chat already exists because one like it exists (line 73 as of writing)
+            'For starters, say there's an existing chat between Ash and Henry, and we make a group chat between Ash, Henry and Lachie, the system thinks the chat already exists because one like it exists (line 69 as of writing)
             'next, you can make a group chat with yourself. There's nothing on the group chat maker form to stop you from typing your own name in.
             'on the same note, there's nothing stopping you typing someone else's name twice.
             'finally, when the stream button is created, there are no spaces between commas and names. There is also the potential for the button to run out of text space if the names are too long.

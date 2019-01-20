@@ -373,9 +373,12 @@
 
     End Function
 
+    Function d(ByVal num As Integer)
+        Console.WriteLine(num)
+    End Function
+
     Function addMessageAfterTheFact(ByVal message As String, ByVal userWebBrowsersCount As Integer)
         Dim wbr As New WebBrowser
-
         wbr.Width = frm_main.pnl_messages.Width - 32
         'console.writeline("'" & message & "' was sent by them: " & theySentTheMessage(message))
         Dim div As String
@@ -391,7 +394,6 @@
                 If message = theLastMessageThatWasSentByUsAndIsReadIn(getMessagesArr(MakeSQLSafe(frm_main.grp_chat.Text), 25)) Then readDiv = "<div class=""readName"">Read</div>" : div = "<div class=""chat us read"">"
             End If
         End If
-
         wbr.Left = 10
 
         wbr.DocumentText = html & getMessageColor().ToHtmlHexadecimal & html2 & getMessageColor().ToHtmlHexadecimal & html3 & getMessageColor().ToHtmlHexadecimal & html4 & div & message & readDiv & "</div></body></html>"
@@ -401,7 +403,6 @@
         wbr.BringToFront()
 
         wbr.ScrollBarsEnabled = False
-
         Try
             wbr.Name = "wbr_" & readMessageID(message)
         Catch ex As Exception
@@ -412,7 +413,6 @@
             End If
         End Try
         'console.writeline(lbl.Name & " TOP: " & lbl.Top & " USERLABELCOUT: " & Userlabels.Count)
-
         'console.writeline()
         frm_main.pnl_messages.Controls.Add(wbr)
 
