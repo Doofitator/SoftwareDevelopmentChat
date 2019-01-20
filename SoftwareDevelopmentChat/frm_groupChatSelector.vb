@@ -22,21 +22,21 @@
     End Sub
 
     Private Sub txt_grpMember_textchanged(sender As Object, e As EventArgs) Handles txt_grpMember1.TextChanged, txt_grpMember1.TextChanged
-        Dim txt As TextBox = CType(sender, TextBox)
-        If readUserID(UppercaseFirstLetter(txt.Text)) = 0 Then
-            txt.ForeColor = Color.Red
+        Dim txt As TextBox = CType(sender, TextBox)             'get sender
+        If readUserID(UppercaseFirstLetter(txt.Text)) = 0 Then  'if you can't get a user ID from the textbox input
+            txt.ForeColor = Color.Red                           'forecolor=red
         Else
-            txt.ForeColor = Color.Black
+            txt.ForeColor = Color.Black                         'forecolor=black (normal)
         End If
     End Sub
 
     Private Sub btn_ok_Click(sender As Object, e As EventArgs) Handles btn_ok.Click
-        Me.DialogResult = DialogResult.OK
-        Me.Close()
+        Me.DialogResult = DialogResult.OK   'let whoever called this form know that it's ok       
+        Me.Close()                          'close
     End Sub
 
     Private Sub btn_cancel_Click(sender As Object, e As EventArgs) Handles btn_cancel.Click
-        Me.DialogResult = DialogResult.Cancel
-        Me.Close()
+        Me.DialogResult = DialogResult.Cancel   'let whoever called this form know its cancelled
+        Me.Close()                              'close
     End Sub
 End Class
