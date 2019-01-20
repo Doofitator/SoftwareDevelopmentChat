@@ -36,7 +36,7 @@ Public Class frm_conversations
 
 
             'TODO: This is really dodgy.
-            'For starters, say there's an existing chat between Ash and Henry, and we make a group chat between Ash, Henry and Lachie, the system thinks the chat already exists because one like it exists (line 72 as of writing)
+            'For starters, say there's an existing chat between Ash and Henry, and we make a group chat between Ash, Henry and Lachie, the system thinks the chat already exists because one like it exists (line 73 as of writing)
             'next, you can make a group chat with yourself. There's nothing on the group chat maker form to stop you from typing your own name in.
             'on the same note, there's nothing stopping you typing someone else's name twice.
             'finally, when the stream button is created, there are no spaces between commas and names. There is also the potential for the button to run out of text space if the names are too long.
@@ -69,6 +69,7 @@ Public Class frm_conversations
 
             For Each recipient In recipientString
                 If userExists(recipient) Then
+                    'TODO: Fix the following function - streamExists needs to be written better. I'll work on that today (21/1/19).
                     If streamExists(recipients, frm_main.txt_userName.Text) Then MsgBox("Conversation already exists", vbOKOnly, "Error creating stream") : Exit Sub 'check if stream already exists & cancel if it does
                     If writeSQL(sql) Then
                         MsgBox("Conversation created successfully.", vbOKOnly, "Success")

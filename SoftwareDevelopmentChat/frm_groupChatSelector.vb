@@ -36,6 +36,7 @@
         For Each control In Me.Controls        'for each control on form
             If TypeOf (control) Is TextBox Then 'if control is a textbox
                 Dim text As TextBox = CType(control, TextBox)   'convert control to a textbox (legit just for intellisense)
+                'TODO: The following line needs to also make sure there aren't duplicates with any other textboxes
                 If Not text.Text = "" And Not txt.ForeColor = Color.Red Then textValids.Add(True) Else textValids.Add(False) 'if the textbox isn't red and contains text then put a true in textvalids else false
             End If
         Next
