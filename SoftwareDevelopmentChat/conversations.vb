@@ -85,7 +85,7 @@ Public Class frm_conversations
                         End If
                     End If
                 Else
-                    MsgBox("This user doesn't exist" & vbNewLine & "Please check the spelling and try again")
+                    MsgBox("Chat creation cancelled.")
                 End If
             Next
 
