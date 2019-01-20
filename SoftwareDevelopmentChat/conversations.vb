@@ -35,28 +35,53 @@ Public Class frm_conversations
         'THIS IS WHAT I AM WORKING ON, I HAVE COMMENTED IT ALL OUT SINCE AT THE MOMENT IS ISN'T FULLY WORKING. MESSAGE ME IF YOU HAVE ANY QUESTIONS
 
         If MsgBox("Create group chat?", vbYesNo, "Chat type") = MsgBoxResult.Yes Then
-            '    Dim recipients As String = UppercaseFirstLetter(InputBox("Type all recipients name in format indicated below:" & vbCrLf & vbCrLf & "Eg. recipient1,recipient2,recipient3, ..."))
-            '    Dim recipientString As String() = recipients.Split(New Char() {","c})
-            '    Dim recipientsNumber As Integer = recipientString.Count
-            '    Try
-            '        For Each recipient In recipientString(recipientsNumber)
-            '            Dim recipientID As Integer = readUserID(recipient)
-            '            Dim recipientIDs As List(Of Integer)
-            '            recipientIDs.Add(recipientID)
-            '        Next
-            '    Catch ex As Exception
-            '        If MsgBox("Something went horribly wrong and the user(s) could not be found. View technical details?", vbExclamation + vbYesNo, "Something happened") = MsgBoxResult.Yes Then 'if user wants technical details
-            '            MsgBox(errorInfo.ToString) 'show them the details from the public errorinfo exception on databasefunctions.vb
-            '        End If
-            '    End Try
+            Dim recipients As String = UppercaseFirstLetter(InputBox("Type all recipients name in format indicated below:" & vbCrLf & vbCrLf & "Eg. recipient1,recipient2,recipient3, ..."))
+            Dim recipientString As String() = recipients.Split(New Char() {","c})
+            Dim recipientsNumber As Integer = recipientString.Count
+            Try
+                'Dim recipientIDs As List(Of Integer)
+                For Each recipient In recipientString
+                    Dim recipientID As Integer = readUserID(recipient)
+                Next
+            Catch ex As Exception
+                If MsgBox("Something went horribly wrong and the user(s) could not be found. View technical details?", vbExclamation + vbYesNo, "Something happened") = MsgBoxResult.Yes Then 'if user wants technical details
+                    MsgBox(errorInfo.ToString) 'show them the details from the public errorinfo exception on databasefunctions.vb
+                End If
+            End Try
 
-            '    Dim StreamNameString As String = recipientString(recipientsNumber) & " and " & frm_main.txt_userName.Text
+            Dim StreamNameString As String = recipients & " and " & frm_main.txt_userName.Text
+            Dim sql As String = "insert into tbl_streams (StreamName) values ('" & StreamNameString & "')"
+            Dim UserButtons As List(Of Button) = New List(Of Button)
 
-            '    Dim sql As String = "insert into tbl_streams (StreamName) values ('" & StreamNameString & "')"
-            '    'Dim UserButtons As List(Of Button) = New List(Of Button)
+            For Each recipient In recipientString
+                If userExists(recipient) Then
+                    If streamExists(recipients, frm_main.txt_userName.Text) Then MsgBox("Conversation already exists", vbOKOnly, "Error creating stream") : Exit Sub 'check if stream already exists & cancel if it does
+                    If writeSQL(sql) Then
+                        MsgBox("Conversation created successfully.", vbOKOnly, "Success")
+                        Dim btn As New Button
+                        'btn.Location = New Point(13, 57 + UserButtons.Count * 6)
+                        btn.Top = 84 + ((UserButtons.Count - 1) * 47)
+                        btn.Left = 13
+                        btn.Height = 38
+                        btn.Width = 163
+                        btn.Name = "btn_" & StreamNameString
+                        btn.Text = StreamNameString
+                        Me.Controls.Add(btn)
+                        UserButtons.Add(btn)
+                        StreamButtons = UserButtons.Count + 1
+                        AddHandler btn.Click, AddressOf RecipientHandler
+                    Else
+                        If MsgBox("Something went horribly wrong and the database couldn't be written to. View technical details?", vbExclamation + vbYesNo, "Something happened") = MsgBoxResult.Yes Then 'if user wants technical details
+                            MsgBox(errorInfo.ToString)
+                        End If
+                    End If
+                Else
+                    MsgBox("This user doesn't exist" & vbNewLine & "Please check the spelling and try again")
+                    End If
+                    Next
 
 
-        Else
+                Else
             Dim recipient As String = UppercaseFirstLetter(InputBox("Type the recipient's username:").ToLower)
                 Try
                     Dim recipientID As Integer = readUserID(recipient)
