@@ -424,18 +424,48 @@
         writeSQL("update tbl_streams set BubbleColor = '" & MakeSQLSafe(colorToWrite.ToString) & "' where convert(varchar, StreamName) = '" & MakeSQLSafe(stream) & "'")
     End Function
 
-    Function decipherColor(ByVal undecipheredColor As String) As Color
-        Dim deciphered As String = undecipheredColor.Split(New Char() {"[", "]"})(1)
-        decipherColor = System.Drawing.Color.FromName(deciphered)
+    Function decipherColor(ByVal undecipheredColor As String) As Color                      '|
+        Dim deciphered As String = undecipheredColor.Split(New Char() {"[", "]"})(1)        '|
+        decipherColor = System.Drawing.Color.FromName(deciphered)                           '|
+    End Function                                                                            '|
+
+    Function fixARGB(ByVal brokenARGB As String) As Color                                   '|
+        Dim halfwayThere As String = brokenARGB.Split(New Char() {"[", "]"})(1)             '|
+        Dim noA As String = Replace(halfwayThere, "A=", "")                                 '| Legit couldn't tell you how these work
+        Dim noR As String = Replace(noA, "R=", "")                                          '| Ripped them off an old project & all I
+        Dim noG As String = Replace(noR, "G=", "")                                          '| know is that they do work so eh
+        Dim clean As String = Replace(noG, "B=", "")                                        '|
+        Dim sept As String() = clean.Split(New Char() {","c})                               '|
+        fixARGB = Color.FromArgb(sept(0), sept(1), sept(2), sept(3))                        '|
     End Function
 
-    Function fixARGB(ByVal brokenARGB As String) As Color
-        Dim halfwayThere As String = brokenARGB.Split(New Char() {"[", "]"})(1)
-        Dim noA As String = Replace(halfwayThere, "A=", "")
-        Dim noR As String = Replace(noA, "R=", "")
-        Dim noG As String = Replace(noR, "G=", "")
-        Dim clean As String = Replace(noG, "B=", "")
-        Dim sept As String() = clean.Split(New Char() {","c})
-        fixARGB = Color.FromArgb(sept(0), sept(1), sept(2), sept(3))
+    Function getGroupChatNames() As String 'returns "False" on error
+        Dim newFrm_groupChatSelector As New frm_groupChatSelector
+        Dim result As DialogResult = newFrm_groupChatSelector.ShowDialog
+        If Not result = DialogResult.OK Then
+            Return "False"
+        Else
+            Dim usernames As New List(Of String)
+
+            For Each control In newFrm_groupChatSelector.Controls       'for each control on form
+                If TypeOf (control) Is TextBox Then                     'if control is a textbox
+                    Dim text As TextBox = CType(control, TextBox)       'convert control to a textbox (legit just for intellisense)
+                    usernames.Add(UppercaseFirstLetter(text.Text))      'add the text to our list
+                End If
+            Next
+
+            Dim resultString As String = ""
+
+            For i As Integer = 1 To usernames.Count - 1
+                Dim count As Integer = usernames.Count - 1
+                If i = count Then 'last one
+                    resultString += usernames(i - 1)
+                Else
+                    resultString += usernames(i - 1) & ","
+                End If
+            Next
+
+            Return resultstring
+        End If
     End Function
 End Module
