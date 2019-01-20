@@ -42,6 +42,7 @@ Partial Class frm_groupChatSelector
         '
         'btn_ok
         '
+        Me.btn_ok.Enabled = False
         Me.btn_ok.Location = New System.Drawing.Point(295, 95)
         Me.btn_ok.Name = "btn_ok"
         Me.btn_ok.Size = New System.Drawing.Size(75, 23)

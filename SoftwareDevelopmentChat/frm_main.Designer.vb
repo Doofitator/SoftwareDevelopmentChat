@@ -45,6 +45,7 @@ Partial Class frm_main
         Me.pbx_settings = New System.Windows.Forms.PictureBox()
         Me.tmr_messageChecker = New System.Windows.Forms.Timer(Me.components)
         Me.notificationTray = New System.Windows.Forms.NotifyIcon(Me.components)
+        Me.Button1 = New System.Windows.Forms.Button()
         Me.grp_login.SuspendLayout()
         CType(Me.pbx_appLogo, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.grp_chat.SuspendLayout()
@@ -54,6 +55,7 @@ Partial Class frm_main
         'grp_login
         '
         Me.grp_login.BackColor = System.Drawing.SystemColors.Control
+        Me.grp_login.Controls.Add(Me.Button1)
         Me.grp_login.Controls.Add(Me.chk_rememberMe)
         Me.grp_login.Controls.Add(Me.pbx_appLogo)
         Me.grp_login.Controls.Add(Me.lbl_passwordRepeat)
@@ -251,6 +253,15 @@ Partial Class frm_main
         Me.notificationTray.Text = "SoftDevChat"
         Me.notificationTray.Visible = True
         '
+        'Button1
+        '
+        Me.Button1.Location = New System.Drawing.Point(176, 163)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(75, 23)
+        Me.Button1.TabIndex = 13
+        Me.Button1.Text = "Button1"
+        Me.Button1.UseVisualStyleBackColor = True
+        '
         'frm_main
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -295,4 +306,5 @@ Partial Class frm_main
     Friend WithEvents pnl_messages As Panel
     Friend WithEvents tmr_messageChecker As Timer
     Friend WithEvents notificationTray As NotifyIcon
+    Friend WithEvents Button1 As Button
 End Class
