@@ -19,16 +19,38 @@
             btn_ok.Top += txt.Height + 10       '|
             AddHandler txt.TextChanged, AddressOf txt_grpMember_textchanged 'make it run textchanged when its text is changed
         End If
+
+        btn_ok.Enabled = False                    'just in case it was enabled before - we don't want it enabled now because there's a new empty box
     End Sub
 
-    Private Sub txt_grpMember_textchanged(sender As Object, e As EventArgs) Handles txt_grpMember1.TextChanged, txt_grpMember1.TextChanged
+    Private Sub txt_grpMember_textchanged(sender As Object, e As EventArgs) Handles txt_grpMember1.TextChanged, txt_grpMember2.TextChanged
         Dim txt As TextBox = CType(sender, TextBox)             'get sender
         If readUserID(UppercaseFirstLetter(txt.Text)) = 0 Then  'if you can't get a user ID from the textbox input
             txt.ForeColor = Color.Red                           'forecolor=red
         Else
             txt.ForeColor = Color.Black                         'forecolor=black (normal)
         End If
+
+        Dim textValids As New List(Of Boolean)
+
+        For Each control In Me.Controls        'for each control on form
+            If TypeOf (control) Is TextBox Then 'if control is a textbox
+                Dim text As TextBox = CType(control, TextBox)   'convert control to a textbox (legit just for intellisense)
+                If Not text.Text = "" And Not txt.ForeColor = Color.Red Then textValids.Add(True) Else textValids.Add(False) 'if the textbox isn't red and contains text then put a true in textvalids else false
+            End If
+        Next
+
+        btn_ok.Enabled = checkValids(textValids) 'check textvalids to make sure there's no falses. If so, make ok enabled.
+
     End Sub
+
+    Private Function checkValids(arr As List(Of Boolean)) As Boolean
+        For i As Integer = 1 To arr.Count - 1
+            If arr(i) = False Then Return False
+            If arr(i) <> arr(0) Then Return False
+        Next
+        Return True
+    End Function
 
     Private Sub btn_ok_Click(sender As Object, e As EventArgs) Handles btn_ok.Click
         Me.DialogResult = DialogResult.OK   'let whoever called this form know that it's ok       
