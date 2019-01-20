@@ -456,14 +456,11 @@
 
             Dim resultString As String = ""
 
-            For i As Integer = 1 To usernames.Count - 1
-                Dim count As Integer = usernames.Count - 1
-                If i = count Then 'last one
-                    resultString += usernames(i - 1)
-                Else
-                    resultString += usernames(i - 1) & ","
-                End If
+            For i As Integer = 0 To usernames.Count - 1
+                resultString += usernames(i) & ","
             Next
+
+            resultString = resultString.Trim().Substring(0, resultString.Length - 1)
 
             Return resultstring
         End If

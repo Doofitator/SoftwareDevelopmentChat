@@ -33,7 +33,23 @@ Public Class frm_conversations
     Private Sub btn_newMessage_Click(sender As Object, e As EventArgs) Handles btn_newMessage.Click
 
         If MsgBox("Create group chat?", vbYesNo, "Chat type") = MsgBoxResult.Yes Then
-            Dim recipients As String = UppercaseFirstLetter(InputBox("Type all recipients name in format indicated below:" & vbCrLf & vbCrLf & "Eg. recipient1,recipient2,recipient3, ..."))
+
+
+            'TODO: This is really dodgy.
+            'For starters, say there's an existing chat between Ash and Henry, and we make a group chat between Ash, Henry and Lachie, the system thinks the chat already exists because one like it exists (line 72 as of writing)
+            'next, you can make a group chat with yourself. There's nothing on the group chat maker form to stop you from typing your own name in.
+            'on the same note, there's nothing stopping you typing someone else's name twice.
+            'finally, when the stream button is created, there are no spaces between commas and names. There is also the potential for the button to run out of text space if the names are too long.
+
+
+            Dim recipients As String = getGroupChatNames()
+            MsgBox(recipients)
+            If recipients = "False" Then
+                If MsgBox("Something went horribly wrong and the user(s) could not be found. View technical details?", vbExclamation + vbYesNo, "Something happened") = MsgBoxResult.Yes Then 'if user wants technical details
+                    MsgBox(errorInfo.ToString)
+                End If
+                Exit Sub
+            End If
             Dim recipientString As String() = recipients.Split(New Char() {","c})
             Dim recipientsNumber As Integer = recipientString.Count
             Try
