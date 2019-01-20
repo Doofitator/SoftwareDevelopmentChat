@@ -32,8 +32,6 @@ Public Class frm_conversations
 
     Private Sub btn_newMessage_Click(sender As Object, e As EventArgs) Handles btn_newMessage.Click
 
-        'THIS IS WHAT I AM WORKING ON, I HAVE COMMENTED IT ALL OUT SINCE AT THE MOMENT IS ISN'T FULLY WORKING. MESSAGE ME IF YOU HAVE ANY QUESTIONS
-
         If MsgBox("Create group chat?", vbYesNo, "Chat type") = MsgBoxResult.Yes Then
             Dim recipients As String = UppercaseFirstLetter(InputBox("Type all recipients name in format indicated below:" & vbCrLf & vbCrLf & "Eg. recipient1,recipient2,recipient3, ..."))
             Dim recipientString As String() = recipients.Split(New Char() {","c})
@@ -77,33 +75,33 @@ Public Class frm_conversations
                     End If
                 Else
                     MsgBox("This user doesn't exist" & vbNewLine & "Please check the spelling and try again")
-                    End If
-                    Next
+                End If
+            Next
 
 
-                Else
+        Else
             Dim recipient As String = UppercaseFirstLetter(InputBox("Type the recipient's username:").ToLower)
-                Try
-                    Dim recipientID As Integer = readUserID(recipient)
-                Catch
-                    If MsgBox("Something went horribly wrong and the user could not be found. View technical details?", vbExclamation + vbYesNo, "Something happened") = MsgBoxResult.Yes Then 'if user wants technical details
-                        MsgBox(errorInfo.ToString) 'show them the details from the public errorinfo exception on databasefunctions.vb
-                    End If
-                End Try
+            Try
+                Dim recipientID As Integer = readUserID(recipient)
+            Catch
+                If MsgBox("Something went horribly wrong and the user could not be found. View technical details?", vbExclamation + vbYesNo, "Something happened") = MsgBoxResult.Yes Then 'if user wants technical details
+                    MsgBox(errorInfo.ToString) 'show them the details from the public errorinfo exception on databasefunctions.vb
+                End If
+            End Try
 
-                Dim StreamNameString As String = recipient & " and " & frm_main.txt_userName.Text
+            Dim StreamNameString As String = recipient & " and " & frm_main.txt_userName.Text
 
-                Dim sql As String = "insert into tbl_streams (StreamName) values ('" & StreamNameString & "')"
-                'Dim UserButtons As List(Of Button) = New List(Of Button)
+            Dim sql As String = "insert into tbl_streams (StreamName) values ('" & StreamNameString & "')"
+            'Dim UserButtons As List(Of Button) = New List(Of Button)
 
-                Dim UserButtons As List(Of Button) = New List(Of Button)
-                For Each Control In Me.Controls
-                    If TypeOf Control Is Button Then UserButtons.Add(Control)
-                Next
+            Dim UserButtons As List(Of Button) = New List(Of Button)
+            For Each Control In Me.Controls
+                If TypeOf Control Is Button Then UserButtons.Add(Control)
+            Next
 
 
 
-                If userExists(recipient) Then
+            If userExists(recipient) Then
                 If streamExists(recipient, frm_main.txt_userName.Text) Then MsgBox("Conversation already exists", vbOKOnly, "Error creating stream") : Exit Sub 'check if stream already exists & cancel if it does
                 If writeSQL(sql) Then
                     MsgBox("Conversation created successfully.", vbOKOnly, "Success")

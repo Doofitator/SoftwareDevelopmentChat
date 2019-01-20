@@ -81,6 +81,12 @@
     </Compile>
     <Compile Include="DatabaseFunctions.vb" />
     <Compile Include="Encryption.vb" />
+    <Compile Include="frm_groupChatSelector.Designer.vb">
+      <DependentUpon>frm_groupChatSelector.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frm_groupChatSelector.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frm_main.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -116,6 +122,9 @@
   <ItemGroup>
     <EmbeddedResource Include="conversations.resx">
       <DependentUpon>conversations.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frm_groupChatSelector.resx">
+      <DependentUpon>frm_groupChatSelector.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frm_main.resx">
       <DependentUpon>frm_main.vb</DependentUpon>
