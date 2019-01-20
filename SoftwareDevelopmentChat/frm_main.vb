@@ -206,8 +206,4 @@ correctPassword:
 
         ' // should check if existing messages are read yet now
     End Sub
-
-    Private Sub Button1_Click(sender As Object, e As EventArgs)
-        frm_groupChatSelector.ShowDialog()
-    End Sub
 End Class

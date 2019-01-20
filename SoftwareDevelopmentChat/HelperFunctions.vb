@@ -345,13 +345,12 @@
         'Read                       <-- idk yet not important
 
         Dim StreamID As Integer = readStreamID(MakeSQLSafe(streamName))     '|
-        Dim fromID As Integer = readUserID(MakeSQLSafe(username))           '|  <-- getting variables as listed above
-        Dim timestamp As DateTime = DateTime.Now                            '|
+        Dim fromID As Integer = readUserID(MakeSQLSafe(username))           '|  <-- getting variables as listed above                       '|
 
         'console.writeline(message)
 
         Try
-            writeSQL("insert into tbl_messages (StreamID, FromID, Timestamp, Message) values ('" & StreamID & "', '" & fromID & "', '" & timestamp & "', '" & MakeSQLSafe(message) & "')")
+            writeSQL("insert into tbl_messages (StreamID, FromID, Timestamp, Message) values ('" & StreamID & "', '" & fromID & "', getdate(), '" & MakeSQLSafe(message) & "')")
         Catch ex As Exception
             'console.writeline(ex.ToString)
             'console.writeline(ex.ToString)
