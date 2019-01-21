@@ -36,12 +36,6 @@ Public Class frm_conversations
 
         If MsgBox("Create group chat?", vbYesNo, "Chat type") = MsgBoxResult.Yes Then
 
-
-            'TODO: This is really dodgy.
-            'For starters, say there's an existing chat between Ash and Henry, and we make a group chat between Ash, Henry and Lachie, the system thinks the chat already exists because one like it exists (line 72 as of writing)
-            'finally, when the stream button is created, there is the potential for the button to run out of text space if the names are too long.
-
-
             Dim recipients As String = getGroupChatNames()
             'MsgBox(recipients) 'debugging
             Dim recipientString As String() = recipients.Split(New Char() {","c})
