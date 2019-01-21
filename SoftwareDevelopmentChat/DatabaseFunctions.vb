@@ -58,6 +58,10 @@ Module DatabaseFunctions
     End Function
 
     Function streamExists(ByVal user1 As String, ByVal user2 As String) As Boolean
+
+        'spent like two hours working this out for mssql: https://pastebin.com/vbw5651q
+
+
         Dim sql1 As String = "select count(*) from tbl_streams where convert(varchar, StreamName) = '" & user1 & " and " & user2 & "'"
         Dim sql2 As String = "select count(*) from tbl_streams where convert(varchar, StreamName) = '" & user2 & " and " & user1 & "'"
 
