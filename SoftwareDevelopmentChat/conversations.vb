@@ -38,10 +38,8 @@ Public Class frm_conversations
 
 
             'TODO: This is really dodgy.
-            'For starters, say there's an existing chat between Ash and Henry, and we make a group chat between Ash, Henry and Lachie, the system thinks the chat already exists because one like it exists (line 74 as of writing)
-            'next, you can make a group chat with yourself. There's nothing on the group chat maker form to stop you from typing your own name in.
-            'on the same note, there's nothing stopping you typing someone else's name twice.
-            'finally, when the stream button is created, there are no spaces between commas and names. There is also the potential for the button to run out of text space if the names are too long.
+            'For starters, say there's an existing chat between Ash and Henry, and we make a group chat between Ash, Henry and Lachie, the system thinks the chat already exists because one like it exists (line 72 as of writing)
+            'finally, when the stream button is created, there is the potential for the button to run out of text space if the names are too long.
 
 
             Dim recipients As String = getGroupChatNames()
@@ -59,7 +57,7 @@ Public Class frm_conversations
                 End If
             End Try
 
-            Dim StreamNameString As String = recipients & " and " & frm_main.txt_userName.Text
+            Dim StreamNameString As String = recipients.Replace(",", ", ") & " and " & frm_main.txt_userName.Text
             Dim sql As String = "insert into tbl_streams (StreamName) values ('" & StreamNameString & "')"
             Dim UserButtons As List(Of Button) = New List(Of Button)
 
@@ -82,7 +80,7 @@ Public Class frm_conversations
                 btn.Width = 163
                 btn.Name = "btn_" & StreamNameString
                 btn.Text = StreamNameString
-                Me.Controls.Add(btn)
+                Me.Controls.Add(btn) 'todo: not working
                 UserButtons.Add(btn)
                 StreamButtons = UserButtons.Count + 1
                 AddHandler btn.Click, AddressOf RecipientHandler
