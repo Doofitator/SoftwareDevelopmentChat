@@ -68,8 +68,14 @@ Public Class frm_conversations
                 End If
             Next
 
+            Dim streamArray As New List(Of String)
+            For Each user As String In recipientString
+                streamArray.Add(user)
+            Next
+            streamArray.Add(frm_main.txt_userName.Text)
+
             'TODO: Fix the following function - streamExists needs to be written better. I'll work on that today (21/1/19).
-            If streamExists(recipients, frm_main.txt_userName.Text) Then MsgBox("Conversation already exists", vbOKOnly, "Error creating stream") : Exit Sub 'check if stream already exists & cancel if it does
+            If streamExists(streamArray.ToArray) Then MsgBox("Conversation already exists", vbOKOnly, "Error creating stream") : Exit Sub 'check if stream already exists & cancel if it does
             If writeSQL(sql) Then
                 MsgBox("Conversation created successfully.", vbOKOnly, "Success")
                 Dim btn As New Button
@@ -111,10 +117,12 @@ Public Class frm_conversations
                 If TypeOf Control Is Button Then UserButtons.Add(Control)
             Next
 
-
+            Dim streamArray As New List(Of String)
+            streamArray.Add(recipient)
+            streamArray.Add(frm_main.txt_userName.Text)
 
             If userExists(recipient) Then
-                If streamExists(recipient, frm_main.txt_userName.Text) Then MsgBox("Conversation already exists", vbOKOnly, "Error creating stream") : Exit Sub 'check if stream already exists & cancel if it does
+                If streamExists(streamArray.ToArray) Then MsgBox("Conversation already exists", vbOKOnly, "Error creating stream") : Exit Sub 'check if stream already exists & cancel if it does
                 If writeSQL(sql) Then
                     MsgBox("Conversation created successfully.", vbOKOnly, "Success")
                     Dim btn As New Button

@@ -461,7 +461,7 @@
 
             resultString = resultString.Trim().Substring(0, resultString.Length - 1)
 
-            Return resultstring
+            Return resultString
         End If
     End Function
 
