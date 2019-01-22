@@ -281,6 +281,7 @@
             Catch
                 'console.writeline("no messages")
             End Try
+            Console.WriteLine("real: " & UserWebBrowsers.Count)
             Return True
         Catch ex As Exception
             'console.writeline(ex.ToString)
@@ -378,6 +379,7 @@
     End Function
 
     Function addMessageAfterTheFact(ByVal message As String, ByVal userWebBrowsersCount As Integer)
+        Console.WriteLine("bad?: " & userWebBrowsersCount)
         Dim wbr As New WebBrowser
         wbr.Width = frm_main.pnl_messages.Width - 32
         'console.writeline("'" & message & "' was sent by them: " & theySentTheMessage(message))
@@ -398,8 +400,8 @@
 
         wbr.DocumentText = html & getMessageColor().ToHtmlHexadecimal & html2 & getMessageColor().ToHtmlHexadecimal & html3 & getMessageColor().ToHtmlHexadecimal & html4 & div & message & readDiv & "</div></body></html>"
 
-        wbr.Height = 80                         '| TODO: Fix this. 
-        wbr.Top = (userWebBrowsersCount * 15)   '| also this makes no sense but you know what? I can't be bothered.
+        wbr.Height = 80
+        wbr.Top = (userWebBrowsersCount * 15)
         wbr.BringToFront()
 
         wbr.ScrollBarsEnabled = False
