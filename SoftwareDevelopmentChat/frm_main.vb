@@ -188,7 +188,15 @@ correctPassword:
                                         userWebBrowserCount += 1
                                     Next
                                     If grp_chat.Text = streamName Then                      'if grp_chat is showing that stream
-                                        addMessageAfterTheFact(latestMessage, userWebBrowserCount) 'load the message
+                                        Dim biggestTop As Integer = 0
+                                        Dim lastHeight As Integer = 0
+                                        Dim UserWebBrowsersCount As Integer = 0
+                                        For Each webbrowser In pnl_messages.Controls
+                                            If webbrowser.top > biggestTop Then biggestTop = webbrowser.top : lastHeight = webbrowser.height
+                                            UserWebBrowsersCount += 1
+                                        Next
+
+                                        addMessageAfterTheFact(latestMessage, UserWebBrowsersCount, biggestTop, lastHeight)
                                     End If
                                     notificationTray.BalloonTipTitle = streamName           '|
                                     notificationTray.BalloonTipText = latestMessage         '| display notification

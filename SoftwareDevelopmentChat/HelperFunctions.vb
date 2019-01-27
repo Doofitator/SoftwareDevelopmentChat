@@ -281,7 +281,6 @@
             Catch
                 'console.writeline("no messages")
             End Try
-            Console.WriteLine("real: " & UserWebBrowsers.Count)
             Return True
         Catch ex As Exception
             'console.writeline(ex.ToString)
@@ -370,16 +369,11 @@
             UserWebBrowsersCount += 1
         Next
 
-        addMessageAfterTheFact(message, UserWebBrowsersCount)
+        addMessageAfterTheFact(message, UserWebBrowsersCount, biggestTop, lastHeight)
 
     End Function
 
-    Function d(ByVal num As Integer)
-        Console.WriteLine(num)
-    End Function
-
-    Function addMessageAfterTheFact(ByVal message As String, ByVal userWebBrowsersCount As Integer)
-        Console.WriteLine("bad?: " & userWebBrowsersCount)
+    Function addMessageAfterTheFact(ByVal message As String, ByVal userWebBrowsersCount As Integer, ByVal biggestTop As Integer, ByVal lastHeight As Integer)
         Dim wbr As New WebBrowser
         wbr.Width = frm_main.pnl_messages.Width - 32
         'console.writeline("'" & message & "' was sent by them: " & theySentTheMessage(message))
@@ -401,7 +395,7 @@
         wbr.DocumentText = html & getMessageColor().ToHtmlHexadecimal & html2 & getMessageColor().ToHtmlHexadecimal & html3 & getMessageColor().ToHtmlHexadecimal & html4 & div & message & readDiv & "</div></body></html>"
 
         wbr.Height = 80
-        wbr.Top = (userWebBrowsersCount * 15)
+        wbr.Top = biggestTop + lastHeight + 10
         wbr.BringToFront()
 
         wbr.ScrollBarsEnabled = False

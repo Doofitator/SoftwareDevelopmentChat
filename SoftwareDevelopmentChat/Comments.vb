@@ -17,6 +17,5 @@
 
     'TODO: since adding pnl_messages, resising is kind of broken
 
-
     'TODO: If one person sends 'hi'. and three days later somebody else in the chat sends 'hi', the whole thing crashes because it can't work out who sent each 'hi' message :/
 End Module
