@@ -38,6 +38,7 @@ Partial Class frm_main
         Me.txt_password = New System.Windows.Forms.TextBox()
         Me.txt_userName = New System.Windows.Forms.TextBox()
         Me.grp_chat = New System.Windows.Forms.GroupBox()
+        Me.btn_rich = New System.Windows.Forms.Button()
         Me.pnl_messages = New System.Windows.Forms.Panel()
         Me.btn_send = New System.Windows.Forms.Button()
         Me.txt_message = New System.Windows.Forms.TextBox()
@@ -186,6 +187,7 @@ Partial Class frm_main
         '
         'grp_chat
         '
+        Me.grp_chat.Controls.Add(Me.btn_rich)
         Me.grp_chat.Controls.Add(Me.pnl_messages)
         Me.grp_chat.Controls.Add(Me.btn_send)
         Me.grp_chat.Controls.Add(Me.txt_message)
@@ -195,12 +197,21 @@ Partial Class frm_main
         Me.grp_chat.TabIndex = 1
         Me.grp_chat.TabStop = False
         '
+        'btn_rich
+        '
+        Me.btn_rich.Location = New System.Drawing.Point(300, 384)
+        Me.btn_rich.Name = "btn_rich"
+        Me.btn_rich.Size = New System.Drawing.Size(75, 23)
+        Me.btn_rich.TabIndex = 3
+        Me.btn_rich.Text = "Format"
+        Me.btn_rich.UseVisualStyleBackColor = True
+        '
         'pnl_messages
         '
         Me.pnl_messages.AutoScroll = True
         Me.pnl_messages.Location = New System.Drawing.Point(0, 21)
         Me.pnl_messages.Name = "pnl_messages"
-        Me.pnl_messages.Size = New System.Drawing.Size(381, 383)
+        Me.pnl_messages.Size = New System.Drawing.Size(381, 357)
         Me.pnl_messages.TabIndex = 2
         '
         'btn_send
@@ -214,9 +225,10 @@ Partial Class frm_main
         '
         'txt_message
         '
-        Me.txt_message.Location = New System.Drawing.Point(7, 410)
+        Me.txt_message.Location = New System.Drawing.Point(7, 384)
+        Me.txt_message.Multiline = True
         Me.txt_message.Name = "txt_message"
-        Me.txt_message.Size = New System.Drawing.Size(287, 20)
+        Me.txt_message.Size = New System.Drawing.Size(287, 47)
         Me.txt_message.TabIndex = 0
         '
         'tmr_messageChecker
@@ -295,4 +307,5 @@ Partial Class frm_main
     Friend WithEvents pnl_messages As Panel
     Friend WithEvents tmr_messageChecker As Timer
     Friend WithEvents notificationTray As NotifyIcon
+    Friend WithEvents btn_rich As Button
 End Class

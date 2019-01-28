@@ -32,8 +32,6 @@ Public Class frm_conversations
 
     Private Sub btn_newMessage_Click(sender As Object, e As EventArgs) Handles btn_newMessage.Click
 
-        'todo: https://github.com/Doofitator/SoftwareDevelopmentChat/issues/4
-
         If MsgBox("Create group chat?", vbYesNo, "Chat type") = MsgBoxResult.Yes Then
 
             Dim recipients As String = getGroupChatNames()
@@ -72,7 +70,6 @@ Public Class frm_conversations
             Next
             streamArray.Add(frm_main.txt_userName.Text)
 
-            'TODO: Fix the following function - streamExists needs to be written better. I'll work on that today (21/1/19).
             If streamExists(streamArray.ToArray) Then MsgBox("Conversation already exists", vbOKOnly, "Error creating stream") : Exit Sub 'check if stream already exists & cancel if it does
             If writeSQL(sql) Then
                 MsgBox("Conversation created successfully.", vbOKOnly, "Success")
@@ -84,7 +81,7 @@ Public Class frm_conversations
                 btn.Width = 163
                 btn.Name = "btn_" & StreamNameString
                 btn.Text = StreamNameString
-                pnl_streams.controls.add(btn)
+                pnl_streams.Controls.Add(btn)
                 UserButtons.Add(btn)
                 StreamButtons = UserButtons.Count + 1
                 Console.WriteLine(btn.Top)
@@ -132,7 +129,7 @@ Public Class frm_conversations
                     btn.Width = 163
                     btn.Name = "btn_" & StreamNameString
                     btn.Text = StreamNameString
-                    pnl_streams.controls.add(btn)
+                    pnl_streams.Controls.Add(btn)
                     UserButtons.Add(btn)
                     StreamButtons = UserButtons.Count + 1
                     AddHandler btn.Click, AddressOf RecipientHandler

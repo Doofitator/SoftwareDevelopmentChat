@@ -152,12 +152,14 @@ correctPassword:
         ' // move all the controls with the form //
         grp_chat.Width = Me.Width - 40
         grp_chat.Height = Me.Height - 60
-        pnl_messages.Height = grp_chat.Height - 54
+        pnl_messages.Height = grp_chat.Height - 80
         pnl_messages.Width = grp_chat.Width
         txt_message.Width = grp_chat.Width - 95
-        btn_send.Left = txt_message.Left + txt_message.Width + 10
+        btn_send.Left = txt_message.Left + txt_message.Width + 8
+        btn_rich.Left = txt_message.Left + txt_message.Width + 8
         txt_message.Top = grp_chat.Height - txt_message.Height - 10
-        btn_send.Top = txt_message.Top
+        btn_rich.Top = txt_message.Top
+        btn_send.Top = txt_message.Top + btn_rich.Height + 1
         pbx_settings.Left = Me.Width - pbx_settings.Width - 20
 
         For Each wbr As WebBrowser In pnl_messages.Controls
@@ -219,5 +221,13 @@ correctPassword:
         Next
 
         ' // should check if existing messages are read yet now
+    End Sub
+
+    Private Sub txt_message_KeyDown(ByVal sender As Object, ByVal e As KeyEventArgs) Handles txt_message.KeyDown
+        If e.KeyCode = Keys.Enter Then e.SuppressKeyPress = True
+    End Sub
+
+    Private Sub btn_rich_Click(sender As Object, e As EventArgs) Handles btn_rich.Click
+        frm_richText.ShowDialog()
     End Sub
 End Class
