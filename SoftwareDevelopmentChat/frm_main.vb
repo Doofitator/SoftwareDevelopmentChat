@@ -163,7 +163,7 @@ correctPassword:
         pbx_settings.Left = Me.Width - pbx_settings.Width - 20
 
         For Each wbr As WebBrowser In pnl_messages.Controls
-            If wbr.Name.Contains("False") Then wbr.Left = pnl_messages.Width - wbr.Width - 15
+            If wbr.Name.Contains("False") Then wbr.Left = pnl_messages.Width - wbr.Width - 17
         Next
 
         ' // end move controls //
@@ -203,8 +203,14 @@ correctPassword:
                                             If webbrowser.top > biggestTop Then biggestTop = webbrowser.top : lastHeight = webbrowser.height
                                             UserWebBrowsersCount += 1
                                         Next
-                                        'Todo: bug here where a message is sometimes added twice
-                                        addMessageAfterTheFact(latestMessage, UserWebBrowsersCount, biggestTop, lastHeight)
+                                        Dim latestwbr As WebBrowser
+                                        For Each browser As WebBrowser In pnl_messages.Controls
+                                            latestwbr = browser
+                                        Next
+                                        Console.WriteLine(getMessageFromWebBrowser(latestwbr))
+                                        Console.WriteLine("vs")
+                                        Console.WriteLine(latestMessage)
+                                        If Not getMessageFromWebBrowser(latestwbr) = latestMessage Then addMessageAfterTheFact(latestMessage, UserWebBrowsersCount, biggestTop, lastHeight)
                                     End If
                                     notificationTray.BalloonTipTitle = streamName           '|
                                     notificationTray.BalloonTipText = latestMessage         '| display notification

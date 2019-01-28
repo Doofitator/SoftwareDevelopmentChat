@@ -289,6 +289,18 @@
         End Try
     End Function
 
+    Function getMessageFromWebBrowser(ByVal wbr As WebBrowser) As String
+
+        Dim toRemove1 As String = "<body style=""background-color: rgb(240, 240, 240);""><div class=""chat them"">"
+        Dim toRemove2 As String = "</div></body>"
+
+        Dim existingHtml As String = wbr.Document.Body.OuterHtml
+
+        Dim message As String = existingHtml.Replace(toRemove1, "").Replace(toRemove2, "")
+
+        Return message
+    End Function
+
     Function theLastMessageThatWasSentByUsAndIsReadIn(ByVal Messages As Array) As String 'returns the last message that was sent by 'us' and is read by the other person / persons
         Dim messagesList As New List(Of String)
 
