@@ -203,7 +203,7 @@ correctPassword:
                                             If webbrowser.top > biggestTop Then biggestTop = webbrowser.top : lastHeight = webbrowser.height
                                             UserWebBrowsersCount += 1
                                         Next
-
+                                        'Todo: bug here where a message is sometimes added twice
                                         addMessageAfterTheFact(latestMessage, UserWebBrowsersCount, biggestTop, lastHeight)
                                     End If
                                     notificationTray.BalloonTipTitle = streamName           '|
