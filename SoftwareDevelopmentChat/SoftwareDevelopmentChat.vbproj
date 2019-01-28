@@ -47,8 +47,9 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="LiveSwitch.TextControl">
-      <HintPath>..\..\..\..\Downloads\TextControlEXE\TextControlEXE\LiveSwitch.TextControl.exe</HintPath>
+    <Reference Include="LiveSwitch.TextControl, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\LiveSwitch.TextControl.exe</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
