@@ -150,14 +150,20 @@ correctPassword:
         frm_conversations.Height = Me.Height 'keep the other form in sync with this one
 
         ' // move all the controls with the form //
-        ' This might need to become a function one day. Could get very big.
         grp_chat.Width = Me.Width - 40
         grp_chat.Height = Me.Height - 60
+        pnl_messages.Height = grp_chat.Height - 54
+        pnl_messages.Width = grp_chat.Width
         txt_message.Width = grp_chat.Width - 95
         btn_send.Left = txt_message.Left + txt_message.Width + 10
         txt_message.Top = grp_chat.Height - txt_message.Height - 10
         btn_send.Top = txt_message.Top
         pbx_settings.Left = Me.Width - pbx_settings.Width - 20
+
+        For Each wbr As WebBrowser In pnl_messages.Controls
+            If wbr.Name.Contains("False") Then wbr.Left = pnl_messages.Width - wbr.Width - 15
+        Next
+
         ' // end move controls //
     End Sub
 

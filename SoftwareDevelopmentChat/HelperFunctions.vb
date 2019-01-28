@@ -246,7 +246,7 @@
                     wbr.ScrollBarsEnabled = False
 
                     Try
-                        wbr.Name = "wbr_" & readMessageID(message)
+                        wbr.Name = "wbr_" & theySentTheMessage(message) & "_" & readMessageID(message)
                     Catch ex As Exception
                         'console.writeline(ex.ToString)
                         If MsgBox("Something went horribly wrong and the message IDs couldn't be loaded. View technical details?", vbExclamation + vbYesNo, "Something happened") = MsgBoxResult.Yes Then 'if user wants technical details
@@ -400,7 +400,7 @@
 
         wbr.ScrollBarsEnabled = False
         Try
-            wbr.Name = "wbr_" & readMessageID(message)
+            wbr.Name = "wbr_" & theySentTheMessage(message) & "_" & readMessageID(message)
         Catch ex As Exception
             'console.writeline(ex.ToString)
             If MsgBox("Something went horribly wrong and the message IDs couldn't be loaded. View technical details?", vbExclamation + vbYesNo, "Something happened") = MsgBoxResult.Yes Then 'if user wants technical details
