@@ -59,13 +59,12 @@ Partial Class frm_conversations
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoScroll = True
         Me.ClientSize = New System.Drawing.Size(188, 461)
+        Me.ControlBox = False
         Me.Controls.Add(Me.pnl_streams)
         Me.Controls.Add(Me.cbx_class)
         Me.Controls.Add(Me.btn_newMessage)
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "frm_conversations"
-        Me.Text = "Conversations"
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
