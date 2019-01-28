@@ -6,7 +6,8 @@
     'TODO: admin rights
 
     'TODO: webbrowsers need to dynamically size
-    '^ They kinda do but html formatting kinda broke it sooo :/
+
+    'TODO: RecipientRead not updating
 
     'TODO: two windows need to be better in sync. Minimise one, minimise the other. Activate one, the other appears next to it.
 
