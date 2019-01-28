@@ -23,7 +23,12 @@ Module DatabaseFunctions
         myCmd.CommandText = Query
 
         'Open the connection.
-        MyConn.Open()
+        Try
+            MyConn.Open()
+        Catch
+            MsgBox("No connection to server.", vbAbort, "Fatal")
+            frm_main.Close()
+        End Try
 
         Try
             myCmd.ExecuteNonQuery() 'run sql script
@@ -46,7 +51,12 @@ Module DatabaseFunctions
         myCmd.CommandText = "select count(*) from tbl_users where convert(varchar, Name) = '" & MakeSQLSafe(name) & "'"
 
         'Open the connection.
-        MyConn.Open()
+        Try
+            MyConn.Open()
+        Catch
+            MsgBox("No connection to server.", vbAbort, "Fatal")
+            frm_main.Close()
+        End Try
 
         If myCmd.ExecuteScalar = 1 Then 'if there is one result returned, then the username already exists in the database.
             MyConn.Close()
@@ -101,7 +111,12 @@ Module DatabaseFunctions
         Dim myCmd = MyConn.CreateCommand
         myCmd.CommandText = builtSql 'set command to check sql1
         'Open the connection.
-        MyConn.Open()
+        Try
+            MyConn.Open()
+        Catch
+            MsgBox("No connection to server.", vbAbort, "Fatal")
+            frm_main.Close()
+        End Try
 
         If myCmd.ExecuteScalar > 0 Then 'if more than zero results returned, then the stream already exists in the database.
             MyConn.Close()
@@ -120,7 +135,13 @@ Module DatabaseFunctions
         myCmd.CommandText = "select Password from tbl_users where convert(varchar, Name) = '" & MakeSQLSafe(Name) & "'"
 
         'Open the connection.
-        MyConn.Open()
+
+        Try
+            MyConn.Open()
+        Catch
+            MsgBox("No connection to server.", vbAbort, "Fatal")
+            frm_main.Close()
+        End Try
 
         Dim result As String = "False" 'this is what the function will return
 
@@ -151,7 +172,12 @@ Module DatabaseFunctions
         myCmd.CommandText = "select ID from tbl_users where convert(varchar, Name) = '" & MakeSQLSafe(Name) & "'"
 
         'Open the connection.
-        MyConn.Open()
+        Try
+            MyConn.Open()
+        Catch
+            MsgBox("No connection to server.", vbAbort, "Fatal")
+            frm_main.Close()
+        End Try
 
         Dim result As Integer = 0 'this is what the function will return
 
@@ -180,7 +206,12 @@ Module DatabaseFunctions
         myCmd.CommandText = "select Name from tbl_users where ID = '" & ID & "'"
 
         'Open the connection.
-        MyConn.Open()
+        Try
+            MyConn.Open()
+        Catch
+            MsgBox("No connection to server.", vbAbort, "Fatal")
+            frm_main.Close()
+        End Try
 
         Dim result As String = 0 'this is what the function will return
 
@@ -211,7 +242,12 @@ Module DatabaseFunctions
         myCmd.CommandText = "select StreamName from tbl_streams Where streamName like '%" & MakeSQLSafe(frm_main.txt_userName.Text) & "%'" 'select streamname where it includes your name
 
         'Open the connection.
-        MyConn.Open()
+        Try
+            MyConn.Open()
+        Catch
+            MsgBox("No connection to server.", vbAbort, "Fatal")
+            frm_main.Close()
+        End Try
 
         Dim result As String = "False" 'this is what the function will return
 
@@ -253,7 +289,12 @@ Module DatabaseFunctions
         'console.writeline(myCmd.CommandText)
 
         'Open the connection.
-        MyConn.Open()
+        Try
+            MyConn.Open()
+        Catch
+            MsgBox("No connection to server.", vbAbort, "Fatal")
+            frm_main.Close()
+        End Try
 
         Dim result As String = "False" 'this is what the function will return
 
@@ -289,7 +330,12 @@ Module DatabaseFunctions
         myCmd.CommandText = "select StreamID from tbl_streams where convert(varchar, StreamName) = '" & MakeSQLSafe(streamName) & "'"
 
         'Open the connection.
-        MyConn.Open()
+        Try
+            MyConn.Open()
+        Catch
+            MsgBox("No connection to server.", vbAbort, "Fatal")
+            frm_main.Close()
+        End Try
 
         Dim result As Integer = 0 'this is what the function will return
 
@@ -318,7 +364,12 @@ Module DatabaseFunctions
         myCmd.CommandText = "select StreamID from tbl_messages where ID = '" & messageID & "'"
 
         'Open the connection.
-        MyConn.Open()
+        Try
+            MyConn.Open()
+        Catch
+            MsgBox("No connection to server.", vbAbort, "Fatal")
+            frm_main.Close()
+        End Try
 
         Dim result As Integer = 0 'this is what the function will return
 
@@ -347,7 +398,12 @@ Module DatabaseFunctions
         myCmd.CommandText = "select ID from tbl_messages where convert(varchar(MAX), Message) = '" & MakeSQLSafe(Message) & "'" 'probably a less bandwidth hogging way of doing this but its not 1986 anymore so it doesn't really matter
 
         'Open the connection.
-        MyConn.Open()
+        Try
+            MyConn.Open()
+        Catch
+            MsgBox("No connection to server.", vbAbort, "Fatal")
+            frm_main.Close()
+        End Try
 
         Dim result As Integer = 0 'this is what the function will return
 
@@ -377,7 +433,12 @@ Module DatabaseFunctions
         'console.writeline(myCmd.CommandText)
 
         'Open the connection.
-        MyConn.Open()
+        Try
+            MyConn.Open()
+        Catch
+            MsgBox("No connection to server.", vbAbort, "Fatal")
+            frm_main.Close()
+        End Try
 
         Dim FromName As String = "" 'who sent the message
 
@@ -408,7 +469,12 @@ Module DatabaseFunctions
         myCmd.CommandText = "Select Message from tbl_messages where streamID=" & streamID & " order by ID ASC"
 
         'Open the connection.
-        MyConn.Open()
+        Try
+            MyConn.Open()
+        Catch
+            MsgBox("No connection to server.", vbAbort, "Fatal")
+            frm_main.Close()
+        End Try
 
         Dim Message As String = ""
 
@@ -440,7 +506,12 @@ Module DatabaseFunctions
         'console.writeline(myCmd.CommandText)
 
         'Open the connection.
-        MyConn.Open()
+        Try
+            MyConn.Open()
+        Catch
+            MsgBox("No connection to server.", vbAbort, "Fatal")
+            frm_main.Close()
+        End Try
 
         Dim read As Boolean = False
 
@@ -471,7 +542,12 @@ Module DatabaseFunctions
         myCmd.CommandText = "select BubbleColor from tbl_streams where convert(varchar, StreamName) = '" & frm_main.grp_chat.Text & "'"
 
         'Open the connection.
-        MyConn.Open()
+        Try
+            MyConn.Open()
+        Catch
+            MsgBox("No connection to server.", vbAbort, "Fatal")
+            frm_main.Close()
+        End Try
 
         Dim result As String = "False"
 

@@ -26,8 +26,6 @@
         frm_main.tmr_messageChecker.Enabled = True
 
         Return True
-
-        'TODO: Auto click first stream button if it exists
     End Function
 
     Function addUser(ByVal username As String, ByVal password As String) As Boolean 'returns true on success
@@ -102,7 +100,6 @@
                     UserButtons.Add(btn)
                     frm_conversations.StreamButtons = UserButtons.Count + 1
                     AddHandler btn.Click, AddressOf frm_conversations.RecipientHandler
-                    Console.WriteLine(btn.Name & "-" & btn.Top)
                 Next
             Catch ex As Exception
                 'console.writeline(ex.ToString)

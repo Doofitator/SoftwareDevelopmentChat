@@ -8,6 +8,16 @@ Public Class frm_conversations
         Me.Top = frm_main.Top
         frm_main.UserMoving = True
         loadStreams()
+
+        For Each control As Button In pnl_streams.Controls
+            Try
+                control.PerformClick()
+                Exit For
+            Catch ex As Exception
+                Console.WriteLine("no chats")
+            End Try
+        Next
+
         cbx_class.Items.Add("Add New...")
     End Sub
 
