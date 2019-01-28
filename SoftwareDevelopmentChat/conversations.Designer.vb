@@ -25,6 +25,7 @@ Partial Class frm_conversations
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frm_conversations))
         Me.btn_newMessage = New System.Windows.Forms.Button()
         Me.cbx_class = New System.Windows.Forms.ComboBox()
+        Me.pnl_streams = New System.Windows.Forms.Panel()
         Me.SuspendLayout()
         '
         'btn_newMessage
@@ -44,11 +45,21 @@ Partial Class frm_conversations
         Me.cbx_class.Size = New System.Drawing.Size(163, 21)
         Me.cbx_class.TabIndex = 1
         '
+        'pnl_streams
+        '
+        Me.pnl_streams.AutoSize = True
+        Me.pnl_streams.Location = New System.Drawing.Point(0, 84)
+        Me.pnl_streams.Name = "pnl_streams"
+        Me.pnl_streams.Size = New System.Drawing.Size(187, 373)
+        Me.pnl_streams.TabIndex = 2
+        '
         'frm_conversations
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(188, 589)
+        Me.AutoScroll = True
+        Me.ClientSize = New System.Drawing.Size(188, 461)
+        Me.Controls.Add(Me.pnl_streams)
         Me.Controls.Add(Me.cbx_class)
         Me.Controls.Add(Me.btn_newMessage)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow
@@ -56,9 +67,11 @@ Partial Class frm_conversations
         Me.Name = "frm_conversations"
         Me.Text = "Conversations"
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
 
     Friend WithEvents btn_newMessage As Button
     Friend WithEvents cbx_class As ComboBox
+    Friend WithEvents pnl_streams As Panel
 End Class

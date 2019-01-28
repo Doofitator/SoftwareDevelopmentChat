@@ -84,24 +84,25 @@
     Function loadStreams() 'load existing streams
         Try
             Dim UserButtons As List(Of Button) = New List(Of Button)
-            For Each Control In frm_conversations.Controls
-                If TypeOf Control Is Button Then UserButtons.Add(Control)
+            For Each control In frm_conversations.pnl_streams.Controls
+                If TypeOf control Is Button Then UserButtons.Add(control)
             Next
 
             Try
                 For Each stream As String In getStreamArr() 'for each stream on the database, make a button for it
                     Dim btn As New Button
                     'btn.Location = New Point(13, 57 + UserButtons.Count * 6)
-                    btn.Top = 84 + ((UserButtons.Count - 1) * 47)
+                    btn.Top = ((UserButtons.Count) * 47)
                     btn.Left = 13
                     btn.Height = 38
                     btn.Width = 163
                     btn.Name = "btn_" & stream
                     btn.Text = stream
-                    frm_conversations.Controls.Add(btn)
+                    frm_conversations.pnl_streams.controls.add(btn)
                     UserButtons.Add(btn)
                     frm_conversations.StreamButtons = UserButtons.Count + 1
                     AddHandler btn.Click, AddressOf frm_conversations.RecipientHandler
+                    Console.WriteLine(btn.Name & "-" & btn.Top)
                 Next
             Catch ex As Exception
                 'console.writeline(ex.ToString)

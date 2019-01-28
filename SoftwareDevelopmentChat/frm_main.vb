@@ -179,7 +179,7 @@ correctPassword:
 
     Private Sub tmr_messageChecker_Tick(sender As Object, e As EventArgs) Handles tmr_messageChecker.Tick
         ' // check for new unread messages //
-        For Each control In frm_conversations.Controls                                  '|
+        For Each control In frm_conversations.pnl_streams.Controls                                  '|
             If TypeOf (control) Is Button Then                                          '| for each stream button
                 If Not control.name = "btn_newMessage" Then                             '|
                     Dim streamName = control.text                                       'get stream name

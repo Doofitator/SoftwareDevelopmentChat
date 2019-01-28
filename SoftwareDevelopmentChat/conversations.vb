@@ -53,7 +53,11 @@ Public Class frm_conversations
 
             Dim StreamNameString As String = recipients.Replace(",", ", ") & " and " & frm_main.txt_userName.Text
             Dim sql As String = "insert into tbl_streams (StreamName) values ('" & StreamNameString & "')"
+
             Dim UserButtons As List(Of Button) = New List(Of Button)
+            For Each Control In Me.pnl_streams.Controls
+                If TypeOf Control Is Button Then UserButtons.Add(Control)
+            Next
 
             For Each recipient In recipientString
                 If Not userExists(recipient) Then
@@ -74,15 +78,16 @@ Public Class frm_conversations
                 MsgBox("Conversation created successfully.", vbOKOnly, "Success")
                 Dim btn As New Button
                 'btn.Location = New Point(13, 57 + UserButtons.Count * 6)
-                btn.Top = 84 + ((UserButtons.Count - 1) * 47)
+                btn.Top = ((UserButtons.Count) * 47)
                 btn.Left = 13
                 btn.Height = 38
                 btn.Width = 163
                 btn.Name = "btn_" & StreamNameString
                 btn.Text = StreamNameString
-                Me.Controls.Add(btn) 'todo: not working
+                pnl_streams.controls.add(btn)
                 UserButtons.Add(btn)
                 StreamButtons = UserButtons.Count + 1
+                Console.WriteLine(btn.Top)
                 AddHandler btn.Click, AddressOf RecipientHandler
             Else
                 If MsgBox("Something went horribly wrong and the database couldn't be written to. View technical details?", vbExclamation + vbYesNo, "Something happened") = MsgBoxResult.Yes Then 'if user wants technical details
@@ -107,7 +112,7 @@ Public Class frm_conversations
             'Dim UserButtons As List(Of Button) = New List(Of Button)
 
             Dim UserButtons As List(Of Button) = New List(Of Button)
-            For Each Control In Me.Controls
+            For Each Control In Me.pnl_streams.Controls
                 If TypeOf Control Is Button Then UserButtons.Add(Control)
             Next
 
@@ -121,13 +126,13 @@ Public Class frm_conversations
                     MsgBox("Conversation created successfully.", vbOKOnly, "Success")
                     Dim btn As New Button
                     'btn.Location = New Point(13, 57 + UserButtons.Count * 6)
-                    btn.Top = 84 + ((UserButtons.Count - 1) * 47)
+                    btn.Top = ((UserButtons.Count) * 47)
                     btn.Left = 13
                     btn.Height = 38
                     btn.Width = 163
                     btn.Name = "btn_" & StreamNameString
                     btn.Text = StreamNameString
-                    Me.Controls.Add(btn)
+                    pnl_streams.controls.add(btn)
                     UserButtons.Add(btn)
                     StreamButtons = UserButtons.Count + 1
                     AddHandler btn.Click, AddressOf RecipientHandler

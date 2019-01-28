@@ -59,6 +59,8 @@ Module DatabaseFunctions
 
     Function streamExists(ByVal users As Array) As Boolean
 
+        'the following really should have been a stringbuilder, but I don't know how they work & can't really be bothered to work it out. If it ain't broke, don't fix it.
+
         Dim sql_partOne As String = "SELECT count(*) FROM (select ' ' + REPLACE(convert(varchar(MAX), replace(convert(varchar(MAX),streamName), ',','')),' ','  ') + ' ' as streamName from tbl_streams) t WHERE"
         Dim sql_partTwo As String = " streamName like '% "
         Dim sql_partThree As String = " %' AND "
