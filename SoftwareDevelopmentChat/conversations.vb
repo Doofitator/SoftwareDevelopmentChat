@@ -32,17 +32,7 @@ Public Class frm_conversations
 
     Private Sub btn_newMessage_Click(sender As Object, e As EventArgs) Handles btn_newMessage.Click
 
-        'todo: https://github.com/Doofitator/SoftwareDevelopmentChat/issues/4
-
         If MsgBox("Create group chat?", vbYesNo, "Chat type") = MsgBoxResult.Yes Then
-
-
-            'TODO: This is really dodgy.
-            'For starters, say there's an existing chat between Ash and Henry, and we make a group chat between Ash, Henry and Lachie, the system thinks the chat already exists because one like it exists (line 74 as of writing)
-            'next, you can make a group chat with yourself. There's nothing on the group chat maker form to stop you from typing your own name in.
-            'on the same note, there's nothing stopping you typing someone else's name twice.
-            'finally, when the stream button is created, there are no spaces between commas and names. There is also the potential for the button to run out of text space if the names are too long.
-
 
             Dim recipients As String = getGroupChatNames()
             'MsgBox(recipients) 'debugging
@@ -59,9 +49,13 @@ Public Class frm_conversations
                 End If
             End Try
 
-            Dim StreamNameString As String = recipients & " and " & frm_main.txt_userName.Text
+            Dim StreamNameString As String = recipients.Replace(",", ", ") & " and " & frm_main.txt_userName.Text
             Dim sql As String = "insert into tbl_streams (StreamName) values ('" & StreamNameString & "')"
+
             Dim UserButtons As List(Of Button) = New List(Of Button)
+            For Each Control In Me.pnl_streams.Controls
+                If TypeOf Control Is Button Then UserButtons.Add(Control)
+            Next
 
             For Each recipient In recipientString
                 If Not userExists(recipient) Then
@@ -70,21 +64,27 @@ Public Class frm_conversations
                 End If
             Next
 
-            'TODO: Fix the following function - streamExists needs to be written better. I'll work on that today (21/1/19).
-            If streamExists(recipients, frm_main.txt_userName.Text) Then MsgBox("Conversation already exists", vbOKOnly, "Error creating stream") : Exit Sub 'check if stream already exists & cancel if it does
+            Dim streamArray As New List(Of String)
+            For Each user As String In recipientString
+                streamArray.Add(user)
+            Next
+            streamArray.Add(frm_main.txt_userName.Text)
+
+            If streamExists(streamArray.ToArray) Then MsgBox("Conversation already exists", vbOKOnly, "Error creating stream") : Exit Sub 'check if stream already exists & cancel if it does
             If writeSQL(sql) Then
                 MsgBox("Conversation created successfully.", vbOKOnly, "Success")
                 Dim btn As New Button
                 'btn.Location = New Point(13, 57 + UserButtons.Count * 6)
-                btn.Top = 84 + ((UserButtons.Count - 1) * 47)
+                btn.Top = ((UserButtons.Count) * 47)
                 btn.Left = 13
                 btn.Height = 38
                 btn.Width = 163
                 btn.Name = "btn_" & StreamNameString
                 btn.Text = StreamNameString
-                Me.Controls.Add(btn)
+                pnl_streams.Controls.Add(btn)
                 UserButtons.Add(btn)
                 StreamButtons = UserButtons.Count + 1
+                Console.WriteLine(btn.Top)
                 AddHandler btn.Click, AddressOf RecipientHandler
             Else
                 If MsgBox("Something went horribly wrong and the database couldn't be written to. View technical details?", vbExclamation + vbYesNo, "Something happened") = MsgBoxResult.Yes Then 'if user wants technical details
@@ -109,25 +109,27 @@ Public Class frm_conversations
             'Dim UserButtons As List(Of Button) = New List(Of Button)
 
             Dim UserButtons As List(Of Button) = New List(Of Button)
-            For Each Control In Me.Controls
+            For Each Control In Me.pnl_streams.Controls
                 If TypeOf Control Is Button Then UserButtons.Add(Control)
             Next
 
-
+            Dim streamArray As New List(Of String)
+            streamArray.Add(recipient)
+            streamArray.Add(frm_main.txt_userName.Text)
 
             If userExists(recipient) Then
-                If streamExists(recipient, frm_main.txt_userName.Text) Then MsgBox("Conversation already exists", vbOKOnly, "Error creating stream") : Exit Sub 'check if stream already exists & cancel if it does
+                If streamExists(streamArray.ToArray) Then MsgBox("Conversation already exists", vbOKOnly, "Error creating stream") : Exit Sub 'check if stream already exists & cancel if it does
                 If writeSQL(sql) Then
                     MsgBox("Conversation created successfully.", vbOKOnly, "Success")
                     Dim btn As New Button
                     'btn.Location = New Point(13, 57 + UserButtons.Count * 6)
-                    btn.Top = 84 + ((UserButtons.Count - 1) * 47)
+                    btn.Top = ((UserButtons.Count) * 47)
                     btn.Left = 13
                     btn.Height = 38
                     btn.Width = 163
                     btn.Name = "btn_" & StreamNameString
                     btn.Text = StreamNameString
-                    Me.Controls.Add(btn)
+                    pnl_streams.Controls.Add(btn)
                     UserButtons.Add(btn)
                     StreamButtons = UserButtons.Count + 1
                     AddHandler btn.Click, AddressOf RecipientHandler

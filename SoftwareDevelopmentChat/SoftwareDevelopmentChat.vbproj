@@ -47,6 +47,10 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="LiveSwitch.TextControl, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\LiveSwitch.TextControl.exe</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
@@ -94,6 +98,12 @@
       <DependentUpon>frm_main.vb</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="frm_richText.Designer.vb">
+      <DependentUpon>frm_richText.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frm_richText.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="HelperFunctions.vb" />
     <Compile Include="internetExplorerFixer.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -128,6 +138,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frm_main.resx">
       <DependentUpon>frm_main.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frm_richText.resx">
+      <DependentUpon>frm_richText.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>

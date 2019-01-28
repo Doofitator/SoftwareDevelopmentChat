@@ -57,32 +57,57 @@ Module DatabaseFunctions
         End If
     End Function
 
-    Function streamExists(ByVal user1 As String, ByVal user2 As String) As Boolean
-        Dim sql1 As String = "select count(*) from tbl_streams where convert(varchar, StreamName) = '" & user1 & " and " & user2 & "'"
-        Dim sql2 As String = "select count(*) from tbl_streams where convert(varchar, StreamName) = '" & user2 & " and " & user1 & "'"
+    Function streamExists(ByVal users As Array) As Boolean
+
+        'the following really should have been a stringbuilder, but I don't know how they work & can't really be bothered to work it out. If it ain't broke, don't fix it.
+
+        Dim sql_partOne As String = "SELECT count(*) FROM (select ' ' + REPLACE(convert(varchar(MAX), replace(convert(varchar(MAX),streamName), ',','')),' ','  ') + ' ' as streamName from tbl_streams) t WHERE"
+        Dim sql_partTwo As String = " streamName like '% "
+        Dim sql_partThree As String = " %' AND "
+        Dim sql_partFour As String = " REPLACE("
+        Dim sql_partFive As String = "streamName,' "
+        Dim sql_partSix As String = " ','')"
+        Dim sql_partSeven As String = ", ' "
+        Dim sql_partEight As String = " ','')"
+        Dim sql_partNine As String = " = ''"
+
+        Dim builtLikes As String = ""
+        Dim builtReplaces1 As String = ""
+        Dim builtReplaces2 As String = ""
+        Dim builtSql As String = ""
+        Dim first As Boolean = True
+
+        For Each user As String In users
+            builtLikes += sql_partTwo & user & sql_partThree
+            builtReplaces1 += sql_partFour
+            If first Then
+                builtReplaces2 += sql_partFive & user & sql_partSix
+            Else
+                builtReplaces2 += sql_partSeven & user & sql_partEight
+            End If
+            first = False
+        Next
+        builtLikes += sql_partTwo & "and" & sql_partThree
+        builtReplaces1 += sql_partFour
+        builtReplaces2 += sql_partSeven & "and" & sql_partEight & sql_partNine
+
+        Console.WriteLine(sql_partOne & builtLikes & builtReplaces1 & builtReplaces2)
+        builtSql = sql_partOne & builtLikes & builtReplaces1 & builtReplaces2
 
         'Create a Connection object.
         Dim MyConn = New SqlConnection(connectionString)
 
         'Create a Command object.
         Dim myCmd = MyConn.CreateCommand
-        myCmd.CommandText = sql1 'set command to check sql1
-
+        myCmd.CommandText = builtSql 'set command to check sql1
         'Open the connection.
         MyConn.Open()
 
-        If myCmd.ExecuteScalar = 1 Then 'if there is one result returned, then the stream already exists in the database.
+        If myCmd.ExecuteScalar > 0 Then 'if more than zero results returned, then the stream already exists in the database.
             MyConn.Close()
-            Return True 'sql1 exists
+            Return True ' exists
         Else
-            myCmd.CommandText = sql2 'set command to sql2
-            If myCmd.ExecuteScalar = 1 Then
-                MyConn.Close()
-                Return True 'sql2 exists
-            Else
-                MyConn.Close()
-                Return False ' neither exist
-            End If
+            Return False ' not exist
         End If
     End Function
 

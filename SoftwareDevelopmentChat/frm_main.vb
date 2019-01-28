@@ -150,14 +150,22 @@ correctPassword:
         frm_conversations.Height = Me.Height 'keep the other form in sync with this one
 
         ' // move all the controls with the form //
-        ' This might need to become a function one day. Could get very big.
         grp_chat.Width = Me.Width - 40
         grp_chat.Height = Me.Height - 60
+        pnl_messages.Height = grp_chat.Height - 80
+        pnl_messages.Width = grp_chat.Width
         txt_message.Width = grp_chat.Width - 95
-        btn_send.Left = txt_message.Left + txt_message.Width + 10
+        btn_send.Left = txt_message.Left + txt_message.Width + 8
+        btn_rich.Left = txt_message.Left + txt_message.Width + 8
         txt_message.Top = grp_chat.Height - txt_message.Height - 10
-        btn_send.Top = txt_message.Top
+        btn_rich.Top = txt_message.Top
+        btn_send.Top = txt_message.Top + btn_rich.Height + 1
         pbx_settings.Left = Me.Width - pbx_settings.Width - 20
+
+        For Each wbr As WebBrowser In pnl_messages.Controls
+            If wbr.Name.Contains("False") Then wbr.Left = pnl_messages.Width - wbr.Width - 15
+        Next
+
         ' // end move controls //
     End Sub
 
@@ -173,7 +181,7 @@ correctPassword:
 
     Private Sub tmr_messageChecker_Tick(sender As Object, e As EventArgs) Handles tmr_messageChecker.Tick
         ' // check for new unread messages //
-        For Each control In frm_conversations.Controls                                  '|
+        For Each control In frm_conversations.pnl_streams.Controls                                  '|
             If TypeOf (control) Is Button Then                                          '| for each stream button
                 If Not control.name = "btn_newMessage" Then                             '|
                     Dim streamName = control.text                                       'get stream name
@@ -188,7 +196,15 @@ correctPassword:
                                         userWebBrowserCount += 1
                                     Next
                                     If grp_chat.Text = streamName Then                      'if grp_chat is showing that stream
-                                        addMessageAfterTheFact(latestMessage, userWebBrowserCount) 'load the message
+                                        Dim biggestTop As Integer = 0
+                                        Dim lastHeight As Integer = 0
+                                        Dim UserWebBrowsersCount As Integer = 0
+                                        For Each webbrowser In pnl_messages.Controls
+                                            If webbrowser.top > biggestTop Then biggestTop = webbrowser.top : lastHeight = webbrowser.height
+                                            UserWebBrowsersCount += 1
+                                        Next
+                                        'Todo: bug here where a message is sometimes added twice
+                                        addMessageAfterTheFact(latestMessage, UserWebBrowsersCount, biggestTop, lastHeight)
                                     End If
                                     notificationTray.BalloonTipTitle = streamName           '|
                                     notificationTray.BalloonTipText = latestMessage         '| display notification
@@ -205,5 +221,13 @@ correctPassword:
         Next
 
         ' // should check if existing messages are read yet now
+    End Sub
+
+    Private Sub txt_message_KeyDown(ByVal sender As Object, ByVal e As KeyEventArgs) Handles txt_message.KeyDown
+        If e.KeyCode = Keys.Enter Then e.SuppressKeyPress = True
+    End Sub
+
+    Private Sub btn_rich_Click(sender As Object, e As EventArgs) Handles btn_rich.Click
+        frm_richText.ShowDialog()
     End Sub
 End Class

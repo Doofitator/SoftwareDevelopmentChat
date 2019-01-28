@@ -28,9 +28,6 @@
         Dim textValids As New List(Of Boolean)
         Dim textValues As New List(Of String)
 
-
-
-
         For Each control In Me.Controls        'for each control on form
             If TypeOf (control) Is TextBox Then 'if control is a textbox
                 Dim text As TextBox = CType(control, TextBox)   'convert control to a textbox (legit just for intellisense)

@@ -84,24 +84,25 @@
     Function loadStreams() 'load existing streams
         Try
             Dim UserButtons As List(Of Button) = New List(Of Button)
-            For Each Control In frm_conversations.Controls
-                If TypeOf Control Is Button Then UserButtons.Add(Control)
+            For Each control In frm_conversations.pnl_streams.Controls
+                If TypeOf control Is Button Then UserButtons.Add(control)
             Next
 
             Try
                 For Each stream As String In getStreamArr() 'for each stream on the database, make a button for it
                     Dim btn As New Button
                     'btn.Location = New Point(13, 57 + UserButtons.Count * 6)
-                    btn.Top = 84 + ((UserButtons.Count - 1) * 47)
+                    btn.Top = ((UserButtons.Count) * 47)
                     btn.Left = 13
                     btn.Height = 38
                     btn.Width = 163
                     btn.Name = "btn_" & stream
                     btn.Text = stream
-                    frm_conversations.Controls.Add(btn)
+                    frm_conversations.pnl_streams.controls.add(btn)
                     UserButtons.Add(btn)
                     frm_conversations.StreamButtons = UserButtons.Count + 1
                     AddHandler btn.Click, AddressOf frm_conversations.RecipientHandler
+                    Console.WriteLine(btn.Name & "-" & btn.Top)
                 Next
             Catch ex As Exception
                 'console.writeline(ex.ToString)
@@ -246,7 +247,7 @@
                     wbr.ScrollBarsEnabled = False
 
                     Try
-                        wbr.Name = "wbr_" & readMessageID(message)
+                        wbr.Name = "wbr_" & theySentTheMessage(message) & "_" & readMessageID(message)
                     Catch ex As Exception
                         'console.writeline(ex.ToString)
                         If MsgBox("Something went horribly wrong and the message IDs couldn't be loaded. View technical details?", vbExclamation + vbYesNo, "Something happened") = MsgBoxResult.Yes Then 'if user wants technical details
@@ -369,15 +370,11 @@
             UserWebBrowsersCount += 1
         Next
 
-        addMessageAfterTheFact(message, UserWebBrowsersCount)
+        addMessageAfterTheFact(message, UserWebBrowsersCount, biggestTop, lastHeight)
 
     End Function
 
-    Function d(ByVal num As Integer)
-        Console.WriteLine(num)
-    End Function
-
-    Function addMessageAfterTheFact(ByVal message As String, ByVal userWebBrowsersCount As Integer)
+    Function addMessageAfterTheFact(ByVal message As String, ByVal userWebBrowsersCount As Integer, ByVal biggestTop As Integer, ByVal lastHeight As Integer)
         Dim wbr As New WebBrowser
         wbr.Width = frm_main.pnl_messages.Width - 32
         'console.writeline("'" & message & "' was sent by them: " & theySentTheMessage(message))
@@ -398,13 +395,13 @@
 
         wbr.DocumentText = html & getMessageColor().ToHtmlHexadecimal & html2 & getMessageColor().ToHtmlHexadecimal & html3 & getMessageColor().ToHtmlHexadecimal & html4 & div & message & readDiv & "</div></body></html>"
 
-        wbr.Height = 80                         '| TODO: Fix this. 
-        wbr.Top = (userWebBrowsersCount * 15)   '| also this makes no sense but you know what? I can't be bothered.
+        wbr.Height = 80
+        wbr.Top = biggestTop + lastHeight + 10
         wbr.BringToFront()
 
         wbr.ScrollBarsEnabled = False
         Try
-            wbr.Name = "wbr_" & readMessageID(message)
+            wbr.Name = "wbr_" & theySentTheMessage(message) & "_" & readMessageID(message)
         Catch ex As Exception
             'console.writeline(ex.ToString)
             If MsgBox("Something went horribly wrong and the message IDs couldn't be loaded. View technical details?", vbExclamation + vbYesNo, "Something happened") = MsgBoxResult.Yes Then 'if user wants technical details
@@ -461,7 +458,7 @@
 
             resultString = resultString.Trim().Substring(0, resultString.Length - 1)
 
-            Return resultstring
+            Return resultString
         End If
     End Function
 
