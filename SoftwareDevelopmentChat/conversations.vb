@@ -1,6 +1,12 @@
 ﻿Imports System.ComponentModel
 
 Public Class frm_conversations
+    Dim r As Boolean = False
+    Private Sub frm_conversations_resize(sender As Object, e As EventArgs) Handles MyBase.Resize
+        Me.Width = 204
+        If r Then frm_main.Height = Me.Height
+    End Sub
+
     Private Sub frm_conversations_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         frm_main.UserMoving = False
         Me.Left = frm_main.Left - Me.Width
@@ -19,6 +25,8 @@ Public Class frm_conversations
         Next
 
         cbx_class.Items.Add("Add New...")
+
+        r = True
     End Sub
 
     ' // The following is for moving the main form with this one, adapted from http://www.vbforums.com/showthread.php?611932-snap-or-dock-forms-together#2 //
