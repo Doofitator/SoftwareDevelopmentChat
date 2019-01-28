@@ -1,13 +1,9 @@
 ﻿Module Comments
-    'TODO: group chats
-
     'TODO: full scale test (see how database copes with lots of data)
 
     'TODO: classes
 
     'TODO: admin rights
-
-    'TODO: rich text formatting (with html)
 
     'TODO: webbrowsers need to dynamically size
 
