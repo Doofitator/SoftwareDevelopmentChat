@@ -162,7 +162,7 @@ correctPassword:
     End Sub
 
     Public Sub btn_send_Click(sender As Object, e As EventArgs) Handles btn_send.Click
-        writeMessage(txt_message.Text, grp_chat.Text, txt_userName.Text)
+        writeMessage(SwearFilter(txt_message.Text), grp_chat.Text, txt_userName.Text)
     End Sub
 
     Private Sub pbx_settings_Click(sender As Object, e As EventArgs) Handles pbx_settings.Click
