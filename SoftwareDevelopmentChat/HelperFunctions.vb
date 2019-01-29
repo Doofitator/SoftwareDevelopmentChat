@@ -96,7 +96,7 @@
                     btn.Width = 163
                     btn.Name = "btn_" & stream
                     btn.Text = stream
-                    frm_conversations.pnl_streams.controls.add(btn)
+                    frm_conversations.pnl_streams.Controls.Add(btn)
                     UserButtons.Add(btn)
                     frm_conversations.StreamButtons = UserButtons.Count + 1
                     AddHandler btn.Click, AddressOf frm_conversations.RecipientHandler
@@ -471,8 +471,22 @@
         End If
     End Function
 
-    '_swear is a list of the swear words
-    Private _swearArray As String() = {"shit", "shit", "ass", "etc"}
+    Private Function _swearArray() As Array
+        '_swear is a list of the swear words
+        Dim address As String = "http://www.bannedwordlist.com/lists/swearWords.txt"
+        Dim client As Net.WebClient = New Net.WebClient()
+        Dim reader As IO.StreamReader = New IO.StreamReader(client.OpenRead(address))
+
+        Dim swearlist As New List(Of String)
+
+        Using reader
+            While Not reader.EndOfStream
+                swearlist.add(reader.ReadLine)
+            End While
+        End Using
+
+        Return swearlist.ToArray
+    End Function
 
     Public Function SwearFilter(ByVal textBoxInput As String) As String
         Dim cleanedText As String = ""
