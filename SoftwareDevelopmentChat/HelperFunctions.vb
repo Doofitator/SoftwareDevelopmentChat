@@ -1,4 +1,6 @@
-﻿Module HelperFunctions
+﻿Imports System.IO
+
+Module HelperFunctions
     'This module will contain all functions that don't talk to the database. It really doesn't need to exist,
     'but it means that the forms don't have so much crap in them. For example, the main form really doesn't 
     'need the login Function To reside In it, but it could.
@@ -212,7 +214,8 @@
                     'For Each Control In frm_main.grp_chat.Controls
                     ' If TypeOf Control Is Label Then Userlabels.Add(Control)
                     ' Next
-
+                    Dim unsensoredMessage As String = message
+                    message = SwearFilter(message)
                     Dim wbr As New WebBrowser
 
                     wbr.Width = frm_main.pnl_messages.Width - 32
@@ -221,7 +224,7 @@
                     Dim readDiv As String = ""
 
 
-                    If theySentTheMessage(message) Then
+                    If theySentTheMessage(unsensoredMessage) Then
                         lastMessage = message
                         div = "<div class=""chat them"">"
                     Else
@@ -319,6 +322,7 @@
 
 
         'console.writeline(FromName & " vs " & frm_main.txt_userName.Text)
+        'Console.WriteLine("SenderName = " & senderName(message) & " vs " & frm_main.txt_userName.Text.ToLower)
         If senderName(message) = frm_main.txt_userName.Text.ToLower Then
             Return False 'it was us
         Else
@@ -344,7 +348,6 @@
 
     Function writeMessage(ByVal message As String, ByVal streamName As String, ByVal username As String) 'when you send a message it needs to write to the database
 
-
         'the messages table has the following columns:
         'ID (auto incrememnt)
         'StreamID                   <-- Get from streamName
@@ -360,7 +363,7 @@
         'console.writeline(message)
 
         Try
-            writeSQL("insert into tbl_messages (StreamID, FromID, Timestamp, Message) values ('" & StreamID & "', '" & fromID & "', getdate(), '" & SwearFilter(MakeSQLSafe(message)) & "')")
+            writeSQL("insert into tbl_messages (StreamID, FromID, Timestamp, Message) values ('" & StreamID & "', '" & fromID & "', getdate(), '" & MakeSQLSafe(message) & "')")
         Catch ex As Exception
             'console.writeline(ex.ToString)
             'console.writeline(ex.ToString)
@@ -384,13 +387,15 @@
     End Function
 
     Function addMessageAfterTheFact(ByVal message As String, ByVal userWebBrowsersCount As Integer, ByVal biggestTop As Integer, ByVal lastHeight As Integer)
+        Dim uncensoredMessage As String = message
+        message = SwearFilter(message)
         Dim wbr As New WebBrowser
         wbr.Width = frm_main.pnl_messages.Width - 32
         'console.writeline("'" & message & "' was sent by them: " & theySentTheMessage(message))
         Dim div As String
         Dim readDiv As String
 
-        If theySentTheMessage(message) Then
+        If theySentTheMessage(uncensoredMessage) Then
             div = "<div class=""chat them"">"
         Else
             If Not readRecipt(message) Then
@@ -472,20 +477,19 @@
     End Function
 
     Private Function _swearArray() As Array
-        '_swear is a list of the swear words
-        Dim address As String = "http://www.bannedwordlist.com/lists/swearWords.txt"
-        Dim client As Net.WebClient = New Net.WebClient()
-        Dim reader As IO.StreamReader = New IO.StreamReader(client.OpenRead(address))
 
-        Dim swearlist As New List(Of String)
+        'encrypted swear words as csv because I really don't want a list of vulgar words in my source code
+        'to see decrypted, http://www.bannedwordlist.com/lists/swearWords.csv
 
-        Using reader
-            While Not reader.EndOfStream
-                swearlist.add(reader.ReadLine)
-            End While
-        End Using
+        Dim encr As String = "P+nJwxSWzje8fkExQJnLJphSjM3vMj2GiawnkzSVBO0afBFmkX3MqdK2XppwhEV/0wOWUK42L0hcSFy0XExlFrtZhBnOKYHdKnYdh3f6tJxUgzxO4bp5JKzeY6afcWE8cxIwdLE7+oYmiYDqLnk5N6zfxhKK9N4/Hn3ca5oIPbCh/uQMT8nSD5r5MsUPFVwYrnanJg/8NPjyGEBy6D/SLpgTIiXdOhU7dzbGTi1Z+DnrtQSCiXK4I8Led/65Jdi4Sgk4ePlRBvFseQvYMIN4eeZ5iiTGhf/PXma3qMTDiSiuPjYTnwoZh7X1uWQQmRTxkiLZRcuWjKsSELflg95cilZTgOPsay8CplaTAQms9eHIh/ZAjm7eQDfqlKMCiXSOzjr+grew8sfhebK2FP8MY3EjQGunoiTCkSTIsGQT7YFncDmIYIqFYp9fatTHMluCMibVHlz/nrgtUI4/1y5+e8wMLh/eI3JfUuhzq4KaEBSId204+SyrbZdjUDw0Q44cvk7jpg5HZDCRTwvshI/ktDJ7kMg5rwHWRUAQMzRacoVVCMW5vHo46zy/QGyuPsXlVnJ6e2IaeUt+Ber43LF0SzmD2KM4fyyOXM8O6bUSSy7yXwKRkw9Xyb+eXu5JcBuRzrqISoQz45k="
 
-        Return swearlist.ToArray
+
+        Dim wrapper As Encryption = New Encryption("badWords")
+        Dim decr As String = wrapper.DecryptData(encr)
+
+        Dim badWords As String() = decr.Split(New Char() {","c})
+
+        Return badWords
     End Function
 
     Public Function SwearFilter(ByVal textBoxInput As String) As String
@@ -494,7 +498,7 @@
         textBoxInput = "xx " + textBoxInput
         textBoxInput = textBoxInput.ToLower
         For i As Integer = 0 To _swearArray.Length - 1
-            textBoxInput = textBoxInput.Replace(_swearArray(i), " #")
+            textBoxInput = textBoxInput.Replace(_swearArray(i), " ████")
         Next
         Return textBoxInput.Substring(3)
     End Function

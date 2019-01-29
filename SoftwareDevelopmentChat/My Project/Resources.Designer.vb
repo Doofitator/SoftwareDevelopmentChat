@@ -22,7 +22,7 @@ Namespace My.Resources
     '''<summary>
     '''  A strongly-typed resource class, for looking up localized strings, etc.
     '''</summary>
-    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0"),  _
+    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0"),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute(),  _
      Global.Microsoft.VisualBasic.HideModuleNameAttribute()>  _
@@ -77,6 +77,15 @@ Namespace My.Resources
             Get
                 Dim obj As Object = ResourceManager.GetObject("Logo", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to jBZMdmeUTsSZ5B+vUgAiLXn0zmRFJnSXRmWXve+vUVYuBBAdek1T3dBJASggsyfiUWLDIlwnhUPgueAWdKuQD1eLecSsayMJNvUZhzCLVeINoI9LzJhdGfVXkHaCuK6jowd5/hlgs516dd91Pb9KNqNH3TGd9B8ufdhFmX8MySGwDp6zx7IR+7Zi1iY6FxdF56r5OQcZlkpnaxdoV8kKfxce+vj3JQI87o4GjBuNIiwpWoykfCm5apif4QN3t1CPPagU/uWbZAvS6UQjXguUHJLJnF2lZCdmas2PCC+DdxulJoGt6Yw/VACickPdkJ7I9MGPdcymbvYQzyw7I2SX4sIEy2IZapy4//fYuS9945Z7fAH3LN8TDCdAqfBJyHiuFsyMCMFI/+Qjkrqdbyk2rF3CWsdQiZrztqB7fR7rjAGR7TGW2MZfx7beEHb26V+3kUk0Pv5d41kNNgji7rsfhLpw39sUIPv84261azT29C7yWgoXuwvvZS083nOY3wfT [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property swears() As String
+            Get
+                Return ResourceManager.GetString("swears", resourceCulture)
             End Get
         End Property
     End Module

@@ -2,6 +2,8 @@
 
     ' // Image background credit https://www.y2architecture.com.au/marist-college-bendigo-champagnat/
 
+    Protected Overloads Property MaximizedBounds As System.Drawing.Rectangle = New Rectangle(10, 10, 20, 20) 'todo: this
+
     Private Sub frm_main_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.Width = 421 'set the width to half what it is in the design editor (it's only double there so we can see both windows)
         If Me.Left < frm_conversations.Width + 50 Then 'make sure that the form loads far enough to the right that the conversations form fits next to it
@@ -146,6 +148,7 @@ correctPassword:
         'https://docs.microsoft.com/en-us/dotnet/framework/winforms/advanced/how-to-create-a-new-setting-at-design-time)
     End Sub
 
+
     Private Sub frm_main_Resize(sender As Object, e As EventArgs) Handles Me.Resize
         frm_conversations.Height = Me.Height 'keep the other form in sync with this one
 
@@ -167,10 +170,16 @@ correctPassword:
         Next
 
         ' // end move controls //
+
+        If Me.WindowState = FormWindowState.Minimized Then 'todo: this is useless
+            frm_conversations.WindowState = FormWindowState.Minimized
+        ElseIf Me.WindowState = FormWindowState.Normal Then
+            frm_conversations.WindowState = WindowState.Normal
+        End If
     End Sub
 
     Public Sub btn_send_Click(sender As Object, e As EventArgs) Handles btn_send.Click
-        writeMessage(SwearFilter(txt_message.Text), grp_chat.Text, txt_userName.Text)
+        writeMessage(txt_message.Text, grp_chat.Text, txt_userName.Text)
     End Sub
 
     Private Sub pbx_settings_Click(sender As Object, e As EventArgs) Handles pbx_settings.Click
@@ -236,4 +245,6 @@ correctPassword:
     Private Sub btn_rich_Click(sender As Object, e As EventArgs) Handles btn_rich.Click
         frm_richText.ShowDialog()
     End Sub
+
+
 End Class
