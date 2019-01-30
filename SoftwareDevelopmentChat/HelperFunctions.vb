@@ -478,7 +478,7 @@ Module HelperFunctions
 
     Private Function _swearArray() As Array
 
-        'encrypted swear words as csv because I really don't want a list of vulgar words in my source code
+        'encrypted swear words as csv because I really don't want a list of vulgar words in my source code. Yes, it increases CPU usage, but too bad so sad.
         'to see decrypted, http://www.bannedwordlist.com/lists/swearWords.csv
 
         Dim encr As String = "P+nJwxSWzje8fkExQJnLJphSjM3vMj2GiawnkzSVBO0afBFmkX3MqdK2XppwhEV/0wOWUK42L0hcSFy0XExlFrtZhBnOKYHdKnYdh3f6tJxUgzxO4bp5JKzeY6afcWE8cxIwdLE7+oYmiYDqLnk5N6zfxhKK9N4/Hn3ca5oIPbCh/uQMT8nSD5r5MsUPFVwYrnanJg/8NPjyGEBy6D/SLpgTIiXdOhU7dzbGTi1Z+DnrtQSCiXK4I8Led/65Jdi4Sgk4ePlRBvFseQvYMIN4eeZ5iiTGhf/PXma3qMTDiSiuPjYTnwoZh7X1uWQQmRTxkiLZRcuWjKsSELflg95cilZTgOPsay8CplaTAQms9eHIh/ZAjm7eQDfqlKMCiXSOzjr+grew8sfhebK2FP8MY3EjQGunoiTCkSTIsGQT7YFncDmIYIqFYp9fatTHMluCMibVHlz/nrgtUI4/1y5+e8wMLh/eI3JfUuhzq4KaEBSId204+SyrbZdjUDw0Q44cvk7jpg5HZDCRTwvshI/ktDJ7kMg5rwHWRUAQMzRacoVVCMW5vHo46zy/QGyuPsXlVnJ6e2IaeUt+Ber43LF0SzmD2KM4fyyOXM8O6bUSSy7yXwKRkw9Xyb+eXu5JcBuRzrqISoQz45k="
@@ -497,6 +497,7 @@ Module HelperFunctions
         'doesn't catch first word for some reason, so just create 3 temp chars and remove them at the end
         textBoxInput = "xx " + textBoxInput
         textBoxInput = textBoxInput.ToLower
+        'TODO: The above line causes all chats to be lowercase.
         For i As Integer = 0 To _swearArray.Length - 1
             textBoxInput = textBoxInput.Replace(_swearArray(i), " ████")
         Next
