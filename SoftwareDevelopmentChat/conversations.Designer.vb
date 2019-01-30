@@ -44,6 +44,7 @@ Partial Class frm_conversations
         Me.cbx_class.Name = "cbx_class"
         Me.cbx_class.Size = New System.Drawing.Size(163, 21)
         Me.cbx_class.TabIndex = 1
+        Me.cbx_class.Text = "[Not Implemented]"
         '
         'pnl_streams
         '
