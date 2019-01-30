@@ -496,10 +496,8 @@ Module HelperFunctions
         Dim cleanedText As String = ""
         'doesn't catch first word for some reason, so just create 3 temp chars and remove them at the end
         textBoxInput = "xx " + textBoxInput
-        textBoxInput = textBoxInput.ToLower
-        'TODO: The above line causes all chats to be lowercase.
         For i As Integer = 0 To _swearArray.Length - 1
-            textBoxInput = textBoxInput.Replace(_swearArray(i), " ████")
+            textBoxInput = Strings.Replace(textBoxInput, _swearArray(i), " ████", 1, -1, Constants.vbTextCompare)
         Next
         Return textBoxInput.Substring(3)
     End Function
