@@ -450,7 +450,7 @@ Module HelperFunctions
     End Function
 
     Function getGroupChatNames() As String 'returns "False" on error
-        Dim newFrm_groupChatSelector As New frm_groupChatSelector
+        Dim newFrm_groupChatSelector As New frm_recipientChatSelector
         Dim result As DialogResult = newFrm_groupChatSelector.ShowDialog
         If Not result = DialogResult.OK Then
             Return "False"

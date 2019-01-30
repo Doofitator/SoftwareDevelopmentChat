@@ -1,4 +1,4 @@
-﻿Public Class frm_groupChatSelector
+﻿Public Class frm_recipientChatSelector
     Private Sub btn_new_Click(sender As Object, e As EventArgs) Handles btn_new.Click
         Dim userFields As New List(Of TextBox) 'new list
         For Each control In Me.Controls        'for each control on form
@@ -23,7 +23,7 @@
         btn_ok.Enabled = False                    'just in case it was enabled before - we don't want it enabled now because there's a new empty box
     End Sub
 
-    Private Sub txt_grpMember_textchanged(sender As Object, e As EventArgs) Handles txt_grpMember1.TextChanged, txt_grpMember2.TextChanged
+    Private Sub txt_grpMember_textchanged(sender As Object, e As EventArgs) Handles txt_grpMember1.TextChanged
 
         Dim textValids As New List(Of Boolean)
         Dim textValues As New List(Of String)
