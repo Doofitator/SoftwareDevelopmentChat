@@ -148,7 +148,11 @@ correctPassword:
         'https://docs.microsoft.com/en-us/dotnet/framework/winforms/advanced/how-to-create-a-new-setting-at-design-time)
     End Sub
 
-
+    Dim max As Boolean = False 'boolean to remember if form is maximised
+    Dim x As Integer '|
+    Dim y As Integer '| location and
+    Dim h As Integer '| height parameters
+    Dim w As Integer '|
     Private Sub frm_main_Resize(sender As Object, e As EventArgs) Handles Me.Resize
         frm_conversations.Height = Me.Height 'keep the other form in sync with this one
 
@@ -171,10 +175,30 @@ correctPassword:
 
         ' // end move controls //
 
-        If Me.WindowState = FormWindowState.Minimized Then 'todo: this is useless
+        If Me.WindowState = FormWindowState.Minimized Then
             frm_conversations.WindowState = FormWindowState.Minimized
+        ElseIf Me.WindowState = FormWindowState.Maximized Then
+            With Me
+                If Not max Then
+                    .WindowState = FormWindowState.Normal
+                    x = .Left
+                    y = .Top
+                    w = .Width
+                    h = .Height
+                    .Left = frm_conversations.Width
+                    .Top = Screen.PrimaryScreen.WorkingArea.Top
+                    .Height = Screen.PrimaryScreen.WorkingArea.Height
+                    .Width = Screen.PrimaryScreen.WorkingArea.Width - frm_conversations.Width
+                    max = True
+                Else
+                    .WindowState = FormWindowState.Normal
+                    .Location = New Point(x, y)
+                    .Size = New Size(w, h)
+                    max = False
+                End If
+            End With
         ElseIf Me.WindowState = FormWindowState.Normal Then
-            frm_conversations.WindowState = WindowState.Normal
+            frm_conversations.WindowState = WindowState.Normal 'todo: this moves the form sideways every time you unminimise it
         End If
     End Sub
 

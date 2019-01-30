@@ -54,7 +54,7 @@ Module DatabaseFunctions
         Try
             MyConn.Open()
         Catch
-            MsgBox("No connection to server.", vbAbort, "Fatal")
+            MsgBox("No connection to server.", vbAbort + vbOKOnly, "Fatal")
             frm_main.Close()
         End Try
 
