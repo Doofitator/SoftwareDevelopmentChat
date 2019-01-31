@@ -36,7 +36,11 @@
         saveFileDialog1.RestoreDirectory = True
 
         If saveFileDialog1.ShowDialog() = DialogResult.OK Then
-            IO.File.WriteAllLines(saveFileDialog1.FileName, CType(getMessagesArr(frm_main.grp_chat.Text, , True), String()))
+            Dim htmlFreeArray As New List(Of String)
+            For Each msg In CType(getMessagesArr(frm_main.grp_chat.Text, , True), String())
+                htmlFreeArray.Add(System.Text.RegularExpressions.Regex.Replace(msg, "<.*?>", ""))
+            Next
+            IO.File.WriteAllLines(saveFileDialog1.FileName, htmlFreeArray.ToArray)
         End If
     End Sub
 End Class
